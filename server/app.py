@@ -69,6 +69,12 @@ class Users(Resource):
     db.session.add(new_user)
     db.session.commit()
     session['user_id'] = new_user.id
+    response = make_response(
+      new_user.to_dict(),
+      201
+    )
+    return response
+api.add_resource(Users,'/users')
 
 class CastMembers(Resource):
   def get(self):
