@@ -59,6 +59,17 @@ class ProductionByID(Resource):
 
 api.add_resource(ProductionByID, '/productions/<int:id>')
 
+class Users(Resource):
+  def post(self):
+    form_json = request.get_json()
+    new_user = User(
+      name = form_json['name'],
+      name = form_json['email']
+    )
+    db.session.add(new_user)
+    db.session.commit()
+    session['user_id'] = new_user.id
+
 class CastMembers(Resource):
   def get(self):
     cast_members_list = [cast_member.to_dict() for cast_member in CastMember.query.all()] 
