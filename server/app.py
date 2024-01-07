@@ -1,3 +1,6 @@
+from flask import Flask, request, make_response, abort
+from flask_migrate import Migrate
+from flask_restful import Api, Resource
 from config import app
 from werkzeug.exceptions import NotFound
 
@@ -46,7 +49,7 @@ class ProductionByID(Resource):
   def get(self, id):
     production = Production.query.filter_by(id=id).first()
 # if production not found, show error message
-    
+
     production_dict = production.to_dict()
     response = make_response(
       production_dict,
