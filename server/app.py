@@ -2,37 +2,19 @@ from flask import Flask, request, make_response, abort, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_restful import Api, Resource
-from config import app
+from config import create_app
+from flask_login import LoginManager, login_user, logout_user, login_required, current_user
 from werkzeug.exceptions import NotFound
 
-app = Flask(__name__)
-# app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///your_database.db'
-# app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False  
-# db = SQLAlchemy(app)
-# migrate = Migrate(app.db)
+app, db, bcrypt, api = create_app()
+
+login_manager = LoginManager(app)
+login_manager.login_view = 'login'
 
 api = Api(app)
 
 app.jsons.compact = False 
 # db.init_app(app)
-
-if __name__ == "__main__":
-  app.run(port=5555, debug=True)
-
-class PomAd(db.Model):
-  __tablename__ = 'pomads'
-
-  ad_id = db.Column(db.Integer, primary_key=True)
-  user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'), nullable=False)
-  title = db.Column(db.String, nullable=False)
-  description = db.Column(db.Text, nullable=False, comment='Content of the post')
-  created_at = db.Column(db.TIMESTAMP, server_default=db.func.current_timestamp(), nullable=False)
-
-  # Relationship with User model
-  user = db.relationship('User', backref=db.backref('pomads', lazy=True))
-
-  def __repr__(self):
-      return f'<PomAd {self.ad_id}, {self.title}, {self.user.username}>'
 
 # User model
 class User(db.Model):
@@ -51,6 +33,61 @@ class User(db.Model):
     def __repr__(self):
         return f'<User {self.id}, {self.username}, {self.email}>'
     
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(int(user_id))
+
+@app.before_request
+def authenticate():
+    # Check if the session key is present in the cookie
+    if 'user_id' in session:
+        # User is logged in
+        g.user = get_user_by_id(session['user_id'])
+    else:
+        # User is a guest
+        g.user = None
+        
+@app.route('/login', methods=['POST'])
+def login():
+    data = request.get_json()
+    username = data.get('username')
+    password = data.get('password')
+
+    # Validate user credentials
+    user = User.query.filter_by(username=username).first()
+    if user and bcrypt.check_password_hash(user.password, password):
+        login_user(user)
+        return jsonify({'message': 'Login successful'})
+
+    return jsonify({'message': 'Invalid credentials'}), 401
+
+@app.route('/logout')
+@login_required
+def logout():
+    logout_user()
+    return jsonify({'message': 'Logout successful'})
+
+# Example protected route
+@app.route('/protected')
+@login_required
+def protected():
+    return jsonify({'message': 'This is a protected route for the user: {}'.format(current_user.username)})
+
+class PomAd(db.Model):
+  __tablename__ = 'pomads'
+
+  ad_id = db.Column(db.Integer, primary_key=True)
+  user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'), nullable=False)
+  title = db.Column(db.String, nullable=False)
+  description = db.Column(db.Text, nullable=False, comment='Content of the post')
+  created_at = db.Column(db.TIMESTAMP, server_default=db.func.current_timestamp(), nullable=False)
+
+  # Relationship with User model
+  user = db.relationship('User', backref=db.backref('pomads', lazy=True))
+
+  def __repr__(self):
+      return f'<PomAd {self.ad_id}, {self.title}, {self.user.username}>'
+
 class Productions (Resource) :
   def get(self):
     production_list = [p.to_dict() for p in Production.query.all()] 
@@ -168,3 +205,6 @@ def handle_not_found(e):
     404
   )
   return response
+
+if __name__ == "__main__":
+  app.run(port=5555, debug=True)
