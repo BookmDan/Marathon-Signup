@@ -1,17 +1,58 @@
-from flask import Flask, request, make_response, abort
+from flask import Flask, request, make_response, abort, jsonify
+from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_restful import Api, Resource
 from config import app
 from werkzeug.exceptions import NotFound
 
+app = Flask(__name__)
+
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///your_database.db'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False  
+
+db = SQLAlchemy(app)
+migrate = Migrate(app.db)
+
+api = Api(app)
+
+app.jsons.compact = False 
+# db.init_app(app)
+
 if __name__ == "__main__":
   app.run(port=5555, debug=True)
 
-app.jsons.compact = False 
-migrate = Migrate(app.db)
-db.init_app(app)
-api = Api(app)
+class PomAd(db.Model):
+  __tablename__ = 'pomads'
 
+  ad_id = db.Column(db.Integer, primary_key=True)
+  user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'), nullable=False)
+  title = db.Column(db.String, nullable=False)
+  description = db.Column(db.Text, nullable=False, comment='Content of the post')
+  created_at = db.Column(db.TIMESTAMP, server_default=db.func.current_timestamp(), nullable=False)
+
+  # Relationship with User model
+  user = db.relationship('User', backref=db.backref('pomads', lazy=True))
+
+  def __repr__(self):
+      return f'<PomAd {self.ad_id}, {self.title}, {self.user.username}>'
+
+# User model
+class User(db.Model):
+    __tablename__ = 'users'
+
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String, unique=True, nullable=False)
+    email = db.Column(db.String, unique=True, nullable=False)
+    password = db.Column(db.String, nullable=False)
+    address_line1 = db.Column(db.String)
+    address_line2 = db.Column(db.String)
+    city = db.Column(db.String)
+    state = db.Column(db.String)
+    postal_code = db.Column(db.String)
+
+    def __repr__(self):
+        return f'<User {self.id}, {self.username}, {self.email}>'
+    
 class Productions (Resource) :
   def get(self):
     production_list = [p.to_dict() for p in Production.query.all()] 
