@@ -4,8 +4,24 @@ import viteLogo from '/vite.svg'
 import './App.css'
 
 function App() {
-  const [count, setCount] = useState(0)
+  // const [count, setCount] = useState(0)
+  const [productions, setProductions] = useState([])
+  const [productionEdit, setProductionEdit] = useState([])
+  const [user, setUser] = useState(null)
+  const history = useHistory()
 
+  useEffect(() => {
+    fetchProductions()
+  }, [])
+  
+  const fetchProductions = () => (
+    fetch('/productions')
+      .then(res => res.json())
+    .then(setProductions)
+  )
+  const fetchUser = () => {
+    
+  }
   return (
     <>
       <div>

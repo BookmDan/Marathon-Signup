@@ -11,7 +11,7 @@ function Authentication({ updateUser }) {
   const [signUp, setSignUp] = useState(false);
 
   const handleClick = () => setSignUp((signUp) => !signUp);
-
+  
   const formik = useFormik({
     initialValues: {
       name: '',
@@ -23,7 +23,19 @@ function Authentication({ updateUser }) {
     }),
     onSubmit: (values) => {
       // Handle form submission here
-      console.log(values);
+      fetch(signUp ? '/users' : 'login', {
+        method: "POST",
+        headers: {
+          "Content-Type":"application/json"
+        },
+        body: JSON.stringify(values)
+      })
+        .then(res => res.json())
+        .then(user => {
+          updateUser(user)
+          history.push('/')
+      })
+      // console.log(values);
     },
   });
 
