@@ -10,21 +10,7 @@ login_manager = LoginManager(app)
 login_manager.login_view = 'login'
 app.jsons.compact = False 
 
-class User(db.Model):
-    __tablename__ = 'users'
 
-    id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String, unique=True, nullable=False)
-    email = db.Column(db.String, unique=True, nullable=False)
-    password = db.Column(db.String, nullable=False)
-    address_line1 = db.Column(db.String)
-    address_line2 = db.Column(db.String)
-    city = db.Column(db.String)
-    state = db.Column(db.String)
-    postal_code = db.Column(db.String)
-
-    def __repr__(self):
-        return f'<User {self.id}, {self.username}, {self.email}>'
     
 @login_manager.user_loader
 def load_user(user_id):

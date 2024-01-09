@@ -2,26 +2,57 @@ import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 
-function App() {
-  // const [count, setCount] = useState(0)
-  const [productions, setProductions] = useState([])
-  const [productionEdit, setProductionEdit] = useState([])
-  const [user, setUser] = useState(null)
-  const history = useHistory()
+const Home = () => <div>Home Page</div>;
+const Posts = () => <div>Posts Page</div>;
+const Favorites = () => <div>Favorites Page</div>;
 
-  useEffect(() => {
-    fetchProductions()
-  }, [])
+const Navigation = () => (
+  <nav>
+    <ul>
+      <li>
+        <Link to="/">Home</Link>
+      </li>
+      <li>
+        <Link to="/posts">Posts</Link>
+      </li>
+      <li>
+        <Link to="/favorites">Favorites</Link>
+      </li>
+    </ul>
+  </nav>
+);
+
+const App = () => (
+  <Router>
+    <Navigation />
+    <Route path="/" exact component={Home} />
+    <Route path="/posts" component={Posts} />
+    <Route path="/favorites" component={Favorites} />
+  </Router>
+);
+
+
+// function App() {
+//   // const [count, setCount] = useState(0)
+//   const [productions, setProductions] = useState([])
+//   const [productionEdit, setProductionEdit] = useState([])
+//   const [user, setUser] = useState(null)
+//   const history = useHistory()
+
+//   useEffect(() => {
+//     fetchProductions()
+//   }, [])
   
-  const fetchProductions = () => (
-    fetch('/productions')
-      .then(res => res.json())
-    .then(setProductions)
-  )
-  const fetchUser = () => {
+//   const fetchProductions = () => (
+//     fetch('/productions')
+//       .then(res => res.json())
+//     .then(setProductions)
+//   )
+//   const fetchUser = () => {
     
-  }
+//   }
   return (
     <>
       <div>
