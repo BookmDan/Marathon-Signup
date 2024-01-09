@@ -2,21 +2,14 @@ from flask import Flask, request, make_response, abort, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_restful import Api, Resource
-from config import create_app
+from config import app, db, bcrypt, api
 from flask_login import LoginManager, login_user, logout_user, login_required, current_user
 from werkzeug.exceptions import NotFound
 
-app, db, bcrypt, api = create_app()
-
 login_manager = LoginManager(app)
 login_manager.login_view = 'login'
-
-api = Api(app)
-
 app.jsons.compact = False 
-# db.init_app(app)
 
-# User model
 class User(db.Model):
     __tablename__ = 'users'
 

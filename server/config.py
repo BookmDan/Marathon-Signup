@@ -35,4 +35,4 @@ api = Api(app=app)
 
 CORS(app)
 
-return app, db, bcrypt, api
+# return app, db, bcrypt, api

@@ -12,6 +12,7 @@ flask-restful = "*"
 flask-migrate = "*"
 flask-bcrypt = "*"
 python-dotenv = "*"
+flask-login = "*"
 
 [requires]
 python_version = "3.9"
