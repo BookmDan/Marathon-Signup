@@ -1,11 +1,17 @@
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
-from app import db
+from sqlalchemy import MetaData
+from sqlalchemy_serializer import SerializerMixin
+
+metadata = MetaData(naming_convention={
+    "fk": "fk_%(table_name)s_%(column_0_name)s_%(referred_table_name)s",
+})
+# from app import db
 
 # create the Flask SQLAlchemy extension
 db = SQLAlchemy()
 
-class User(db.Model):
+class User(db.Model, SerializerMixin):
   __tablename__ = 'users'
 
   id = db.Column(db.Integer, primary_key=True)
@@ -20,22 +26,22 @@ class User(db.Model):
 
   def __repr__(self):
       return f'<User {self.id}, {self.username}, {self.email}>'
-  
+
 class Pom(db.Model):
-  __tablename__ = 'poms'
+    __tablename__ = 'poms'
 
-  id = db.Column(db.Integer, primary_key=True)
-  name = db.Column(db.String, nullable=False)
-  age = db.Column(db.Integer)
-  color = db.Column(db.String)
-  description = db.Column(db.String)
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String, nullable=False)
+    age = db.Column(db.Integer)
+    color = db.Column(db.String)
+    description = db.Column(db.String)
 
-  # Relationship with AdoptionRequest model
-  adoption_requests = db.relationship('AdoptionRequest', backref=db.backref('pom', lazy=True))
+    # Relationship with AdoptionRequest model
+    adoption_requests = db.relationship('AdoptionRequest', backref=db.backref('pom', lazy=True), cascade='all, delete-orphan')
 
-  def __repr__(self):
-      return f'<Pom {self.id}, Name: {self.name}, Age: {self.age}, Color: {self.color}>'
-  
+    def __repr__(self):
+        return f'<Pom {self.id}, Name: {self.name}, Age: {self.age}, Color: {self.color}>'
+
 class AdoptionRequest(db.Model):
   __tablename__ = 'adoption_requests'
 
@@ -44,7 +50,6 @@ class AdoptionRequest(db.Model):
   pom_id = db.Column(db.Integer, db.ForeignKey('poms.id'), nullable=False)
   adopter_name = db.Column(db.String, nullable=False)
   email = db.Column(db.String, nullable=False)
-  # phoneNumber = db.Column(db.Integer)  # Uncomment if needed
 
   # status = db.Column(db.String)  # Uncomment if needed
   # created_at = db.Column(db.TIMESTAMP, default=datetime.utcnow)  # Uncomment if needed
@@ -53,7 +58,7 @@ class AdoptionRequest(db.Model):
   user = db.relationship('User', backref=db.backref('adoption_requests', lazy=True))
 
   # Relationship with Pom model
-  pom = db.relationship('Pom', backref=db.backref('adoption_requests', lazy=True))
+  pom = db.relationship('Pom', backref=db.backref('adoption_requests_rel', lazy=True, cascade='all, delete-orphan'))
 
   def __repr__(self):
       return f'<AdoptionRequest {self.id}, Adopter: {self.adopter_name}, User: {self.user.username}, Pom: {self.pom.name}>'
