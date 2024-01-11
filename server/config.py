@@ -34,5 +34,3 @@ bcrypt = Bcrypt(app=app)
 api = Api(app=app)
 
 CORS(app)
-
-# return app, db, bcrypt, api

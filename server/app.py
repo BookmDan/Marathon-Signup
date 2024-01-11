@@ -4,12 +4,25 @@
 # from flask_migrate import Migrate
 # from flask_restful import Api, Resource
 # from dotenv import load_dotenv
-# # from config import app, db, bcrypt, api
+# from config import app, db, bcrypt, api
 # from flask_login import LoginManager, login_user, logout_user, login_required, current_user
 # from werkzeug.exceptions import NotFound
 # import os
+from models import db, Pet
 
-# from models import db, User, Pom, PomAd, AdoptionRequest
+# just contain routes 
+from config import app, api
+from flask_restful import Resource
+
+
+class PetsResource(Resource):
+    def get(self):
+        return[pet.to_dict() for pet in Pet.query.all()], 200
+    
+api.add_resource(PetsResource, '/pets')
+if __name__ == "__main__":
+  app.run(port=5555, debug = True)
+
 
 # app = Flask(__name__)
 # CORS(app)
@@ -207,68 +220,68 @@
 
 # if __name__ == "__main__":
 #   app.run(port=5555, debug=True)
-#-------------------------
+# #-------------------------
 
-from flask import Flask, request, make_response, jsonify
-from flask_cors import CORS
-from flask_migrate import Migrate
-from flask_cors import CORS
+# from flask import Flask, request, make_response, jsonify
+# from flask_cors import CORS
+# from flask_migrate import Migrate
+# from flask_cors import CORS
 
-from models import db, User
+# from models import db, User
 
-app = Flask(__name__)
-CORS(app)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///app.db'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.json.compact = False
+# app = Flask(__name__)
+# CORS(app)
+# app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///app.db'
+# app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+# app.json.compact = False
 
-CORS(app)
-migrate = Migrate(app, db)
+# CORS(app)
+# migrate = Migrate(app, db)
 
-db.init_app(app)
+# db.init_app(app)
 
-@app.route('/users', methods =['GET', 'POST']) 
-def users():
-  if request.method =='GET':
-      users = User.query.order_by('id').all()
-      # flask doesn't serialize, so we do need it in object form
-      response = [ user.to_dict() for user in users] 
+# @app.route('/users', methods =['GET', 'POST']) 
+# def users():
+#   if request.method =='GET':
+#       users = User.query.order_by('id').all()
+#       # flask doesn't serialize, so we do need it in object form
+#       response = [ user.to_dict() for user in users] 
   
-  # elif request.method == 'POST':
-  #   data = request.get_json()
-  #   # get from model Message
-  #   user = User(
-  #       username = data['username']
-  #       email = data['email'],
-  #       password = data['password'],
-  #   )
-  #   # do something with message
-  #   db.session.add(user)
-  #   db.session.commit()
-  #   response = make_response(
-  #       jsonify(user.to_dict()), 201
-  #       # 201 http code created
-  #   )
-  return response
+#   # elif request.method == 'POST':
+#   #   data = request.get_json()
+#   #   # get from model Message
+#   #   user = User(
+#   #       username = data['username']
+#   #       email = data['email'],
+#   #       password = data['password'],
+#   #   )
+#   #   # do something with message
+#   #   db.session.add(user)
+#   #   db.session.commit()
+#   #   response = make_response(
+#   #       jsonify(user.to_dict()), 201
+#   #       # 201 http code created
+#   #   )
+#   return response
    
 
-# @app.route('/messages/<int:id>', methods =['GET', 'PATCH', 'DELETE'])
-# def messages_by_id(id):
-#     message = Message.query.filter_by(id=id).first()
+# # @app.route('/messages/<int:id>', methods =['GET', 'PATCH', 'DELETE'])
+# # def messages_by_id(id):
+# #     message = Message.query.filter_by(id=id).first()
 
-#     if request.method == 'PATCH':
-#         newMessageData = request.get_json()
-#         for key in newMessageData:
-#             setattr(message, key, newMessageData[key])
-#         db.session.add(message)
-#         db.session.commit()
+# #     if request.method == 'PATCH':
+# #         newMessageData = request.get_json()
+# #         for key in newMessageData:
+# #             setattr(message, key, newMessageData[key])
+# #         db.session.add(message)
+# #         db.session.commit()
 
-#         response = make_response(jsonify(message.to_dict()))
-#     elif request.method == 'DELETE':
-#         db.session.delete(message)
-#         db.session.commit()
-#         response = jsonify({'message': f'deleted message {id}'})
-#     return response
+# #         response = make_response(jsonify(message.to_dict()))
+# #     elif request.method == 'DELETE':
+# #         db.session.delete(message)
+# #         db.session.commit()
+# #         response = jsonify({'message': f'deleted message {id}'})
+# #     return response
 
-if __name__ == '__main__':
-    app.run(port=4000)
+# if __name__ == '__main__':
+#     app.run(port=4000, debug=True)
