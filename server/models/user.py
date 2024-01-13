@@ -10,8 +10,9 @@ class User(db.Model, SerializerMixin):
   phone_number = db.Column(db.String)
   password = db.Column(db.String)
   
-  race_signups = db.relationship('RaceSignup', back_populates='user')
+  race_signups = db.relationship('RaceSignup', back_populates='user', uselist=False)
   credit_card_info = db.relationship('CreditCardInfo', back_populates='user') 
+  race_events = db.relationship('RaceEvent', back_populates='user') 
 
   def __repr__(self):
     return f'<User id={self.id} name={self.name} email={self.email}>'
