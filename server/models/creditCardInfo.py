@@ -1,5 +1,6 @@
 from config import db
 from sqlalchemy_serializer import SerializerMixin
+from marshmallow import Schema, fields
   
 class CreditCardInfo(db.Model, SerializerMixin):
   __tablename__ = 'credit_card_info'
@@ -20,3 +21,17 @@ class CreditCardInfo(db.Model, SerializerMixin):
 
   def __repr__(self):
     return f'<CreditCardInfo creditCardNumber={self.creditCardNumber} user_id={self.user_id}>'
+  
+class CreditCardInfoSchema(Schema):
+  credit_card_number = fields.Str(required=True)
+  name_on_card = fields.Str()
+  expiration_date = fields.Str()
+  cvv = fields.Str()
+  street_address = fields.Str()
+  country = fields.Str()
+  zipcode = fields.Str()
+  city = fields.Str()
+  state = fields.Str()
+  save_my_card = fields.Boolean()
+
+credit_card_info_schema = CreditCardInfoSchema()

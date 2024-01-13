@@ -1,16 +1,8 @@
 from config import api, db
 from flask import make_response, request
 from flask_restful import Resource
-from models.models import RaceEvent
-from marshmallow import Schema, fields
+from models.models import RaceEvent, RaceEventSchema
 
-class RaceEventSchema(Schema):
-    id = fields.Int()
-    name = fields.Str()
-
-race_event_schema = RaceEventSchema()
-
-# In your RaceEventsResource class
 class RaceEventsResource(Resource):
   def get(self):
     events = RaceEvent.query.all()
@@ -25,7 +17,7 @@ class RaceEventsResource(Resource):
     db.session.add(new_event)
     db.session.commit()
 
-    resp = race_event_schema.dump(new_event)
+    resp = RaceEventSchema.race_event_schema.dump(new_event)
     return make_response(resp, 201)
 
 api.add_resource(RaceEventsResource, '/raceEvents')
@@ -35,7 +27,7 @@ class RaceEventsById(Resource):
     event = RaceEvent.query.filter_by(id=id).first()
 
     if event:
-      resp = race_event_schema.dump(event)
+      resp = RaceEventSchema.race_event_schema.dump(event)
       status_code = 200
     else:
       resp = { "message": f"Event {id} was not found."}

@@ -1,5 +1,6 @@
 from config import db
 from sqlalchemy_serializer import SerializerMixin
+from marshmallow import Schema, fields
 
 class RaceSignup(db.Model, SerializerMixin):
   __tablename__ = "race_signup"
@@ -16,3 +17,11 @@ class RaceSignup(db.Model, SerializerMixin):
 
   def __repr__(self):
     return f'<RaceSignup id={self.id} user_id={self.user_id} raceEvent_id={self.raceEvent_id}>'
+
+class RaceSignupSchema(Schema):
+    id = fields.Int(dump_only=True)
+    waiver_accept = fields.Boolean()
+    tshirt_size = fields.Str()
+    coupon_code = fields.Str()
+
+race_signup_schema = RaceSignupSchema()

@@ -1,5 +1,6 @@
 from config import db
 from sqlalchemy_serializer import SerializerMixin
+from marshmallow import Schema, fields
 
 class User(db.Model, SerializerMixin):
   __tablename__ = "user"
@@ -16,3 +17,12 @@ class User(db.Model, SerializerMixin):
 
   def __repr__(self):
     return f'<User id={self.id} name={self.name} email={self.email}>'
+  
+class UserSchema(Schema):
+  id = fields.Int()
+  name = fields.Str(required=True)
+  email = fields.Email(required=True)
+  phone_number = fields.Str()
+  password = fields.Str(load_only=True)
+  
+user_schema = UserSchema()
