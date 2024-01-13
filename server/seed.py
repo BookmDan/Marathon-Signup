@@ -33,8 +33,8 @@ if __name__ == "__main__":
         db.session.commit()
 
         # Create race events
-        race_event1 = RaceEvent( organization="BigHearts", race_type="5k") #race_name="Better Half",
-        race_event2 = RaceEvent( organization="10000Runs", race_type="10k") #race_name="Orca 3000",
+        race_event1 = RaceEvent(race_name="Better Half", organization="BigHearts", race_type="5k") #
+        race_event2 = RaceEvent(race_name="Orca 3000", organization="10000Runs", race_type="10k") #
         db.session.add_all([race_event1, race_event2])
         db.session.commit()
 

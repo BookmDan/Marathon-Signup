@@ -24,4 +24,4 @@ class RaceSignupSchema(Schema):
     tshirt_size = fields.Str()
     coupon_code = fields.Str()
 
-race_signup_schema = RaceSignupSchema()
+# race_signup_schema = RaceSignupSchema()

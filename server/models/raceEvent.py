@@ -14,9 +14,10 @@ class RaceEvent(db.Model, SerializerMixin):
   user = db.relationship('User', back_populates='race_events')
   
   race_signups = db.relationship('RaceSignup', back_populates='race_event')
-
+  
+#   race_name={self.race_name}
   def __repr__(self):
-    return f'<RaceEvent id={self.id} race_name={self.race_name}  organization={self.organization} race_type={self.race_type}>'
+    return f'<RaceEvent id={self.id}  organization={self.organization} race_type={self.race_type}>'
   
 class RaceEventSchema(Schema):
   id = fields.Int(dump_only=True)
@@ -24,4 +25,4 @@ class RaceEventSchema(Schema):
   organization = fields.Str()
   race_type = fields.Str()
 
-race_event_schema = RaceEventSchema()
+# schema_instance = RaceEventSchema()

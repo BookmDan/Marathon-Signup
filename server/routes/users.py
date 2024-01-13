@@ -27,16 +27,32 @@ class UsersResource(Resource):
     resp = user_schema.dump(new_user)
     return make_response(resp, 201)
   
-  def get_by_id(self, user_id):
-    user = User.query.get(user_id)
+  # def get_by_id(self, user_id):
+  #   user = User.query.get(user_id)
 
-    if user:
-        resp = user_schema.dump(user)
-        status_code = 200
-    else:
-        resp = {"message": f"User with ID {user_id} was not found."}
-        status_code = 404
+  #   if user:
+  #       resp = user_schema.dump(user)
+  #       status_code = 200
+  #   else:
+  #       resp = {"message": f"User with ID {user_id} was not found."}
+  #       status_code = 404
 
-    return make_response(resp, status_code)
+  #   return make_response(resp, status_code)
   
-api.add_resource(UsersResource, '/users',  '/users/<int:user_id>')
+api.add_resource(UsersResource, '/users')
+
+class UsersById(Resource):
+    def get(self, id):
+        user = User.query.get(id)
+
+        if user:
+            resp = user_schema.dump(user)
+            status_code = 200
+        else:
+            resp = {"message": f"User with ID {id} was not found."}
+            status_code = 404
+
+        return make_response(resp, status_code)
+
+# Adding the resource to your API
+api.add_resource(UsersById, '/users/<int:id>')

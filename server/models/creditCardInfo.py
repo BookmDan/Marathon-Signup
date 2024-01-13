@@ -4,7 +4,7 @@ from marshmallow import Schema, fields
   
 class CreditCardInfo(db.Model, SerializerMixin):
   __tablename__ = 'credit_card_info'
-
+  # id = db.Column(db.Integer, primary_key=True)
   credit_card_number = db.Column(db.String, primary_key=True)
   name_on_card = db.Column(db.String)
   expiration_date = db.Column(db.String)
@@ -20,9 +20,12 @@ class CreditCardInfo(db.Model, SerializerMixin):
   user = db.relationship('User', back_populates='credit_card_info')
 
   def __repr__(self):
-    return f'<CreditCardInfo creditCardNumber={self.creditCardNumber} user_id={self.user_id}>'
+    return f'<CreditCardInfo id={self.id} credit_card_number={self.credit_card_number} name_on_card={self.name_on_card}>'
+
+    # return f'<CreditCardInfo creditCardNumber={self.creditCardNumber} user_id={self.user_id}>'
   
 class CreditCardInfoSchema(Schema):
+  # id = fields.Int(dump_only=True)
   credit_card_number = fields.Str(required=True)
   name_on_card = fields.Str()
   expiration_date = fields.Str()
@@ -34,4 +37,4 @@ class CreditCardInfoSchema(Schema):
   state = fields.Str()
   save_my_card = fields.Boolean()
 
-credit_card_info_schema = CreditCardInfoSchema()
+# credit_card_info_schema = CreditCardInfoSchema()

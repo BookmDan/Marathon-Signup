@@ -28,16 +28,20 @@ class RaceSignupsResource(Resource):
     resp = race_signup_schema.dump(new_signup)
     return make_response(resp, 201)
   
-  def get_by_id(self, signup_id):
-    signup = RaceSignup.query.get(signup_id)
+api.add_resource(RaceSignupsResource, '/raceSignups')
+
+class RaceSignupsById(Resource):
+  def get(self, id):
+    signup = RaceSignup.query.filter_by(id=id).first()
 
     if signup:
         resp = race_signup_schema.dump(signup)
         status_code = 200
     else:
-        resp = {"message": f"RaceSignup with ID {signup_id} was not found."}
+        resp = {"message": f"RaceSignup with ID {id} was not found."}
         status_code = 404
 
     return make_response(resp, status_code)
-  
-api.add_resource(RaceSignupsResource, '/raceSignups', '/raceSignups/<int:signup_id>')
+
+# Adding the resource to your API
+api.add_resource(RaceSignupsById, '/raceSignups/<int:id>')

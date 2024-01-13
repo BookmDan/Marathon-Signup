@@ -33,16 +33,32 @@ class CreditCardsResource(Resource):
     resp = credit_card_info_schema.dump(new_credit_card)
     return make_response(resp, 201)
 
-  def get_by_ccid(self, ccid):
-    credit_card = CreditCardInfo.query.get(ccid)
+  # def get_by_ccid(self, ccid):
+  #   credit_card = CreditCardInfo.query.get(ccid)
+
+  #   if credit_card:
+  #       resp = credit_card_info_schema.dump(credit_card)
+  #       status_code = 200
+  #   else:
+  #       resp = {"message": f"Credit card with number {ccid} was not found."}
+  #       status_code = 404
+
+  #   return make_response(resp, status_code)
+
+api.add_resource(CreditCardsResource, '/creditcards')
+
+class CreditCardsById(Resource):
+  def get(self, id):
+    credit_card = CreditCardInfo.query.filter_by(id=id).first()
 
     if credit_card:
         resp = credit_card_info_schema.dump(credit_card)
         status_code = 200
     else:
-        resp = {"message": f"Credit card with number {ccid} was not found."}
+        resp = {"message": f"Credit card with number {id} was not found."}
         status_code = 404
 
     return make_response(resp, status_code)
 
-api.add_resource(CreditCardsResource, '/creditcards',  '/creditcards/<string:credit_card_number>')
+# Adding the resource to your API
+api.add_resource(CreditCardsById, '/creditcards/<int:id>')

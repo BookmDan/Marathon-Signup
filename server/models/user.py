@@ -25,4 +25,4 @@ class UserSchema(Schema):
   phone_number = fields.Str()
   password = fields.Str(load_only=True)
   
-user_schema = UserSchema()
+# user_schema = UserSchema()
