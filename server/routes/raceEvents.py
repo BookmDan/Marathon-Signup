@@ -2,21 +2,31 @@ from config import api, db
 from flask import make_response, request
 from flask_restful import Resource
 from models.models import RaceEvent
+from marshmallow import Schema, fields
 
+class RaceEventSchema(Schema):
+    id = fields.Int()
+    name = fields.Str()
+
+race_event_schema = RaceEventSchema()
+
+# In your RaceEventsResource class
 class RaceEventsResource(Resource):
   def get(self):
     events = RaceEvent.query.all()
-    resp = [event.to_dict() for event in events]
+    schema = RaceEventSchema(many=True)
+    resp = schema.dump(events)
     return make_response(resp, 200)
   
   def post(self):
     form_data = request.get_json()
-    new_event = RaceEvent(name = form_data.get('race_name'))
+    new_event = RaceEvent(name=form_data.get('organization'))
 
     db.session.add(new_event)
     db.session.commit()
 
-    return make_response(new_event.to_dict(), 201)
+    resp = race_event_schema.dump(new_event)
+    return make_response(resp, 201)
 
 api.add_resource(RaceEventsResource, '/raceEvents')
 
@@ -25,7 +35,7 @@ class RaceEventsById(Resource):
     event = RaceEvent.query.filter_by(id=id).first()
 
     if event:
-      resp = event.to_dict()
+      resp = race_event_schema.dump(event)
       status_code = 200
     else:
       resp = { "message": f"Event {id} was not found."}
@@ -33,5 +43,5 @@ class RaceEventsById(Resource):
 
     return make_response(resp, status_code)
   
-api.add_resource(RaceEventsById, '/raceEvents<int:id>')
+api.add_resource(RaceEventsById, '/raceEvents/<int:id>')
 
