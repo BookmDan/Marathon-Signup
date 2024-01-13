@@ -1,5 +1,5 @@
 # from .pet import Pet
-from .user import User
-from .raceSignup import RaceSignup
-from .raceEvent import RaceEvent
-from .creditCardInfo import CreditCardInfo
+from .user import *
+from .raceSignup import *
+from .raceEvent import *
+from .creditCardInfo import *

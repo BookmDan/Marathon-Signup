@@ -33,14 +33,14 @@ class CreditCardsResource(Resource):
     resp = credit_card_info_schema.dump(new_credit_card)
     return make_response(resp, 201)
 
-  def get_by_card_number(self, credit_card_number):
-    credit_card = CreditCardInfo.query.get(credit_card_number)
+  def get_by_ccid(self, ccid):
+    credit_card = CreditCardInfo.query.get(ccid)
 
     if credit_card:
         resp = credit_card_info_schema.dump(credit_card)
         status_code = 200
     else:
-        resp = {"message": f"Credit card with number {credit_card_number} was not found."}
+        resp = {"message": f"Credit card with number {ccid} was not found."}
         status_code = 404
 
     return make_response(resp, status_code)
