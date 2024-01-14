@@ -74,7 +74,7 @@ class UsersById(Resource):
       db.session.delete(user)
       db.session.commit()
       resp_body = {
-          "message": f"User {user.username} successfully deleted",
+          "message": f"User {user.name} successfully deleted",
           "id": id
       }
       return make_response(resp_body, 200)

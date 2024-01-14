@@ -7,7 +7,7 @@ credit_card_info_schema = CreditCardInfoSchema()
 
 class CreditCardsResource(Resource):
   def get(self):
-    credit_cards = CreditCardInfo.query.all()
+    credit_cards = CreditCardInfo.query.get(id)
     schema = CreditCardInfoSchema(many=True)
     resp = schema.dump(credit_cards)
     return make_response(resp, 200)
@@ -80,7 +80,7 @@ class CreditCardsById(Resource):
       db.session.delete(credit_card)
       db.session.commit()
       resp_body = {
-          "message": f"Credit Card {credit_card.card_number} successfully deleted",
+          "message": f"Credit Card {credit_card.credit_card_number} successfully deleted",
           "id": id
       }
       return make_response(resp_body, 200)

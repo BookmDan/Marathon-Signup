@@ -71,7 +71,7 @@ class RaceEventsById(Resource):
       db.session.delete(event)
       db.session.commit()
       resp_body = {
-        "message": f"Event {event.name} successfully deleted",
+        "message": f"Event {event.race_name} successfully deleted",
         "id": id
       }
       return make_response(resp_body,200)
