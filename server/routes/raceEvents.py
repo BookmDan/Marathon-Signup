@@ -51,5 +51,32 @@ class RaceEventsById(Resource):
 
     return make_response(resp, status_code)
   
+  def patch(self,id):
+    event = RaceEvent.query.filter_by(id=id).first()
+    if event:
+      form_data = request.get_json()
+      for attr in form_data:
+        setattr(event, attr, form_data.get(attr))
+
+      db.session.add(event)
+      db.session.commit()
+
+      return make_response(event.to_dict(), 200)
+    else:
+      return make_response({"message": f"Event {id} not found"})
+  
+  def delete(self,id):
+    event = RaceEvent.query.filter_by(id=id).first()  
+    if event:
+      db.session.delete(event)
+      db.session.commit()
+      resp_body = {
+        "message": f"Event {event.name} successfully deleted",
+        "id": id
+      }
+      return make_response(resp_body,200)
+    else:
+      return make_response({"message": f"Event {id} not found"})
+
 api.add_resource(RaceEventsById, '/raceEvents/<int:id>')
 

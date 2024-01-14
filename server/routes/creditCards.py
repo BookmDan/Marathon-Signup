@@ -52,13 +52,40 @@ class CreditCardsById(Resource):
     credit_card = CreditCardInfo.query.filter_by(id=id).first()
 
     if credit_card:
-        resp = credit_card_info_schema.dump(credit_card)
-        status_code = 200
+      resp = credit_card_info_schema.dump(credit_card)
+      status_code = 200
     else:
-        resp = {"message": f"Credit card with number {id} was not found."}
-        status_code = 404
+      resp = {"message": f"Credit card with number {id} was not found."}
+      status_code = 404
 
     return make_response(resp, status_code)
+  
+  def patch(self, id):
+    credit_card = CreditCard.query.filter_by(id=id).first()
+    if credit_card:
+      form_data = request.get_json()
+      for attr in form_data:
+          setattr(credit_card, attr, form_data.get(attr))
+
+      db.session.add(credit_card)
+      db.session.commit()
+
+      return make_response(credit_card.to_dict(), 200)
+    else:
+      return make_response({"message": f"Credit Card {id} not found"})
+
+  def delete(self, id):
+    credit_card = CreditCard.query.filter_by(id=id).first()
+    if credit_card:
+      db.session.delete(credit_card)
+      db.session.commit()
+      resp_body = {
+          "message": f"Credit Card {credit_card.card_number} successfully deleted",
+          "id": id
+      }
+      return make_response(resp_body, 200)
+    else:
+      return make_response({"message": f"Credit Card {id} not found"})
 
 # Adding the resource to your API
 api.add_resource(CreditCardsById, '/creditcards/<int:id>')

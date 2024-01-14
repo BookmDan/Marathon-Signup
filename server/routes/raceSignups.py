@@ -43,5 +43,31 @@ class RaceSignupsById(Resource):
 
     return make_response(resp, status_code)
 
+  def patch(self, id):
+    signup = RaceSignup.query.filter_by(id=id).first()
+    if signup:
+      form_data = request.get_json()
+      for attr in form_data:
+        setattr(signup, attr, form_data.get(attr))
+
+      db.session.add(signup)
+      db.session.commit()
+
+      return make_response(signup.to_dict(), 200)
+    else:
+      return make_response({"message": f"Signup {id} not found"})
+
+  def delete(self, id):
+    signup = RaceSignup.query.filter_by(id=id).first()
+    if signup:
+      db.session.delete(signup)
+      db.session.commit()
+      resp_body = {
+          "message": f"Signup {signup.id} successfully deleted",
+          "id": id
+      }
+      return make_response(resp_body, 200)
+    else:
+      return make_response({"message": f"Signup {id} not found"})
 # Adding the resource to your API
 api.add_resource(RaceSignupsById, '/raceSignups/<int:id>')
