@@ -4,9 +4,10 @@ from marshmallow import Schema, fields
 
 class User(db.Model, SerializerMixin):
   __tablename__ = "user"
-
   id = db.Column(db.Integer, primary_key=True)
   name = db.Column(db.String, nullable=False)
+  # first_name = db.Column(db.String, nullable=False)
+  # last_name = db.Column(db.String, nullable=False)
   email = db.Column(db.String, unique=True, nullable=False)
   phone_number = db.Column(db.String)
   password = db.Column(db.String)
@@ -20,7 +21,8 @@ class User(db.Model, SerializerMixin):
   
 class UserSchema(Schema):
   id = fields.Int()
-  name = fields.Str(required=True)
+  first_name = fields.Str(required=True)
+  last_name = fields.Str(required=True)
   email = fields.Email(required=True)
   phone_number = fields.Str()
   password = fields.Str(load_only=True)

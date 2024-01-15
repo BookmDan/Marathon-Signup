@@ -1,19 +1,3 @@
-# from config import app, db
-# from models.models import Pet
-
-# if __name__ == "__main__":
-#   with app.app_context():
-#     Pet.query.delete()
-
-#     db.session.commit()
-
-#     pet_1 = Pet(name="Bob")
-#     pet_2 = Pet(name="Not Bob")
-#     pet_3 = Pet(name="Garfield")
-
-#     db.session.add_all([pet_1, pet_2, pet_3])
-#     db.session.commit()
-
 from config import app, db
 from models.models import User, RaceSignup, RaceEvent, CreditCardInfo
 
@@ -29,6 +13,9 @@ if __name__ == "__main__":
         # Create users
         user1 = User(name="John Doe", email="john@example.com", phone_number="1234567890", password="12345")
         user2 = User(name="Jane Doe", email="jane@example.com", phone_number="9876543210", password="23456")
+
+        # user1 = User(first_name="John", last_name="Doe", email="john@example.com", phone_number="1234567890", password="12345")
+        # user2 = User(first_name="Jane", last_name="Doe", email="jane@example.com", phone_number="9876543210", password="23456")
         db.session.add_all([user1, user2])
         db.session.commit()
 
