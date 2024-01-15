@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 // import Home from './Home'; // Import your Home component
 // import Posts from './Posts'; // Import your Posts component
 // import Favorites from './Favorites'; // Import your Favorites component
-import NewUser from './NewUser'; // Import your NewUser component
+import NewUser from './components/NewUser'; // Import your NewUser component
 
 const Navigation = () => (
   <nav>
@@ -30,7 +30,7 @@ const App = () => (
     {/* <Route path="/" exact component={Home} />
     <Route path="/posts" component={Posts} />
     <Route path="/favorites" component={Favorites} /> */}
-    <Route path="/register" component={NewUser} /> {/* Add a route for the registration page */}
+    <Route path="/register" component={NewUser} /> 
   </Router>
 );
 
