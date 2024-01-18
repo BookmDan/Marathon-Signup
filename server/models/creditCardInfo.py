@@ -25,7 +25,7 @@ class CreditCardInfo(db.Model, SerializerMixin):
     # return f'<CreditCardInfo creditCardNumber={self.creditCardNumber} user_id={self.user_id}>'
   
 class CreditCardInfoSchema(Schema):
-  id = fields.Int(dump_only=True)
+  id = fields.Int(dump_only=True, primary_key=True)
   credit_card_number = fields.Str(required=True)
   name_on_card = fields.Str()
   expiration_date = fields.Str()

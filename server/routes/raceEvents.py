@@ -3,19 +3,6 @@ from flask import make_response, request
 from flask_restful import Resource
 from models.models import RaceEvent, RaceEventSchema
 
-# @app.route('/raceEvents', methods=['GET','PATCH'])
-# def raceEvents():
-#   if request.method == 'GET':
-#     raceEvents = RaceEvent.query.all()
-#     response_body = [event.to_dict() for event in raceEvents]
-#     return make_response(response_body, 200)
-  
-#   elif request.method == 'PATCH':
-#     form_data = request.get_json()
-#     print(request)
-#     print(form_data)
-#     for attr in form_data: 
-#       print(attr)
 schema_instance = RaceEventSchema()
 
 class RaceEventsResource(Resource):
@@ -27,7 +14,7 @@ class RaceEventsResource(Resource):
   
   def post(self):
     form_data = request.get_json()
-    new_event = RaceEvent(name=form_data.get('organization'))
+    new_event = RaceEvent(organization=form_data.get('organization'), race_name=form_data.get('race_name'), race_type=form_data.get('race_type'))
 
     db.session.add(new_event)
     db.session.commit()
