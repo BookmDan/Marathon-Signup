@@ -21,12 +21,13 @@ def handle_not_found(e):
   )
   return response
    
-api.add_resource(UsersById, '/users/<int:id>')
-api.add_resource(Signup, '/signup') # is this correct
-api.add_resource(CreditCardsById, '/creditcards/<int:id>')
-api.add_resource(RaceEventsById, '/raceEvents/<int:id>')
-api.add_resource(RaceSignupsById, '/raceSignups/<int:id>')
-api.add_resource(UsersById, '/users/<int:id>')
+# api.add_resource(UsersById, '/users/<int:id>')
+# api.add_resource(Signup, '/signup') # is this correct
+# api.add_resource(Login, '/login') 
+# api.add_resource(Logout, '/logout') 
+# api.add_resource(CreditCardsById, '/creditcards/<int:id>')
+# api.add_resource(RaceEventsById, '/raceEvents/<int:id>')
+# api.add_resource(RaceSignupsById, '/raceSignups/<int:id>')
 
 if __name__ == "__main__":
   app.run(port=5555, debug=True)

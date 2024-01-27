@@ -70,3 +70,5 @@ class UsersById(Resource):
       return make_response(resp_body, 200)
     else:
       return make_response({"message": f"User {id} not found"})
+# Adding the resource to your API
+api.add_resource(UsersById, '/users/<int:id>')

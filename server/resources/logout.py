@@ -6,7 +6,6 @@ from models.user import User
 class Logout(Resource):
   def delete(self):
     user = User.query.filter_by(id = session.get('user_id')).first()
-
     if user:
       session['user_id'] = None
       return {}, 200
