@@ -1,5 +1,5 @@
 from config import app
-from routes.routes import *
+from resources.routes import *
 from models.models import *
 
 if __name__ == "__main__":
