@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import styled from 'styled-components';
+import { useHistory } from "react-router-dom";
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 
@@ -9,6 +10,7 @@ const Form = styled.form`
 
 function Authentication({ updateUser }) {
   const [signUp, setSignUp] = useState(false);
+  const history = useHistory()
 
   const handleClick = () => setSignUp((signUp) => !signUp);
   

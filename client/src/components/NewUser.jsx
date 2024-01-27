@@ -21,7 +21,7 @@ function NewUser() {
     }),
 
     onSubmit: (values, { setSubmitting, resetForm }) => {
-      fetch('/api/users', {
+      fetch('/users', {
         method: 'POST',
         headers: {
           'Content-type': 'application/json',

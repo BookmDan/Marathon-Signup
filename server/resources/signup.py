@@ -10,12 +10,17 @@ class Signup(Resource):
     json = request.get_json()
 
     try:
-      user = User(username=json.get('username'), address=json.get('address'))
-      user.password_hash = json.get('password')
+      user = User(
+        name=json.get('name'),
+        email=json.get('email'),
+        phone_number=json.get('phone_number'),
+        password=json.get('password')
+      ) 
       db.session.add(user)
       db.session.commit()
 
       session['user_id'] = user.id
+      import ipdb; ipdb.set_trace()
 
       return user.to_dict(), 201
     

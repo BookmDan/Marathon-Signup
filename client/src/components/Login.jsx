@@ -8,9 +8,6 @@ function Login({ onLogin }) {
   const [signupMode, setSignupMode] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
 
-
-
-
   return (
     <div>
       {isLoading? <LoginLoading />: ""}

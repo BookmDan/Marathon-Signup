@@ -46,7 +46,7 @@ function SignupForm({ signupMode, setSignupMode, onLogin, setIsLoading }) {
       setErrors([])
       if (formik.values.password === formik.values.confirmPassword){
       
-        fetch('/api/signup', {
+        fetch('/signup', {
           method: "POST",
           headers: {
               "Content-Type": "application/json",

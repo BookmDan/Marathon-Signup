@@ -29,7 +29,7 @@ function LoginForm({ onLogin, setSignupMode, signupMode, setIsLoading }) {
         onSubmit: (values) => {
             setIsLoading(true)
             setErrors([])
-            fetch("/api/login", {
+            fetch("/login", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
