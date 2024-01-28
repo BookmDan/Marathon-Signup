@@ -1,44 +1,27 @@
-import { useContext, useEffect, useState } from "react";
-import { UserContext } from "./App";
+import React from "react";
+import RaceEventCard from "./RaceEventCard";
+import SplashBanner from "./SplashBanner";
+import PhotoGallery from "./PhotoGallery";
+import SocialMediaIcons from "./SocialMediaIcons";
 
 function Home() {
-  const [userData, setUserData] = useState(null);
-  const [user] = useContext(UserContext);
-
-  useEffect(() => {
-    if (user) {
-      fetch("/users") // Adjust the endpoint as needed
-        .then((response) => {
-          if (response.ok) {
-            return response.json();
-          } else {
-            throw new Error("Error fetching user data");
-          }
-        })
-        .then((data) => setUserData(data))
-        .catch((error) => {
-          // Handle errors, e.g., redirect to login page
-          console.error("Error fetching user data:", error);
-        });
-    }
-  }, [user]);
+  const raceEvents = [
+    { id: 1, name: "5K Race", description: "Description of the 5K race event." },
+    { id: 2, name: "10K Race", description: "Description of the 10K race event." },
+    { id: 3, name: "Half Marathon", description: "Description of the half marathon race event." },
+    { id: 4, name: "Full Marathon", description: "Description of the full marathon race event." },
+  ];
 
   return (
     <div>
-      <h1>Welcome to the Home Page</h1>
-      {user && (
-        <div>
-          <p>Hello, {user.username}!</p>
-          {/* Display user-specific data here */}
-          {userData && (
-            <div>
-              <h2>User Data</h2>
-              {/* Display user data */}
-              {/* Example: <p>Email: {userData.email}</p> */}
-            </div>
-          )}
-        </div>
-      )}
+      <SplashBanner />
+      <PhotoGallery />
+      <SocialMediaIcons />
+      <div className="race-event-cards">
+        {raceEvents.map((raceEvent) => (
+          <RaceEventCard key={raceEvent.id} raceEvent={raceEvent} />
+        ))}
+      </div>
     </div>
   );
 }

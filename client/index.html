@@ -1,19 +1,76 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite + React</title>
+    <title>Your Race Website</title>
     <link
       rel="stylesheet"
       href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
       integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
       crossorigin="anonymous"
     />
+    <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
+    <!-- Splash Banner -->
+    <div class="splash-banner">
+        <!-- You can add your banner photo here -->
+        <img src="./assets/photos/kristian-running.jpg" alt="Splash Banner">
+    </div>
+
     <div id="root"></div>
+    <!-- Photo Gallery -->
+    <div class="photo-gallery">
+        <!-- Your gallery photos go here -->
+        <img src="gallery-photo1.jpg" alt="Gallery Photo 1">
+        <img src="gallery-photo2.jpg" alt="Gallery Photo 2">
+        <!-- Add more photos as needed -->
+    </div>
+
+    <!-- Social Media Icons -->
+    <div class="social-media-icons">
+        <!-- Your social media icons go here -->
+        <a href="#" target="_blank"><img src="facebook-icon.png" alt="Facebook"></a>
+        <a href="#" target="_blank"><img src="twitter-icon.png" alt="Twitter"></a>
+        <!-- Add more social media icons as needed -->
+    </div>
+
+    <!-- Race Event Cards -->
+    <div class="race-event-cards">
+        <!-- 5K Race Card -->
+        <div class="race-card">
+            <h3>5K Race</h3>
+            <p>Description of the 5K race event.</p>
+            <button class="sign-up-button">Sign Up</button>
+        </div>
+
+        <!-- 10K Race Card -->
+        <div class="race-card">
+            <h3>10K Race</h3>
+            <p>Description of the 10K race event.</p>
+            <button class="sign-up-button">Sign Up</button>
+        </div>
+
+        <!-- Half Marathon Race Card -->
+        <div class="race-card">
+            <h3>Half Marathon</h3>
+            <p>Description of the half marathon race event.</p>
+            <button class="sign-up-button">Sign Up</button>
+        </div>
+
+        <!-- Full Marathon Race Card -->
+        <div class="race-card">
+            <h3>Full Marathon</h3>
+            <p>Description of the full marathon race event.</p>
+            <button class="sign-up-button">Sign Up</button>
+        </div>
+    </div>
+
+    <!-- Donate Button -->
+    <button class="donate-button">Donate</button>
+
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>
