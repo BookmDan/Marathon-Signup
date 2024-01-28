@@ -1,28 +1,35 @@
-import React from "react";
-import RaceEventCard from "./RaceEventCard";
-import SplashBanner from "./SplashBanner";
-import PhotoGallery from "./PhotoGallery";
-import SocialMediaIcons from "./SocialMediaIcons";
+import React, { useState, useEffect } from "react";
+import RaceEventCard from "./cards-boxes-search/RaceEventCard"; // Import your RaceEventCard component
+import { Container, Row, Col } from "react-bootstrap";
 
 function Home() {
-  const raceEvents = [
-    { id: 1, name: "5K Race", description: "Description of the 5K race event." },
-    { id: 2, name: "10K Race", description: "Description of the 10K race event." },
-    { id: 3, name: "Half Marathon", description: "Description of the half marathon race event." },
-    { id: 4, name: "Full Marathon", description: "Description of the full marathon race event." },
-  ];
+  const [raceEvents, setRaceEvents] = useState([]);
+
+  useEffect(() => {
+    fetch("/raceEvents") // Update the endpoint as needed
+      .then((response) => response.json())
+      .then((data) => setRaceEvents(data))
+      .catch((error) => console.error("Error fetching race events:", error));
+  }, []);
 
   return (
-    <div>
-      <SplashBanner />
-      <PhotoGallery />
-      <SocialMediaIcons />
+    <Container>
+      <h1>Welcome to the Home Page</h1>
+      <img
+        src={('../assets/photos/kristian-running.jpg').default}
+        alt="Splash Banner"
+        style={{ width: '100%', height: 'auto' }}
+      />
       <div className="race-event-cards">
-        {raceEvents.map((raceEvent) => (
-          <RaceEventCard key={raceEvent.id} raceEvent={raceEvent} />
-        ))}
+        <Row>
+          {raceEvents.map((raceEvent) => (
+            <Col key={raceEvent.id}>
+              <RaceEventCard raceEvent={raceEvent} />
+            </Col>
+          ))}
+        </Row>
       </div>
-    </div>
+    </Container>
   );
 }
 
