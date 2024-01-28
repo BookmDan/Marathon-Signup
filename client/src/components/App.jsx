@@ -1,7 +1,7 @@
 import { useState, createContext } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Home from "./Home";
-import AppNavbar from "./AppNavbar"; // Import the AppNavbar component
+import Header from "./Header";
 
 export const UserContext = createContext(null);
 
@@ -12,9 +12,12 @@ function App() {
     <Router>
       <div>
         <UserContext.Provider value={[user, setUser]}>
-          <AppNavbar />
+          <Header />
           <Switch>
             <Route exact path="/">
+              <Home />
+            </Route>
+            <Route exact path="/Register">
               <Home />
             </Route>
           </Switch>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import RaceEventCard from "./cards-boxes-search/RaceEventCard"; // Import your RaceEventCard component
 import { Container, Row, Col } from "react-bootstrap";
 
