@@ -9,7 +9,7 @@ function NewUser() {
       last_name: '',
       email: '',
       password: '',
-      phonenumber: '',
+      phonenumber: '', 
     }, 
 
     validationSchema: Yup.object({
