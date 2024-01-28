@@ -1,46 +1,54 @@
-// import React from 'react';
 import { useEffect, useState, createContext } from "react";
 import { Switch, Route } from "react-router-dom";
-// import "bootswatch/dist/flatly/bootstrap.min.css";
-
 import Home from "./Home";
 import Header from "./Header";
 import Login from "./Login";
 
-export const UserContext = createContext(null)
+export const UserContext = createContext(null);
 
 function App() {
-  const [user, setUser] = useState(null)
+  const [user, setUser] = useState(null);
+
   useEffect(() => {
-    fetch("/check_session")
-    .then(r => {
-      if (r.ok) {
-        r.json().then(user => setUser(user))
+    fetch("/api/check_session") // Adjust the endpoint as needed
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        } else {
+          throw new Error("User not authenticated");
+        }
+      })
+      .then((user) => setUser(user))
+      .catch((error) => {
+        // Handle errors, e.g., redirect to login page
+        console.error("Error checking session:", error);
+      });
+  }, []);
 
-      }
-    });
-  }, [])
-
-  if (!user) return (
-    <div>
-      <UserContext.Provider value={[user, setUser]}>
-        <Header/>
-        <Login onLogin={setUser}/>
-      </UserContext.Provider>
-    </div>
-  )
+  if (!user) {
+    return (
+      <div>
+        <UserContext.Provider value={[user, setUser]}>
+          <Header />
+          <Login onLogin={setUser} />
+        </UserContext.Provider>
+      </div>
+    );
+  }
 
   return (
     <div>
-    <UserContext.Provider value={[user, setUser]}>
-      <Header />
-      <Switch>
-        <Route exact path="/">
-          <Home/>
-        </Route>
-      </Switch>
-    </UserContext.Provider>
+      <UserContext.Provider value={[user, setUser]}>
+        <Header />
+        <Switch>
+          <Route exact path="/">
+            <Home />
+          </Route>
+          {/* Add other routes as needed */}
+        </Switch>
+      </UserContext.Provider>
     </div>
-  )
+  );
 }
+
 export default App;

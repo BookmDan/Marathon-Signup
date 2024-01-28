@@ -14,10 +14,9 @@ class User(db.Model, SerializerMixin):
   
   race_signups = db.relationship('RaceSignup', back_populates='user', uselist=False)
   credit_card_info = db.relationship('CreditCardInfo', back_populates='user') 
-  race_events = db.relationship('RaceEvent', back_populates='user') 
 
   def __repr__(self):
-    return f'<User id={self.id} name={self.name} email={self.email}>'
+    return f'<User id={self.id} first_name={self.first_name} last_name={self.last_name} email={self.email}>'
   
 class UserSchema(Schema):
   id = fields.Int()
