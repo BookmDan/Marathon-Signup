@@ -14,8 +14,9 @@ class Signup(Resource):
         name=json.get('name'),
         email=json.get('email'),
         phone_number=json.get('phone_number'),
-        password=json.get('password')
+        # password=json.get('password')
       ) 
+      #hashes password and saves it to _password_hash
       user.password_hash = json['password']
       db.session.add(user)
       db.session.commit()
