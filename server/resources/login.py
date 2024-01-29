@@ -16,6 +16,7 @@ class Login(Resource):
       if user and user.authenticate(password):
           #session set at login and signup
           session['user_id'] = user.id
+          return user.to_dict(), 200
           response_body = user.to_dict(rules=('-_password_hash',))
           return response_body, 200
     except:

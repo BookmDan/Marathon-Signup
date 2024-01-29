@@ -15,7 +15,6 @@ class Signup(Resource):
         last_name=json.get('last_name'),
         email=json.get('email'),
         phone_number=json.get('phone_number'),
-        # password=json.get('password')
       ) 
       #hashes password and saves it to _password_hash
       user.password_hash = json['password']
@@ -23,7 +22,6 @@ class Signup(Resource):
       db.session.commit()
 
       session['user_id'] = user.id
-      # import ipdb; ipdb.set_trace()
 
       return user.to_dict(), 201
     
