@@ -6,8 +6,9 @@ from models.user import User
 
 class Login(Resource):
   def post(self):
-    username = request.get_json()['email']
-    password = request.get_json()['password']
+    data = request.get_json()
+    username = data.get("email")
+    password = data.get("password")
 
     try:
       user = User.query.filter_by(email=username).first()
@@ -18,7 +19,7 @@ class Login(Resource):
           response_body = user.to_dict(rules=('-_password_hash',))
           return response_body, 200
     except:
-      abort(401, "Invalid username and/or password")
+      abort(422, "Username or Password didn't match.")
       
   # def get(self):
   #   return ({"message": "hi"}, 200)
