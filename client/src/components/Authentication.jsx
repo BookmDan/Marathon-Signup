@@ -10,7 +10,7 @@ const Form = styled.form`
 
 function Authentication({ updateUser }) {
   const [signUp, setSignUp] = useState(false);
-  const history = useHistory()
+  const history = useHistory();
 
   const handleClick = () => setSignUp((signUp) => !signUp);
   
@@ -25,20 +25,24 @@ function Authentication({ updateUser }) {
     }),
     onSubmit: (values) => {
       // Handle form submission here
-      fetch(signUp ? '/users' : 'login', {
+      fetch(signUp ? '/signup' : '/login', {
         method: "POST",
         headers: {
-          "Content-Type":"application/json"
+          "Content-Type": "application/json"
         },
-        body: JSON.stringify(values)
+        body: JSON.stringify(values, null, 2),
       })
-        .then(res => res.json())
-        .then(user => {
-          updateUser(user)
-          history.push('/')
-      })
-      // console.log(values);
-    },
+      .then(res => {
+        if (res.ok) {
+          res.json().then(user => {
+            updateUser(user);
+            history.push('/');
+          });
+        } else {
+          res.json().then(console.log);
+        }
+      });
+    }
   });
 
   return (
