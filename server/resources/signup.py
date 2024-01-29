@@ -11,7 +11,8 @@ class Signup(Resource):
 
     try:
       user = User(
-        name=json.get('name'),
+        first_name=json.get('first_name'),
+        last_name=json.get('last_name'),
         email=json.get('email'),
         phone_number=json.get('phone_number'),
         # password=json.get('password')

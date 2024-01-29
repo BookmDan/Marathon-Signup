@@ -2,21 +2,17 @@ from sqlalchemy_serializer import SerializerMixin
 from sqlalchemy.ext.hybrid import hybrid_property
 from marshmallow import Schema, fields
 
-import requests
-import os
-from dotenv import load_dotenv
+# from dotenv import load_dotenv
 
 from config import db, bcrypt
 
 class User(db.Model, SerializerMixin):
   __tablename__ = "user"
   id = db.Column(db.Integer, primary_key=True)
-  # name = db.Column(db.String, nullable=False)
   first_name = db.Column(db.String, nullable=False)
   last_name = db.Column(db.String, nullable=False)
   email = db.Column(db.String, unique=True, nullable=False)
   phone_number = db.Column(db.String)
-  # password = db.Column(db.String)
   _password_hash = db.Column(db.String)
   admin = db.Column(db.String, default = False)
 
@@ -49,6 +45,6 @@ class UserSchema(Schema):
   last_name = fields.Str(required=True)
   email = fields.Email(required=True)
   phone_number = fields.Str()
-  password = fields.Str(load_only=True)
+  password = db.Column(db.String)
   
 # user_schema = UserSchema()
