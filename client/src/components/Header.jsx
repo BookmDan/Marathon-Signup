@@ -2,11 +2,15 @@ import  { useContext } from 'react';
 import { Navbar, Nav, NavDropdown, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { UserContext } from "./App";
+import { useHistory } from "react-router-dom";
 
-function Header() {
+function Header({ updateUser }) {
+  const history = useHistory()
   const handleLogoutClick = () => {
-    fetch("/api/logout", { method: "DELETE" }).then((r) => {
+    fetch("/logout", { method: "DELETE" }).then((r) => {
       if (r.ok) {
+        updateUser(null)
+        history.push('/authentication')
         setUser(null);
       }
     });
