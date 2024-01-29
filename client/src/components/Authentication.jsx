@@ -30,7 +30,7 @@ function Authentication({ updateUser }) {
         headers: {
           "Content-Type": "application/json"
         },
-        body: JSON.stringify(values, null, 2),
+        body: JSON.stringify(values),
       })
       .then(res => {
         if (res.ok) {
