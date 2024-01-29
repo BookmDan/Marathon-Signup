@@ -13,6 +13,7 @@ class Login(Resource):
       user = User.query.filter_by(email=username).first()
 
       if user and user.authenticate(password):
+          #session set at login and signup
           session['user_id'] = user.id
           response_body = user.to_dict(rules=('-_password_hash',))
           return response_body, 200
