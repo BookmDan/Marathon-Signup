@@ -4,7 +4,8 @@ import { createRoot } from "react-dom";
 import "./index.css";
 import App from "./components/App";
 
-const root = createRoot(document.getElementById("root"));
+const container = document.getElementById("root");
+const root = createRoot(container);
 
 root.render(
   <BrowserRouter>
