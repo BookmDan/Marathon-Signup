@@ -1,6 +1,12 @@
-from config import db,bcrypt
-from sqlalchemy_serializer import SerializerMixin, hybrid_property
+from sqlalchemy_serializer import SerializerMixin
+from sqlalchemy.ext.hybrid import hybrid_property
 from marshmallow import Schema, fields
+
+import requests
+import os
+from dotenv import load_dotenv
+
+from config import db, bcrypt
 
 class User(db.Model, SerializerMixin):
   __tablename__ = "user"
@@ -29,6 +35,8 @@ class User(db.Model, SerializerMixin):
   
   race_signups = db.relationship('RaceSignup', back_populates='user', uselist=False)
   credit_card_info = db.relationship('CreditCardInfo', back_populates='user') 
+
+  serialize_rules = ('-_password_hash')
 
   def __repr__(self):
     return f'<User id={self.id} first_name={self.first_name} last_name={self.last_name} email={self.email}>'

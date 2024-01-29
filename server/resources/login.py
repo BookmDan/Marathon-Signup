@@ -1,4 +1,4 @@
-from flask import session, request
+from flask import abort, session, request
 from flask_restful import Resource
 from config import api, db
 
@@ -6,17 +6,18 @@ from models.user import User
 
 class Login(Resource):
   def post(self):
-    username = request.get_json()['username']
+    username = request.get_json()['email']
     password = request.get_json()['password']
 
-    user = User.query.filter_by(username=username).first()
+    try:
+      user = User.query.filter_by(email=username).first()
 
-    if user and user.authenticate(password):
-        session['user_id'] = user.id
-        response_body = user.to_dict(rules=('-_password_hash',))
-        return response_body, 200
-    else:
-        return {"errors": ["Invalid username and/or password"]}, 401
-  
-  def get(self):
-    return ({"message": "hi"}, 200)
+      if user and user.authenticate(password):
+          session['user_id'] = user.id
+          response_body = user.to_dict(rules=('-_password_hash',))
+          return response_body, 200
+    except:
+      abort(401, "Invalid username and/or password")
+      
+  # def get(self):
+  #   return ({"message": "hi"}, 200)
