@@ -1,8 +1,8 @@
-import { useState, useEffect, createContext } from "react";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Home from "./Home";
 import Header from "./Header";
-import Navigation from "./Navigation"
+// import Navigation from "./Navigation"
 import Authentication from "./Authentication"
 import RaceInfo from './RaceInfo';
 import Results from './Results';
@@ -11,9 +11,10 @@ import Volunteer from './Volunteer';
 import Shop from './Shop';
 import RefundPolicy from './RefundPolicy';
 import Directions from './Directions';
+import SignupForm from "./forms/SignupForm";
 
 
-export const UserContext = createContext(null);
+// export const UserContext = createContext(null);
 
 function App() {
   const [user, setUser] = useState(null);
@@ -38,47 +39,30 @@ function App() {
   const updateUser = (user) => setUser(user)
   if (!user) return (
     <>
-      <Navigation />
+      {/* <Navigation /> */}
       <Authentication udpateUser = {updateUser}/>
     </>
   )
+    // < UserContext.Provider value = { [user, setUser]} >
+  // </UserContext.Provider>
+  // <Navigation onUpdateUser={updateUser} />
   return (
     <>
-    <Navigation onUpdateUser={updateUser} />
+
     <Router>
       <div>
-        <UserContext.Provider value={[user, setUser]}>
         <Header />
-        <Switch>
-          <Route exact path="/">
-            <Home />
-          </Route>
-          <Route exact path="/register">
-            <RaceInfo />
-          </Route>
-          <Route exact path="/race-info">
-            <RaceInfo />
-          </Route>
-          <Route exact path="/results">
-            <Results />
-          </Route>
-          <Route exact path="/photos">
-            <Photos />
-          </Route>
-          <Route exact path="/volunteer">
-            <Volunteer />
-          </Route>
-          <Route exact path="/shop">
-            <Shop />
-          </Route>
-          <Route exact path="/refund-policy">
-            <RefundPolicy />
-          </Route>
-          <Route exact path="/directions">
-            <Directions />
-          </Route>
-        </Switch>
-        </UserContext.Provider>
+        <Routes>
+          <Route path="/" element={<Home/>}/>
+          <Route path ="/register" element={<SignupForm/>}/>
+          <Route  path="/race-info" element={<RaceInfo/>}/>
+          <Route  path="/results" element={<Results/>}/>
+          <Route path="/photos" element={<Photos/>}/>
+          <Route path="/volunteer" element={<Volunteer/>}/>
+          <Route path="/shop" element={<Shop/>}/>
+          <Route path="/refund-policy" element={<RefundPolicy/>}/>
+          <Route path="/directions" element={<Directions/>}/>
+        </Routes>
       </div>
     </Router>
     </>

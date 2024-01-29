@@ -1,22 +1,23 @@
-import  { useContext } from 'react';
+import  { useState } from 'react';
 import { Navbar, Nav, NavDropdown, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import { UserContext } from "./App";
-import { useHistory } from "react-router-dom";
+// import { UserContext } from "./App";
+import { useNavigate } from "react-router-dom";
 
 function Header({ updateUser }) {
-  const history = useHistory()
+  const navigate = useNavigate() 
+  const [user, setUser] = useState()
+
   const handleLogoutClick = () => {
     fetch("/logout", { method: "DELETE" }).then((r) => {
       if (r.ok) {
         updateUser(null)
-        history.push('/authentication')
+        navigate('/authentication')
         setUser(null);
       }
     });
   }
 
-  const [user, setUser] = useContext(UserContext)
   return (
     <Navbar bg="light" expand="lg">
       <Navbar.Brand as={Link} to="/">

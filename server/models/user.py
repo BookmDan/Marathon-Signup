@@ -35,7 +35,7 @@ class User(db.Model, SerializerMixin):
   race_signups = db.relationship('RaceSignup', back_populates='user', uselist=False)
   credit_card_info = db.relationship('CreditCardInfo', back_populates='user') 
 
-  serialize_rules = ('-_password_hash')
+  serialize_rules = ('-_password_hash',)
 
   def __repr__(self):
     return f'<User id={self.id} first_name={self.first_name} last_name={self.last_name} email={self.email}>'

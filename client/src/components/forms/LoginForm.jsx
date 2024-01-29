@@ -2,12 +2,12 @@ import { useState } from "react";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import { Form, Button, Col } from "react-bootstrap";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 function LoginForm({ onLogin, setSignupMode, signupMode }) {
   const [errors, setErrors] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const formSchema = yup.object().shape({
     username: yup
@@ -38,7 +38,7 @@ function LoginForm({ onLogin, setSignupMode, signupMode }) {
         if (r.ok) {
           r.json().then((user) => {
             onLogin(user);
-            history.push('/');
+            navigate('/');
           });
         } else {
           r.json().then((err) => {

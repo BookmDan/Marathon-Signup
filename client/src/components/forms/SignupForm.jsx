@@ -1,12 +1,12 @@
 import { useState, useRef } from "react";
 import { useFormik } from "formik";
 import * as yup from "yup";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Form, Button, Col } from "react-bootstrap";
 
 function SignupForm({ signupMode, setSignupMode, onLogin }) {
   const [errors, setErrors] = useState([]);
-  const history = useHistory();
+  const navigate = useNavigate();
   const addressRef = useRef();
 
   const handleReturnClick = () => {
@@ -40,7 +40,7 @@ function SignupForm({ signupMode, setSignupMode, onLogin }) {
         }).then(r => {
           if (r.ok) {
             r.json().then(user => onLogin(user));
-            history.push('/');
+            navigate('/');
           } else {
             r.json().then(err => setErrors((currentErrors) => [...currentErrors, err.errors]));
           }

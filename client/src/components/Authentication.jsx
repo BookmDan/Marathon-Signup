@@ -1,17 +1,13 @@
 import { useState } from 'react';
-import styled from 'styled-components';
-import { useHistory } from "react-router-dom";
+// import styled from 'styled-components';
+import { useNavigate } from "react-router-dom";
 import { useFormik } from 'formik';
 import * as yup from 'yup';
-
-const Form = styled.form`
-  /* Add your styles for the form here */
-`;
 
 function Authentication({ updateUser }) {
   const [signUp, setSignUp] = useState(false);
   const [error, setError] = useState(false)
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const handleClick = () => setSignUp((signUp) => !signUp);
   
@@ -37,7 +33,7 @@ function Authentication({ updateUser }) {
         if (res.ok) {
           res.json().then(user => {
             updateUser(user);
-            history.push('/');
+            navigate('/');
           });
         } else {
           res.json().then(error => setError(error.message));
@@ -55,7 +51,7 @@ function Authentication({ updateUser }) {
       <button type="button" onClick={handleClick}>
         {signUp ? 'Log In' : 'Sign Up'}
       </button>
-      <Form onSubmit={formik.handleSubmit}>
+      <form onSubmit={formik.handleSubmit}>
         <label>
           Email/ username
           <input
@@ -95,7 +91,7 @@ function Authentication({ updateUser }) {
         )}
 
         <button type="submit">Submit</button>
-      </Form>
+      </form>
     </>
   );
 }

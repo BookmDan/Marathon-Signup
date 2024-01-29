@@ -22,14 +22,6 @@ class Login(Resource):
         print("password login attempt failed.")
     else:
       return {"errors": "Username or Password didn't match."}, 422
-    #   print("User not found.")
-    # abort(422, "Username or Password didn't match.")
-          # response_body = user.to_dict(rules=('-_password_hash',))
-          # print(f"Login successful:")
-          # return response_body, 200
-    # except Exception as e:
-      print(f"An error occurred: {e}")
-      abort(500, "Internal Server Error.")
       
   # def get(self):
   #   return ({"message": "hi"}, 200)
