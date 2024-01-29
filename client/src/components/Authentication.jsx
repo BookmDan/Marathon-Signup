@@ -10,6 +10,7 @@ const Form = styled.form`
 
 function Authentication({ updateUser }) {
   const [signUp, setSignUp] = useState(false);
+  const [error, setError] = useState(false)
   const history = useHistory();
 
   const handleClick = () => setSignUp((signUp) => !signUp);
@@ -39,7 +40,7 @@ function Authentication({ updateUser }) {
             history.push('/');
           });
         } else {
-          res.json().then(console.log);
+          res.json().then(error => setError(error.message));
         }
       });
     }
@@ -47,37 +48,46 @@ function Authentication({ updateUser }) {
 
   return (
     <>
-      <h2 style={{ color: 'red' }}> {'Errors Here!'}</h2>
-      <h2>Please Log in or Sign up!</h2>
+      <h2 style={{ color: 'red' }}> {formik.errors.name}</h2>
+      {error && <h2 style={{ color: 'red' }}>{error}</h2>}
+      <h2>Register </h2>
       <h2>{signUp ? 'Already a member?' : 'Not a member'}</h2>
       <button type="button" onClick={handleClick}>
-        {signUp ? 'Log In!' : 'Register now!'}
+        {signUp ? 'Log In' : 'Sign Up'}
       </button>
       <Form onSubmit={formik.handleSubmit}>
         <label>
-          Username
+          Email/ username
           <input
             type="text"
-            name="name"
+            name="email"
             value={formik.values.name}
             onChange={formik.handleChange}
           />
         </label>
+        <label>
+          Password
+        </label>
+        <input 
+          type="password"
+          name="password"
+          value={formik.values.password}
+          onChange={formik.handleChange}
+        />
         {formik.touched.name && formik.errors.name && (
           <div style={{ color: 'red' }}>{formik.errors.name}</div>
         )}
-
         {signUp && (
           <>
             <label>
               Email
-              <input
-                type="text"
-                name="email"
-                value={formik.values.email}
-                onChange={formik.handleChange}
-              />
             </label>
+            <input
+              type="text"
+              name="email"
+              value={formik.values.email}
+              onChange={formik.handleChange}
+            />
             {formik.touched.email && formik.errors.email && (
               <div style={{ color: 'red' }}>{formik.errors.email}</div>
             )}

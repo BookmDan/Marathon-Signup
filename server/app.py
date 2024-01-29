@@ -21,9 +21,9 @@ def handle_not_found(e):
   )
   return response
 
-api.add_resource(Login, '/login', endpoint='login')
 api.add_resource(CheckSession, '/check_session')
 api.add_resource(Signup, '/signup')
+api.add_resource(Login, '/login', endpoint='login')
 api.add_resource(Logout, '/logout')
 
 if __name__ == "__main__":
