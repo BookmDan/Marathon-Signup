@@ -14,8 +14,12 @@ class RaceEventsResource(Resource):
   
   def post(self):
     form_data = request.get_json()
-    new_event = RaceEvent(organization=form_data.get('organization'), race_name=form_data.get('race_name'), race_type=form_data.get('race_type'))
+    new_event = RaceEvent(
+      organization=form_data.get('organization'), 
+      race_name=form_data.get('race_name'), 
+      race_type=form_data.get('race_type'))
 
+    
     db.session.add(new_event)
     db.session.commit()
 

@@ -1,31 +1,31 @@
-import  { useState } from 'react';
-import { Navbar, Nav, NavDropdown, Button } from 'react-bootstrap';
+// import  { useState } from 'react';
+// import { Navbar, Nav, NavDropdown, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 // import { UserContext } from "./App";
-import { useNavigate } from "react-router-dom";
 
-function Header({ updateUser }) {
-  const navigate = useNavigate() 
-  const [user, setUser] = useState()
+const Header=() =>{
+  // const navigate = useNavigate() 
+  // const [user, setUser] = useState()
 
-  const handleLogoutClick = () => {
-    fetch("/logout", { method: "DELETE" }).then((r) => {
-      if (r.ok) {
-        updateUser(null)
-        navigate('/authentication')
-        setUser(null);
-      }
-    });
-  }
-
-  return (
-    <Navbar bg="light" expand="lg">
+  // const handleLogoutClick = () => {
+  //   fetch("/logout", { method: "DELETE" }).then((r) => {
+  //     if (r.ok) {
+  //       updateUser(null)
+  //       navigate('/authentication')
+  //       setUser(null);
+  //     }
+  //   });
+  // }
+{/* <Navbar bg="light" expand="lg">
       <Navbar.Brand as={Link} to="/">
         Race App
       </Navbar.Brand>
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="mr-auto">
+          <Nav.Link as={Link} to="/">
+            Home
+          </Nav.Link>
           <Nav.Link as={Link} to="/race-info">
             Race Info
           </Nav.Link>
@@ -49,10 +49,26 @@ function Header({ updateUser }) {
               Directions
             </NavDropdown.Item>
           </NavDropdown>
+          {!user && (
+            <>
+              <Nav.Link as={Link} to="/register">
+                Register
+              </Nav.Link>
+              <Nav.Link as={Link} to="/authentication">
+                Login
+              </Nav.Link>
+            </>
+          )}
         </Nav>
         {(user)? <Button onClick={handleLogoutClick}>Logout</Button> : ""}
       </Navbar.Collapse>
-    </Navbar>
+    </Navbar> */}
+  return (
+    <ul>
+      <li><Link to='/'>Home</Link></li>
+      <li><Link to='/register'>Sign Up</Link></li>
+      <li></li>
+    </ul>
   );
 }
 
