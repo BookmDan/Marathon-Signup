@@ -16,7 +16,7 @@ function Home() {
     <Container>
       <h1>Welcome to the Home Page</h1>
       <img
-        src={('../assets/photos/kristian-running.jpg').default}
+        src={('../../photos/kristian-running.jpg').default}
         alt="Splash Banner"
         style={{ width: '100%', height: 'auto' }}
       />
