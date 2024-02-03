@@ -65,4 +65,4 @@ class RaceEventsById(Resource):
     else:
       return make_response({"message": f"Event {id} not found"})
 
-api.add_resource(RaceEventsById, '/raceEvents/<int:id>')
+api.add_resource(RaceEventsById, '/api/raceEvents/<int:id>')

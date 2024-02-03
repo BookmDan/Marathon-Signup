@@ -21,10 +21,10 @@ def handle_not_found(e):
   )
   return response
 
-api.add_resource(AuthorizedSession, '/authorized')
-api.add_resource(Signup, '/signup')
-api.add_resource(Login, '/login')
-api.add_resource(Logout, '/logout')
+api.add_resource(AuthorizedSession, '/api/authorized')
+api.add_resource(Signup, '/api/signup')
+api.add_resource(Login, '/api/login')
+api.add_resource(Logout, '/api/logout')
 
 if __name__ == "__main__":
   app.run(port=5555, debug=True)

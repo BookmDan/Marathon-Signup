@@ -70,4 +70,4 @@ class RaceSignupsById(Resource):
     else:
       return make_response({"message": f"Signup {id} not found"})
 # Adding the resource to your API
-api.add_resource(RaceSignupsById, '/raceSignups/<int:id>')
+api.add_resource(RaceSignupsById, '/api/raceSignups/<int:id>')

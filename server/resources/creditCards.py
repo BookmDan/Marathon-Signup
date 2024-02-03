@@ -87,4 +87,4 @@ class CreditCardsById(Resource):
     else:
       return make_response({"message": f"Credit Card {id} not found"})
 # Adding the resource to your API
-api.add_resource(CreditCardsById, '/creditcards/<int:id>')
+api.add_resource(CreditCardsById, '/api/creditcards/<int:id>')

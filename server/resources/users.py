@@ -28,7 +28,7 @@ class UsersResource(Resource):
   #   resp = user_schema.dump(new_user)
   #   return make_response(resp, 201)
   
-api.add_resource(UsersResource, '/users')
+api.add_resource(UsersResource, '/api/users')
 
 class UsersById(Resource):
   def get(self, id):
@@ -70,4 +70,4 @@ class UsersById(Resource):
     else:
       return make_response({"message": f"User {id} not found"})
 # Adding the resource to your API
-api.add_resource(UsersById, '/users/<int:id>')
+api.add_resource(UsersById, '/api/users/<int:id>')
