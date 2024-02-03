@@ -14,26 +14,6 @@ import Authentication from "./Authentication"
 // import Directions from './Directions';
 // import SignupForm from "./forms/SignupForm";
 
-// function App() {
-//   const [user, setUser] = useState(null);
-
-//   useEffect(() => {
-//     fetchUser()
-//   }, [])
-  
-//   const fetchUser = () => {
-//     fetch('/authorized')
-//     .then(res => {
-//       if (res.ok) {
-//         res.json().then(data => {
-//           setUser(data)
-//         })
-//       } else {
-//         setUser(null)
-//       }
-//     })
-//   }
-
 //   const updateUser = (user) => setUser(user)
 //   if (!user) return (
 //     <>
@@ -65,19 +45,12 @@ import Authentication from "./Authentication"
 //     </Router>
 //   );
   // }
-  const Navigation = () => (
-    <nav>
-      <ul>
-        <li>
-          <Link to="/register">Register</Link> 
-        </li>
-      </ul>
-    </nav>
-  );
+
   
-  const App = () => (
+const App = () => (
+    
     <Router>
-      <Navigation />
+      <Header />
       <Routes>
         <Route path="/register" element={<NewUser/>} /> 
       </Routes>
