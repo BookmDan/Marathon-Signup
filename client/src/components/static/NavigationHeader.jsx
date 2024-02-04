@@ -1,20 +1,29 @@
-import { Navbar, Nav, NavDropdown} from 'react-bootstrap';
-import { Link, useNavigate} from 'react-router-dom';
+import {useState} from 'react'
+import { Navbar, Nav, NavDropdown } from 'react-bootstrap';
+import { Link, useNavigate } from 'react-router-dom';
+import ThemeToggle from '../cards-boxes-search/ThemeToggle';
 
 const NavigationHeader = ({ onLogout }) => {
   const navigate = useNavigate()
+  const [isDarkMode, setIsDarkMode] = useState(false);
     
   const handleLogout = () => {
     onLogout(); // Call the provided logout function
     navigate('/'); // Navigate to the home page or any other desired page after logout
   };
+
+  const handleThemeToggle = (newMode) => {
+    setIsDarkMode(newMode);
+  };
+
+  // <Navbar.Toggle aria-controls="basic-navbar-nav" />
   return (
     <div>
-      <Navbar bg="light" expand="lg">
+      <Navbar bg={isDarkMode ? 'dark' : 'light'} expand="lg">
         <Navbar.Brand as={Link} to="/">
-          Race App
+          Run Your Socks Off 
         </Navbar.Brand>
-        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+        <ThemeToggle onToggle={handleThemeToggle} aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="mr-auto">
             <Nav.Link as={Link} to="/login">
