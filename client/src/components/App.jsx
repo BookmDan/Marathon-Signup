@@ -52,11 +52,15 @@ const App = () => {
 
   useEffect(() => {
     fetchUser();
+    fetchEvents();
   }, []);
 
+  const fetchEvents = () => {
+    fetch('/api/raceEvents')
+  }
+  
   const fetchUser = () => {
-    // Assume you have a server route for retrieving user data (/api/user or similar)
-    fetch('/api/user')
+    fetch('/api/users')
       .then(res => {
         if (res.ok) {
           return res.json();
