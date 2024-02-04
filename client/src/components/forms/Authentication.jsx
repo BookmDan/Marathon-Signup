@@ -10,6 +10,15 @@ function Authentication({ updateUser }) {
   const [success, setSuccess] = useState(false); 
   const navigate = useNavigate();
 
+  const formSchema = yup.object().shape({
+    firstName: signUp ? yup.string().required("Please enter your first name") : yup.string(),
+    lastName: signUp ? yup.string().required("Please enter your last name") : yup.string(),
+    email: signUp ? yup.string().email("Invalid email address").required("Email is required") : yup.string(),
+    phoneNumber: signUp ? yup.string().matches(/^\d{10}$/, "Phone number must be 10 digits").required("Phone number is required") : yup.string(),
+    password: yup.string().required("Password is required"),
+    confirmPassword: signUp ? yup.string().required("Please confirm password").oneOf([yup.ref("password"), null], "Passwords must match") : yup.string(),
+  });
+
   const handleClick = () => {
     setSignUp((prevSignUp) => !prevSignUp);
     setSuccess(false);
@@ -20,14 +29,20 @@ function Authentication({ updateUser }) {
     initialValues: {
       email: '',
       password: '',
+      firstName: '',
+      lastName: '',
+      phoneNumber: '',
+      confirmPassword: '',
     },
-    validationSchema: yup.object({
-      email: signUp ? yup.string().email('Invalid email address').required('Email is required') : yup.string(),
-      password: yup.string().required('Password is required'),
-    }),
+    validationSchema: formSchema,
+    // validationSchema: yup.object({
+    //   email: signUp ? yup.string().email('Invalid email address').required('Email is required') : yup.string(),
+    //   password: yup.string().required('Password is required'),
+    // }),
     onSubmit: (values) => {
       // Handle form submission here
-      fetch(signUp ? '/api/signup' : '/api/login', {
+      const endpoint = signUp ? '/api/signup' : '/api/login';
+      fetch(endpoint, {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
@@ -66,7 +81,7 @@ function Authentication({ updateUser }) {
           <input
             type="text"
             name="email"
-            value={formik.values.name}
+            value={formik.values.email}
             onChange={formik.handleChange}
           />
         </label>
@@ -82,21 +97,51 @@ function Authentication({ updateUser }) {
         )}
         {signUp && (
           <>
-            <label>
-              Email
-            </label>
+            <label>First Name</label>
             <input
               type="text"
-              name="email"
-              value={formik.values.email}
+              name="firstName"
+              value={formik.values.firstName}
               onChange={formik.handleChange}
             />
-            {formik.touched.email && formik.errors.email && (
-              <div style={{ color: 'red' }}>{formik.errors.email}</div>
+            {formik.touched.firstName && formik.errors.firstName && (
+              <div style={{ color: 'red' }}>{formik.errors.firstName}</div>
+            )}
+
+            <label>Last Name</label>
+            <input
+              type="text"
+              name="lastName"
+              value={formik.values.lastName}
+              onChange={formik.handleChange}
+            />
+            {formik.touched.lastName && formik.errors.lastName && (
+              <div style={{ color: 'red' }}>{formik.errors.lastName}</div>
+            )}
+
+            <label>Phone Number</label>
+            <input
+              type="text"
+              name="phoneNumber"
+              value={formik.values.phoneNumber}
+              onChange={formik.handleChange}
+            />
+            {formik.touched.phoneNumber && formik.errors.phoneNumber && (
+              <div style={{ color: 'red' }}>{formik.errors.phoneNumber}</div>
+            )}
+
+            <label>Confirm Password</label>
+            <input
+              type="password"
+              name="confirmPassword"
+              value={formik.values.confirmPassword}
+              onChange={formik.handleChange}
+            />
+            {formik.touched.confirmPassword && formik.errors.confirmPassword && (
+              <div style={{ color: 'red' }}>{formik.errors.confirmPassword}</div>
             )}
           </>
         )}
-
         <button type="submit">Submit</button>
       </form>
     </>
