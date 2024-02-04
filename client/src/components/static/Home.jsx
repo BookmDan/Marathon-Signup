@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
 import "../../styles/index.css"
 import RaceEventCard from "../cards-boxes-search/RaceEventCard"; // Import your RaceEventCard component
-import { Container, Row, Col } from "react-bootstrap";
+import { Container, Row, Col, Button } from "react-bootstrap";
 import kristianImage from "../../photos/kristian-running.jpg";
+import { Link } from 'react-router-dom';
 
 function Home() {
   const [raceEvents, setRaceEvents] = useState([]);
@@ -39,15 +40,12 @@ function Home() {
     setFilteredEvents(filtered);
   };
 
-      // <div className="race-event-cards">
-        // <Row>
-        //   {raceEvents.map((raceEvent) => (
-        //     <Col key={raceEvent.id}>
-        //       <RaceEventCard raceEvent={raceEvent} />
-        //     </Col>
-        //   ))}
-        // </Row>
-      // </div>
+  {raceEvents.map((event) => (
+    <Col key={event.id} xs={12} sm={6} md={4}>
+      <RaceEventCard raceEvent={event} />
+    </Col>
+  ))}
+
   return (
     <Container>
       <h1>Sign up for your next Marathon!</h1>
@@ -58,26 +56,17 @@ function Home() {
       />
 
       <div>
-      <h2>Race Events</h2>
-      <input
-        type="text"
-        placeholder="Filter by name, organization, race type"
-        value={filter}
-        onChange={handleFilterChange}
+        <h2>Race Events</h2>
+        <input
+          type="text"
+          placeholder="Filter by name, organization, race type"
+          value={filter}
+          onChange={handleFilterChange}
         />
-      <Row>
-        {raceEvents.map((event) => (
-          <Col key={event.id} xs={12} sm={6} md={4}>
-            <RaceEventCard raceEvent={event} />
-          </Col>
-        ))}
-      </Row>
-      <div className="race-event-cards">
-        {filteredEvents.map(event => (
-          <div key={event.id} className="race-event-card">
-            <h3>{event.race_name}</h3>
-              <p>Organization: {event.organization}</p>
-              <p>Race Type: {event.race_type}</p>
+        <div className="race-event-cards">
+          {filteredEvents.map(event => (
+            <div key={event.id} className="race-event-card">
+              <RaceEventCard raceEvent={event} />
             </div>
           ))}
         </div>
