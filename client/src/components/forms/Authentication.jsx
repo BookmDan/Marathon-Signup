@@ -27,11 +27,11 @@ function Authentication({ updateUser }) {
   
   const formik = useFormik({
     initialValues: {
-      email: '',
-      password: '',
       firstName: '',
       lastName: '',
       phoneNumber: '',
+      email: '',
+      password: '',
       confirmPassword: '',
     },
     validationSchema: formSchema,
@@ -63,38 +63,11 @@ function Authentication({ updateUser }) {
     }
   })
 
-  return (
-    <>
-      <h2 style={{ color: 'red' }}> {formik.errors.email}</h2>
-      {error && <h2 style={{ color: 'red' }}>{error}</h2>}
-      {success && <h2 style={{ color: 'green' }}>Signup successful! You can now log in.</h2>}
-      <h2>Register </h2>
-      <h2>{signUp ? 'Already a member?' : 'Not a member'}</h2>
-      <button type="button" onClick={handleClick}>
-        {signUp ? 'Log In' : 'Sign Up'}
-      </button>
-      <form onSubmit={formik.handleSubmit}>
-        <label>
-          Email
-          <input
-            type="text"
-            name="email"
-            value={formik.values.email}
-            onChange={formik.handleChange}
-          />
-        </label>
-        <label> Password </label>
-        <input 
-          type="password"
-          name="password"
-          value={formik.values.password}
-          onChange={formik.handleChange}
-        />
-        {formik.touched.password && formik.errors.password && (
-          <div style={{ color: 'red' }}>{formik.errors.password}</div>
-        )}
-        {signUp && (
-          <>
+  const renderSignUpFields = () => {
+    if (signUp) {
+      return (
+        <>
+          <div className="form-field">
             <label>First Name</label>
             <input
               type="text"
@@ -103,9 +76,11 @@ function Authentication({ updateUser }) {
               onChange={formik.handleChange}
             />
             {formik.touched.firstName && formik.errors.firstName && (
-              <div style={{ color: 'red' }}>{formik.errors.firstName}</div>
+              <div className="form-error">{formik.errors.firstName}</div>
             )}
+          </div>
 
+          <div className="form-field">
             <label>Last Name</label>
             <input
               type="text"
@@ -114,9 +89,11 @@ function Authentication({ updateUser }) {
               onChange={formik.handleChange}
             />
             {formik.touched.lastName && formik.errors.lastName && (
-              <div style={{ color: 'red' }}>{formik.errors.lastName}</div>
+              <div className="form-error">{formik.errors.lastName}</div>
             )}
+          </div>
 
+          <div className="form-field">
             <label>Phone Number</label>
             <input
               type="text"
@@ -125,19 +102,51 @@ function Authentication({ updateUser }) {
               onChange={formik.handleChange}
             />
             {formik.touched.phoneNumber && formik.errors.phoneNumber && (
-              <div style={{ color: 'red' }}>{formik.errors.phoneNumber}</div>
+              <div className="form-error">{formik.errors.phoneNumber}</div>
             )}
+          </div>
+        </>
+      );
+    }
 
-            <label>Confirm Password</label>
-            <input
-              type="password"
-              name="confirmPassword"
-              value={formik.values.confirmPassword}
-              onChange={formik.handleChange}
-            />
-            {formik.touched.confirmPassword && formik.errors.confirmPassword && (
-              <div style={{ color: 'red' }}>{formik.errors.confirmPassword}</div>
-            )}
+    return null;
+  };
+
+  return (
+    <>
+      <h2 className="form-error"> {formik.errors.email}</h2>
+      {error && <h2  className="form-error">{error}</h2>}
+      {success && <h2 style={{ color: 'green' }}>Signup successful! You can now log in.</h2>}
+      <h2>Register </h2>
+      <h2>{signUp ? 'Already a member?' : 'Not a member'}</h2>
+      <button type="button" onClick={handleClick}>
+        {signUp ? 'Log In' : 'Sign Up'}
+      </button>
+      <form onSubmit={formik.handleSubmit}>
+        <div  className="form-field">
+          <label> Email </label>
+          <input
+            type="text"
+            name="email"
+            value={formik.values.email}
+            onChange={formik.handleChange}
+          />
+        </div>
+        <div  className="form-field">
+          <label> Password </label>
+          <input 
+            type="password"
+            name="password"
+            value={formik.values.password}
+            onChange={formik.handleChange}
+          />
+        {formik.touched.password && formik.errors.password && (
+          <div style={{ color: 'red' }}>{formik.errors.password}</div>
+        )}
+        </div>
+        {renderSignUpFields()}
+        {signUp && (
+          <>
           </>
         )}
         <button type="submit">Submit</button>

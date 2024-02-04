@@ -8,8 +8,8 @@ function RaceEventCard({ raceEvent }) {
   const { id, race_name, organization, race_types } = raceEvent;
   const navigate = useNavigate();
 
-  const handleSignUpClick = (raceTypeId) => {
-    navigate(`/signup/${id}/${raceTypeId}`);
+  const handleSignUpClick = () => {
+    navigate("/signup");
   };
 
   // style={{ width: '18rem' }}

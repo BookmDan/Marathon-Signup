@@ -147,3 +147,14 @@ button:focus-visible {
     margin-bottom: 10px;
   }
 }
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  margin-right: 20px;
+}
+
+/* Additional styling for error messages */
+.form-error {
+  color: red;
+}
