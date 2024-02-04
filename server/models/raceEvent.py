@@ -8,10 +8,11 @@ class RaceEvent(db.Model, SerializerMixin):
   id = db.Column(db.Integer, primary_key=True)
   race_name = db.Column(db.String, nullable=False)
   organization = db.Column(db.String) # who is hosting
-  race_type = db.Column(db.String)  # e.g., '5k', '10k', 'half', 'full'
-
-  # user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-  # user = db.relationship('User', back_populates='race_events')
+  race_type = db.Column(db.String)  
+  price_5k = db.Column(db.Float)  
+  price_10k = db.Column(db.Float) 
+  price_half = db.Column(db.Float)  
+  price_full = db.Column(db.Float)
   
   race_signups = db.relationship('RaceSignup', back_populates='race_event')
   
@@ -24,5 +25,9 @@ class RaceEventSchema(Schema):
   race_name = fields.Str(required=True)
   organization = fields.Str()
   race_type = fields.Str()
+  price_5k = fields.Float()
+  price_10k = fields.Float()
+  price_half = fields.Float()
+  price_full = fields.Float()
 
 # schema_instance = RaceEventSchema()
