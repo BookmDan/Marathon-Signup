@@ -35,10 +35,6 @@ function Authentication({ updateUser }) {
       confirmPassword: '',
     },
     validationSchema: formSchema,
-    // validationSchema: yup.object({
-    //   email: signUp ? yup.string().email('Invalid email address').required('Email is required') : yup.string(),
-    //   password: yup.string().required('Password is required'),
-    // }),
     onSubmit: (values) => {
       // Handle form submission here
       const endpoint = signUp ? '/api/signup' : '/api/login';
@@ -49,19 +45,21 @@ function Authentication({ updateUser }) {
         },
         body: JSON.stringify(values),
       })
-        .then(res => {
+        .then((res) => {
           if (res.ok) {
-            res.json().then(user => {
-              updateUser(user);
-              setSuccess(true)
-              navigate('/');
-            });
+            return res.json();
           } else {
-            res.json().then(err => {
-              setError(err.message);
-            })
+            throw new Error('Invalid credentials');
           }
         })
+        .then((user) => {
+          updateUser(user);
+          setSuccess(true);
+          navigate('/');
+        })
+        .catch((err) => {
+          setError(err.message);
+        });
     }
   })
 

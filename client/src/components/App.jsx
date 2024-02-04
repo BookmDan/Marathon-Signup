@@ -1,17 +1,15 @@
 import { useState, useEffect } from "react";
-import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
-import NewUser from './forms/NewUser';
+import { BrowserRouter as Router, Routes, Route} from "react-router-dom";
 import Home from "./static/Home";
 import NavigationHeader from "./static/NavigationHeader";
 import Authentication from "./forms/Authentication";
-import RaceInfo from './static/RaceInfo';
+import RaceEvents from './static/RaceEvents';
 import Results from './static/Results';
 import Photos from './static/PhotoGallery';
 import Volunteer from './static/Volunteer';
 import Shop from './static/Shop';
 import RefundPolicy from './RefundPolicy';
 import Directions from './Directions';
-// import SignupForm from "./forms/SignupForm";
 
 const App = () => {
   const [user, setUser] = useState(null);
@@ -79,7 +77,7 @@ const App = () => {
           element={<Authentication updateUser={updateUser} />}
         />
         <Route path ="/signup" element={<Authentication/>}/>
-        <Route path="/race-info" element={<RaceInfo />} />
+        <Route path="/race-events" element={<RaceEvents />} />
         <Route path="/results" element={<Results />} />
         <Route path="/photos" element={<Photos />} />
         <Route path="/volunteer" element={<Volunteer />} />
