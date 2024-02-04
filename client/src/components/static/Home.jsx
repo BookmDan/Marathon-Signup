@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import "../../styles/index.css"
 import RaceEventCard from "../cards-boxes-search/RaceEventCard"; // Import your RaceEventCard component
 import { Container, Row, Col } from "react-bootstrap";
+import kristianImage from "../../photos/kristian-running.jpg";
 
 function Home() {
   const [raceEvents, setRaceEvents] = useState([]);
@@ -9,13 +10,20 @@ function Home() {
   const [filter, setFilter] = useState('');
 
   useEffect(() => {
-    fetch("/raceEvents") // Update the endpoint as needed
-      .then((response) => response.json())
-      .then((data) => setRaceEvents(data))
-      .catch((error) => console.error("Error fetching race events:", error));
+    fetchRaceEvents();
     filterEvents(filter); 
   }, [raceEvents]);
 
+  const fetchRaceEvents = () => {
+    fetch('/api/raceEvents')
+      .then((res) => res.json())
+      .then(data => {
+      setRaceEvents(data)
+      })
+      .catch(err => {
+      console.error("Error fetching race events:", err)
+    })
+  }
   const handleFilterChange = (event) => {
     const value = event.target.value;
     setFilter(value);
@@ -31,24 +39,24 @@ function Home() {
     setFilteredEvents(filtered);
   };
 
+      // <div className="race-event-cards">
+        // <Row>
+        //   {raceEvents.map((raceEvent) => (
+        //     <Col key={raceEvent.id}>
+        //       <RaceEventCard raceEvent={raceEvent} />
+        //     </Col>
+        //   ))}
+        // </Row>
+      // </div>
   return (
     <Container>
-      <h1>Welcome to the Home Page</h1>
-
+      <h1>Sign up for your next Marathon!</h1>
       <img
-        src={('../../photos/kristian-running.jpg').default}
+        src={kristianImage}
         alt="Splash Banner"
         style={{ width: '100%', height: 'auto' }}
       />
-      <div className="race-event-cards">
-        <Row>
-          {raceEvents.map((raceEvent) => (
-            <Col key={raceEvent.id}>
-              <RaceEventCard raceEvent={raceEvent} />
-            </Col>
-          ))}
-        </Row>
-      </div>
+
       <div>
       <h2>Race Events</h2>
       <input
@@ -56,7 +64,14 @@ function Home() {
         placeholder="Filter by name, organization, race type"
         value={filter}
         onChange={handleFilterChange}
-      />
+        />
+      <Row>
+        {raceEvents.map((event) => (
+          <Col key={event.id} xs={12} sm={6} md={4}>
+            <RaceEventCard raceEvent={event} />
+          </Col>
+        ))}
+      </Row>
       <div className="race-event-cards">
         {filteredEvents.map(event => (
           <div key={event.id} className="race-event-card">
