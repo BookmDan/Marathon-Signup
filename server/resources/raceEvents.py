@@ -27,7 +27,7 @@ class RaceEventsResource(Resource):
     resp = schema_instance.dump(new_event)
     return make_response(resp, 201)
 
-api.add_resource(RaceEventsResource, '/api/raceEvents')
+api.add_resource(RaceEventsResource, '/api/race-events')
 
 class RaceEventsById(Resource):
   def get(self,id):
@@ -69,4 +69,4 @@ class RaceEventsById(Resource):
     else:
       return make_response({"message": f"Event {id} not found"})
 
-api.add_resource(RaceEventsById, '/api/raceEvents/<int:id>')
+api.add_resource(RaceEventsById, '/api/race-events/<int:id>')

@@ -16,7 +16,7 @@ function Home() {
   }, [raceEvents]);
 
   const fetchRaceEvents = () => {
-    fetch('/api/raceEvents')
+    fetch('/api/race-events')
       .then((res) => res.json())
       .then(data => {
       setRaceEvents(data)
@@ -45,7 +45,7 @@ function Home() {
       <RaceEventCard raceEvent={event} />
     </Col>
   ))}
-     
+  
   return (
     <Container>
       <h1>Sign up for your next Marathon!</h1>

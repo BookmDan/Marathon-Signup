@@ -22,7 +22,7 @@ const App = () => {
   }, []);
 
   const fetchEvents = () => {
-    fetch('/api/raceEvents')
+    fetch('/api/race-events')
   }
 
   const fetchUser = () => {
