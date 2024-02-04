@@ -71,11 +71,11 @@ function SignupForm({ signupMode, setSignupMode, onLogin }) {
               id="firstName"
               name="firstName"
               placeholder="First Name"
-              value={formik.values.username}
+              value={formik.values.firstName}
               onChange={formik.handleChange}
             />
             <Form.Label>First Name</Form.Label>
-            {formik.errors.username ? <div className="text-danger">{formik.errors.username}</div> : ""}
+            {formik.errors.firstName ? <div className="text-danger">{formik.errors.firstName}</div> : ""}
           </Form.Group>
 
           <Form.Group className="form-floating w-50 m-3">

@@ -3,12 +3,7 @@ import FormComponent from "./FormComponent";
 
 function Login({ onLogin }) {
   const [signupMode, setSignupMode] = useState(false);
-  // const [email, setEmail] = useState("");
-
-  // const handleLogin = (user) => {
-  //   onLogin(user);
-  // }
-
+  const [email, setEmail] = useState(false)
   return (
     <div>
       {signupMode ? (
@@ -27,7 +22,7 @@ function Login({ onLogin }) {
             body: JSON.stringify({ email }),
           })
             .then((r) => r.json())
-            .then((user) => handleLogin(user));
+            .then((user) => onLogin(user));
         }}
       >
         <input

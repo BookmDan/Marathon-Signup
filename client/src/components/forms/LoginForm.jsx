@@ -1,9 +1,6 @@
-import { useState } from "react";
-import LoginForm from "./LoginForm";
 import SignupForm from "./SignupForm";
 
-function Login({ onLogin }) {
-  const [signupMode, setSignupMode] = useState(false);
+function LoginForm({ onLogin,setSignupMode,  signupMode}) {
 
   return (
     <div>
@@ -24,4 +21,4 @@ function Login({ onLogin }) {
   );
 }
 
-export default Login;
+export default LoginForm;

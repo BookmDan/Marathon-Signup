@@ -1,7 +1,10 @@
 import { Navbar, Nav, NavDropdown} from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+        // <Nav.Link as={Link} to="/register">
+        //   Register
+        // </Nav.Link>
 
-const Header = () => (
+const NavigationHeader = () => (
   <Navbar bg="light" expand="lg">
     <Navbar.Brand as={Link} to="/">
       Race App
@@ -11,9 +14,6 @@ const Header = () => (
       <Nav className="mr-auto">
         <Nav.Link as={Link} to="/login">
           Sign Up
-        </Nav.Link>
-        <Nav.Link as={Link} to="/register">
-          Register
         </Nav.Link>
         <Nav.Link as={Link} to="/race-info">
           Race Info
@@ -43,4 +43,4 @@ const Header = () => (
   </Navbar>
 );
 
-export default Header;
+export default NavigationHeader;
