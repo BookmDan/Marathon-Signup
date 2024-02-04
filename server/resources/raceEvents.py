@@ -19,7 +19,7 @@ class RaceEventsResource(Resource):
       race_name=form_data.get('race_name'), 
       race_type=form_data.get('race_type'))
 
-    
+
     db.session.add(new_event)
     db.session.commit()
 
@@ -27,7 +27,7 @@ class RaceEventsResource(Resource):
     resp = schema_instance.dump(new_event)
     return make_response(resp, 201)
 
-api.add_resource(RaceEventsResource, '/raceEvents')
+api.add_resource(RaceEventsResource, '/api/raceEvents')
 
 class RaceEventsById(Resource):
   def get(self,id):
