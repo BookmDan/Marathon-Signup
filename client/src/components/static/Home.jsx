@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
 import "../../styles/index.css"
 import RaceEventCard from "../cards-boxes-search/RaceEventCard"; // Import your RaceEventCard component
-import { Container, Row, Col, Button } from "react-bootstrap";
+import { Container, Col, Button } from "react-bootstrap";
 import kristianImage from "../../photos/kristian-running.jpg";
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 
 function Home() {
   const [raceEvents, setRaceEvents] = useState([]);

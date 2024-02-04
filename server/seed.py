@@ -1,5 +1,6 @@
 from config import app, db
-from models.models import User, RaceSignup, RaceEvent, CreditCardInfo
+from models.models import *
+from sqlalchemy import text
 
 if __name__ == "__main__":
     with app.app_context():
@@ -8,6 +9,7 @@ if __name__ == "__main__":
         db.session.query(RaceSignup).delete()
         db.session.query(RaceEvent).delete()
         db.session.query(CreditCardInfo).delete()
+        db.session.query(RaceType).delete()
         db.session.commit()
 
         # Create users
@@ -17,9 +19,27 @@ if __name__ == "__main__":
         db.session.commit()
 
         # Create race events
-        race_event1 = RaceEvent(race_name="Better Half", organization="BigHearts", race_type="5k", price_5k=35.0) #
-        race_event2 = RaceEvent(race_name="Orca 3000", organization="10000Runs", race_type="10k"  price_10k=45.0) #
+        # race_event1 = RaceEvent(race_name="Better Half", organization="BigHearts", race_type="5k", price_5k=35.0) #
+        # race_event2 = RaceEvent(race_name="Orca 3000", organization="10000Runs", race_type="10k"  price_10k=45.0) 
+
+        race_event1 = RaceEvent(race_name="Better Half", organization="BigHearts")
+        race_event2 = RaceEvent(race_name="Orca 3000", organization="10000Runs")
         db.session.add_all([race_event1, race_event2])
+        db.session.commit()
+        # db.session.execute("DELETE FROM sqlite_sequence WHERE name='race_type'")
+        #postgreSQL
+        # db.session.execute(text("ALTER SEQUENCE race_type_id_seq RESTART WITH 1"))
+
+        # Create race types
+        race_type1 = RaceType(race_type="5k", price=35.0, race_event=race_event1)
+        race_type2 = RaceType(race_type="10k", price=45.0, race_event=race_event1)
+        race_type3 = RaceType(race_type="half", price=55.0, race_event=race_event1)
+        race_type4 = RaceType(race_type="5k", price=35.0, race_event=race_event2)
+        race_type5 = RaceType(race_type="10k", price=45.0, race_event=race_event2)
+        db.session.add_all([race_type1, race_type2, race_type3, race_type4, race_type5])
+        db.session.commit()
+
+        db.session.add_all([race_type1, race_type2, race_type3, race_type4, race_type5])
         db.session.commit()
 
         # Create credit card information
