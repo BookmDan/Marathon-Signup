@@ -9,7 +9,7 @@ class Logout(Resource):
     user = User.query.filter_by(id = session.get('user_id')).first()
     if user:
       del session['user_id']
-      return {'message': 'You are not logged in'}, 200
+      return {'message': 'Logout successful'}, 200
       # session['user_id'] = None
       # return {}, 200
     else:

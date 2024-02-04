@@ -11,7 +11,7 @@ import Volunteer from './static/Volunteer';
 import Shop from './static/Shop';
 import RefundPolicy from './RefundPolicy';
 import Directions from './Directions';
-import SignupForm from "./forms/SignupForm";
+// import SignupForm from "./forms/SignupForm";
 
 const App = () => {
   const [user, setUser] = useState(null);
@@ -37,9 +37,9 @@ const App = () => {
       .then(data => {
         setUser(data);
       })
-      .catch(error => {
-        setUser(null);
-      });
+      // .catch(error => {
+      //   setUser(null);
+      // });
   };
 
   const updateUser = (userData) => {
@@ -47,23 +47,38 @@ const App = () => {
   };
 
   const logoutUser = () => {
-    // Implement logic to clear user session and cookies on the server side
-    fetch('/logout', { method: 'POST' })
-      .then(() => {
-        setUser(null);
+    fetch("/api/logout", {
+      method: "DELETE",
+      credentials: "include", // include credentials such as cookies
+    })
+      .then((response) => {
+        if (response.ok) {
+          // If the server returns a success response, set the user to null
+          setUser(null);
+        } else {
+          // Handle error cases
+          console.error("Logout failed:", response.status);
+        }
+      })
+      .catch((error) => {
+        console.error("Error during logout:", error);
       });
   };
 
+  // <Route path="/" element={<Home />} />
   return (
     <Router>
       <NavigationHeader onLogout={logoutUser} />
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route
+          path="/"
+          element={user ? <Home /> : <Authentication updateUser={updateUser} />}
+        />
         <Route
           path="/login"
-          element={user ? <Navigate to="/" /> : <Authentication onLogin={updateUser} />}
+          element={<Authentication updateUser={updateUser} />}
         />
-        <Route path ="/signup" element={<SignupForm/>}/>
+        <Route path ="/signup" element={<Authentication/>}/>
         <Route path="/race-info" element={<RaceInfo />} />
         <Route path="/results" element={<Results />} />
         <Route path="/photos" element={<Photos />} />

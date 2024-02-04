@@ -52,7 +52,7 @@ function Authentication({ updateUser }) {
 
   return (
     <>
-      <h2 style={{ color: 'red' }}> {formik.errors.name}</h2>
+      <h2 style={{ color: 'red' }}> {formik.errors.email}</h2>
       {error && <h2 style={{ color: 'red' }}>{error}</h2>}
       {success && <h2 style={{ color: 'green' }}>Signup successful! You can now log in.</h2>}
       <h2>Register </h2>
