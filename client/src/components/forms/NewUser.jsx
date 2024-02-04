@@ -30,15 +30,11 @@ function NewUser() {
       })
         .then((resp) => resp.json())
         .then((data) => {
-          console.log(data);
-          // Provide success feedback to the user
-          // You might want to show a success message, reset the form, or redirect the user
+          console.log("Server response:", data);
           resetForm(); // Reset the form after successful submission
         })
         .catch((err) => {
-          console.error(err);
-          // Provide error feedback to the user
-          // You might want to show an error message or handle the error in a specific way
+          console.error("Error submitting form:", err);
         })
         .finally(() => {
           setSubmitting(false); // Reset the submitting state
