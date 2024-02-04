@@ -45,7 +45,7 @@ function Home() {
       <RaceEventCard raceEvent={event} />
     </Col>
   ))}
-
+     
   return (
     <Container>
       <h1>Sign up for your next Marathon!</h1>

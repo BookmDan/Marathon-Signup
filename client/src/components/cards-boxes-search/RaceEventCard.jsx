@@ -1,9 +1,14 @@
 // import React from "react";
 import { Card, Button } from "react-bootstrap";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 function RaceEventCard({ raceEvent }) {
   const { id, race_name, organization, race_type } = raceEvent;
+  const navigate = useNavigate();
+
+  const handleSignUpClick = () => {
+    navigate(`/signup/${id}`);
+  };
 
   return (
     <Card style={{ width: '18rem' }} className="mx-2 my-3 race-card">
@@ -18,7 +23,7 @@ function RaceEventCard({ raceEvent }) {
         <Button as={Link} to={`/race-events/${id}`} variant="primary">
           Learn More
         </Button>
-        <Button variant="success" className="ml-2">
+        <Button variant="success" className="ml-2" onClick={handleSignUpClick}>
           Sign Up
         </Button>
       </Card.Body>
