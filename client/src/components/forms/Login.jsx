@@ -1,40 +1,30 @@
 import { useState } from "react";
-import LoginForm from "./forms/LoginForm";
-import SignupForm from "./forms/SignupForm";
+import FormComponent from "./FormComponent";
 
 function Login({ onLogin }) {
   const [signupMode, setSignupMode] = useState(false);
-  const [username, setUsername] = useState("");
+  // const [email, setEmail] = useState("");
 
-  const handleLogin = (user) => {
-    onLogin(user);
-  }
-
+  // const handleLogin = (user) => {
+  //   onLogin(user);
+  // }
 
   return (
     <div>
       {signupMode ? (
-        <SignupForm
-          signupMode={signupMode}
-          setSignupMode={setSignupMode}
-          onLogin={handleLogin}
-        />
+        <FormComponent signupMode={signupMode} setSignupMode={setSignupMode} onLogin={onLogin} />
       ) : (
-        <LoginForm
-          onLogin={handleLogin}
-          setSignupMode={setSignupMode}
-          signupMode={signupMode}
-        />
+        <FormComponent signupMode={signupMode} setSignupMode={setSignupMode} />
       )}
       <form
         onSubmit={(e) => {
           e.preventDefault();
-          fetch("/login", {
+          fetch("/api/login", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
             },
-            body: JSON.stringify({ username }),
+            body: JSON.stringify({ email }),
           })
             .then((r) => r.json())
             .then((user) => handleLogin(user));
@@ -42,8 +32,8 @@ function Login({ onLogin }) {
       >
         <input
           type="text"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
         />
         <button type="submit">Login</button>
       </form>

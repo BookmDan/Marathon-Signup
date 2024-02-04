@@ -7,45 +7,54 @@ import * as yup from 'yup';
 function Authentication({ updateUser }) {
   const [signUp, setSignUp] = useState(false);
   const [error, setError] = useState(false)
+  const [success, setSuccess] = useState(false); 
   const navigate = useNavigate();
 
-  const handleClick = () => setSignUp((signUp) => !signUp);
+  const handleClick = () => {
+    setSignUp((prevSignUp) => !prevSignUp);
+    setSuccess(false);
+    setError(false);
+  };
   
   const formik = useFormik({
     initialValues: {
-      name: '',
       email: '',
+      password: '',
     },
     validationSchema: yup.object({
-      name: yup.string().required('Username is required'),
       email: signUp ? yup.string().email('Invalid email address').required('Email is required') : yup.string(),
+      password: yup.string().required('Password is required'),
     }),
     onSubmit: (values) => {
       // Handle form submission here
-      fetch(signUp ? '/signup' : '/login', {
+      fetch(signUp ? '/api/signup' : '/api/login', {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
         },
         body: JSON.stringify(values),
       })
-      .then(res => {
-        if (res.ok) {
-          res.json().then(user => {
-            updateUser(user);
-            navigate('/');
-          });
-        } else {
-          res.json().then(error => setError(error.message));
-        }
-      });
+        .then(res => {
+          if (res.ok) {
+            res.json().then(user => {
+              updateUser(user);
+              setSuccess(true)
+              navigate('/');
+            });
+          } else {
+            res.json().then(err => {
+              setError(err.message);
+            })
+          }
+        })
     }
-  });
+  })
 
   return (
     <>
       <h2 style={{ color: 'red' }}> {formik.errors.name}</h2>
       {error && <h2 style={{ color: 'red' }}>{error}</h2>}
+      {success && <h2 style={{ color: 'green' }}>Signup successful! You can now log in.</h2>}
       <h2>Register </h2>
       <h2>{signUp ? 'Already a member?' : 'Not a member'}</h2>
       <button type="button" onClick={handleClick}>
@@ -53,7 +62,7 @@ function Authentication({ updateUser }) {
       </button>
       <form onSubmit={formik.handleSubmit}>
         <label>
-          Email/ username
+          Email
           <input
             type="text"
             name="email"
@@ -61,17 +70,15 @@ function Authentication({ updateUser }) {
             onChange={formik.handleChange}
           />
         </label>
-        <label>
-          Password
-        </label>
+        <label> Password </label>
         <input 
           type="password"
           name="password"
           value={formik.values.password}
           onChange={formik.handleChange}
         />
-        {formik.touched.name && formik.errors.name && (
-          <div style={{ color: 'red' }}>{formik.errors.name}</div>
+        {formik.touched.password && formik.errors.password && (
+          <div style={{ color: 'red' }}>{formik.errors.password}</div>
         )}
         {signUp && (
           <>

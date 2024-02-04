@@ -3,10 +3,10 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-d
 import NewUser from './forms/NewUser';
 import Home from "./static/Home";
 import Header from "./static/Header";
-import Authentication from "./Authentication";
+import Authentication from "./forms/Authentication";
 import RaceInfo from './static/RaceInfo';
 import Results from './static/Results';
-import Photos from './static/Photos';
+import Photos from './static/PhotoGallery';
 import Volunteer from './static/Volunteer';
 import Shop from './static/Shop';
 import RefundPolicy from './RefundPolicy';
@@ -63,7 +63,7 @@ const App = () => {
           path="/login"
           element={user ? <Navigate to="/" /> : <SignupForm onLogin={updateUser} />}
         />
-        <Route path="/signup" element={<SignupForm/>} />
+        <Route path="/login" element={<SignupForm/>} />
         <Route path ="/register" element={<SignupForm/>}/>
         <Route path="/race-info" element={<RaceInfo />} />
         <Route path="/results" element={<Results />} />
