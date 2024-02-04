@@ -9,11 +9,9 @@ function RaceEventCard({ raceEvent }) {
   const navigate = useNavigate();
 
   const handleSignUpClick = () => {
-    navigate("/signup");
+    navigate("/login");
   };
 
-  // style={{ width: '18rem' }}
-  // className="mx-2 my-3 race-card">
   return (
     <>
       {race_types.map((raceType) => (

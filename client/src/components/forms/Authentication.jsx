@@ -1,6 +1,7 @@
 import { useState } from 'react';
-import SignupForm from './SignupForm'; // Import the SignupForm component
-// import { useNavigate } from 'react-router-dom';
+import SignupForm from './SignupForm'; 
+import { useFormik } from 'formik';
+
 
 function Authentication({ updateUser }) {
   const [signUp, setSignUp] = useState(false);
@@ -14,6 +15,17 @@ function Authentication({ updateUser }) {
     setError(false);
   };
 
+  const formik = useFormik({
+    initialValues: {
+      firstName: '',
+      lastName: '',
+      email: '',
+      phoneNumber: '',
+      password: '',
+      confirmPassword: '',
+    },
+  })
+
   return (
     <>
       <h2 className="form-error"> {error}</h2>
@@ -24,7 +36,30 @@ function Authentication({ updateUser }) {
         {signUp ? 'Log In' : 'Sign Up'}
       </button>
       {/* Render the SignupForm conditionally based on the signUp state */}
-      {signUp && <SignupForm updateUser={updateUser} />}
+      <form onSubmit={formik.handleSubmit}>
+        <div  className="form-field">
+          <label> Email </label>
+          <input
+            type="text"
+            name="email"
+            value={formik.values.email}
+            onChange={formik.handleChange}
+          />
+        </div>
+        <div  className="form-field">
+          <label> Password </label>
+          <input 
+            type="password"
+            name="password"
+            value={formik.values.password}
+            onChange={formik.handleChange}
+          />
+        {formik.touched.password && formik.errors.password && (
+          <div style={{ color: 'red' }}>{formik.errors.password}</div>
+        )}
+        </div>
+        {signUp && <SignupForm updateUser={updateUser} />}
+      </form>
     </>
   );
 }

@@ -49,19 +49,7 @@ const SignupForm = ({ updateUser }) => {
         });
     }
   });
-
-      // <div className="form-field">
-      //   <label>Confirm Password</label>
-      //   <input
-      //     type="password"
-      //     name="confirmPassword"
-      //     value={formik.values.confirmPassword}
-      //     onChange={formik.handleChange}
-      //   />
-      //   {formik.touched.confirmPassword && formik.errors.confirmPassword && (
-      //     <div className="form-error">{formik.errors.confirmPassword}</div>
-      //   )}
-      // </div>
+  
   return (
     <form onSubmit={formik.handleSubmit}>
       <div className="form-field">
