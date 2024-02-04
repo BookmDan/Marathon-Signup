@@ -64,7 +64,7 @@ const App = () => {
           element={user ? <Navigate to="/" /> : <SignupForm onLogin={updateUser} />}
         />
         <Route path="/signup" element={<SignupForm/>} />
-        <Route path ="/register" element={<NewUser/>}/>
+        <Route path ="/register" element={<SignupForm/>}/>
         <Route path="/race-info" element={<RaceInfo />} />
         <Route path="/results" element={<Results />} />
         <Route path="/photos" element={<Photos />} />

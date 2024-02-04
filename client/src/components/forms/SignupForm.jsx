@@ -14,14 +14,20 @@ function SignupForm({ signupMode, setSignupMode, onLogin }) {
   };
 
   const formSchema = yup.object().shape({
-    username: yup.string().required("Please enter a username").max(20, "Username must be 20 characters or fewer"),
-    password: yup.string().required("Please enter a password").min(4, "Passwords need to be 4 characters or more"),
-    confirmPassword: yup.string().required("Please confirm password"),
+    firstName: yup.string().required("Please enter your first name"),
+    lastName: yup.string().required("Please enter your last name"),
+    email: yup.string().email("Invalid email address").required("Email is required"),
+    phoneNumber: yup.string().matches(/^\d{10}$/, "Phone number must be 10 digits").required("Phone number is required"),
+    password: yup.string().required("Please enter a password").min(8, "Password must be at least 8 characters"),
+    confirmPassword: yup.string().required("Please confirm password").oneOf([yup.ref("password"), null], "Passwords must match"),
   });
 
   const formik = useFormik({
     initialValues: {
-      username: "",
+      firstName: "",
+      lastName: "",
+      email: "",
+      phoneNumber: "",
       password: "",
       confirmPassword: "",
     },
@@ -56,20 +62,58 @@ function SignupForm({ signupMode, setSignupMode, onLogin }) {
       <Button className="m-3 btn-dark" onClick={handleReturnClick}>return to login</Button>
       <Col lg="5" className="mx-auto">
         <h3 className="m-3 text-info">
-          Create a new Nordic Nexus account
+          Create a new RunYourSocksOff account
         </h3>
         <Form onSubmit={formik.handleSubmit}>
           <Form.Group className="form-floating w-50 m-3">
             <Form.Control
               type="text"
-              id="username"
-              name="username"
-              placeholder="Username"
+              id="firstName"
+              name="firstName"
+              placeholder="First Name"
               value={formik.values.username}
               onChange={formik.handleChange}
             />
-            <Form.Label>Username</Form.Label>
+            <Form.Label>First Name</Form.Label>
             {formik.errors.username ? <div className="text-danger">{formik.errors.username}</div> : ""}
+          </Form.Group>
+
+          <Form.Group className="form-floating w-50 m-3">
+            <Form.Control
+              type="text"
+              id="lastName"
+              name="lastName"
+              placeholder="Last Name"
+              value={formik.values.lastName}
+              onChange={formik.handleChange}
+            />
+            <Form.Label>Last Name</Form.Label>
+            {formik.errors.lastName ? <div className="text-danger">{formik.errors.lastName}</div> : ""}
+          </Form.Group>
+          <Form.Group className="form-floating w-50 m-3">
+            <Form.Control
+              type="email"
+              id="email"
+              name="email"
+              placeholder="Email"
+              value={formik.values.email}
+              onChange={formik.handleChange}
+            />
+            <Form.Label>Email</Form.Label>
+            {formik.errors.email ? <div className="text-danger">{formik.errors.email}</div> : ""}
+          </Form.Group>
+
+          <Form.Group className="form-floating w-50 m-3">
+            <Form.Control
+              type="text"
+              id="phoneNumber"
+              name="phoneNumber"
+              placeholder="Phone Number"
+              value={formik.values.phoneNumber}
+              onChange={formik.handleChange}
+            />
+            <Form.Label>Phone Number</Form.Label>
+            {formik.errors.phoneNumber ? <div className="text-danger">{formik.errors.phoneNumber}</div> : ""}
           </Form.Group>
 
           <Form.Group className="form-floating w-50 m-3">
@@ -97,19 +141,6 @@ function SignupForm({ signupMode, setSignupMode, onLogin }) {
             <Form.Label>Confirm Password</Form.Label>
             {formik.errors.confirmPassword ? <div className="text-danger">{formik.errors.confirmPassword}</div> : ""}
           </Form.Group>
-
-          <Form.Group className="form-floating ms-3">
-            <Form.Control
-              type="text"
-              id="address"
-              name="address"
-              placeholder="address"
-              ref={addressRef}
-            />
-            <Form.Label>Address</Form.Label>
-            {formik.errors.address ? <div className="text-danger">{formik.errors.address}</div> : ""}
-          </Form.Group>
-          <Form.Label className="ms-3 text-info"> Text</Form.Label>
 
           <div className="d-flex">
             {errors.map((err) => (
