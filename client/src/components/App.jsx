@@ -5,7 +5,7 @@ import NavigationHeader from "./static/NavigationHeader";
 import Authentication from "./forms/Authentication";
 import RaceEvents from './static/RaceEvents';
 import Results from './static/Results';
-import Photos from './static/PhotoGallery';
+import Photos from './static/Photos';
 import Volunteer from './static/Volunteer';
 import Shop from './static/Shop';
 import RefundPolicy from './RefundPolicy';
@@ -79,7 +79,7 @@ const App = () => {
         <Route path ="/signup" element={<Authentication/>}/>
         <Route path="/race-events" element={<RaceEvents />} />
         <Route path="/results" element={<Results />} />
-        <Route path="/photos" element={<Photos />} />
+        <Route path="/photos" element={<Photos/>} />
         <Route path="/volunteer" element={<Volunteer />} />
         <Route path="/shop" element={<Shop />} />
         <Route path="/refund-policy" element={<RefundPolicy />} />
