@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import lightModeIcon from '../../photos/lightmode.png';
-import darkModeIcon from '../../photos/darkmode.png';
+// import lightModeIcon from '../../photos/lightmode.png';
+// import darkModeIcon from '../../photos/darkmode.png';
 
 const ThemeToggle = ({ onToggle }) => {
   const [isDarkMode, setIsDarkMode] = useState(false);

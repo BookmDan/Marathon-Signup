@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route} from "react-router-dom";
 import Home from "./static/Home";
 import NavigationHeader from "./static/NavigationHeader";
-import Authentication from "./forms/Authentication";
+import Authentication from "./sessions/Authentication";
 import RaceEvents from './static/RaceEvents';
 import Results from './static/Results';
 import Photos from './static/Photos';
@@ -13,7 +13,12 @@ import Directions from './Directions';
 
 const App = () => {
   const [user, setUser] = useState(null);
+  const [loggedIn, setLoggedIn] = useState(null);
 
+  const login = (user) => {
+    setUser(user);
+    setLoggedIn(true)
+  }
   useEffect(() => {
     fetchUser();
     fetchEvents();
@@ -53,6 +58,7 @@ const App = () => {
         if (response.ok) {
           // If the server returns a success response, set the user to null
           setUser(null);
+          setLoggedIn(false)
         } else {
           // Handle error cases
           console.error("Logout failed:", response.status);

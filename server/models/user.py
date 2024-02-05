@@ -1,8 +1,7 @@
 from sqlalchemy_serializer import SerializerMixin
 from sqlalchemy.ext.hybrid import hybrid_property
 from marshmallow import Schema, fields
-
-# from dotenv import load_dotenv
+from sqlalchemy.orm import validates
 
 from config import db, bcrypt
 
@@ -15,6 +14,15 @@ class User(db.Model, SerializerMixin):
   phone_number = db.Column(db.String)
   _password_hash = db.Column(db.String)
   admin = db.Column(db.String, default = False)
+
+  @validates("email")
+  def validate_email(self, key, email):
+    if not email:
+        raise ValueError("Email must exist.")
+    elif '@' not in email:
+        raise ValueError("Email must be a valid email address.")
+
+
 
   @hybrid_property
   def password_hash(self):
