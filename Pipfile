@@ -13,6 +13,8 @@ flask-migrate = "*"
 flask-bcrypt = "*"
 python-dotenv = "*"
 flask-login = "*"
+gunicorn = "*"
+psycopg2-binary = "*"
 
 [requires]
 python_version = "3.9"

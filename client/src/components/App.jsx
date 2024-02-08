@@ -17,10 +17,10 @@ const App = () => {
   const [user, setUser] = useState(null);
   const [loggedIn, setLoggedIn] = useState(null);
 
-  // const login = (user) => {
-  //   setUser(user);
-  //   setLoggedIn(true)
-  // }
+  const login = (user) => {
+    setUser(user);
+    setLoggedIn(true)
+  }
 
   useEffect(() => {
     fetchEvents()
@@ -87,8 +87,8 @@ const App = () => {
   };
 
   return (
-    <UserContext.Provider value={[user, setUser]}>
-      <Router>
+    <Router>
+      <UserContext.Provider value={[user, setUser]}>
         <NavigationHeader onLogout={logoutUser} />
         <Routes>
           <Route
@@ -108,8 +108,8 @@ const App = () => {
           <Route path="/refund-policy" element={<RefundPolicy />} />
           <Route path="/directions" element={<Directions />} />
         </Routes>
-      </Router>
-    </UserContext.Provider>
+      </UserContext.Provider>
+    </Router>
   );
 };
 
