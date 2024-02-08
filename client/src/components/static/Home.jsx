@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import "../../styles/index.css"
 import RaceEventCard from "../cards-boxes-search/RaceEventCard"; // Import your RaceEventCard component
-import { Container, Col, Button } from "react-bootstrap";
+import { Container, Col } from "react-bootstrap";
 import kristianImage from "../../photos/kristian-running.jpg";
 // import { Link } from 'react-router-dom';
 

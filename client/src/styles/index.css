@@ -110,13 +110,15 @@ button:focus-visible {
 
 /* Add these styles to your CSS or styled-components */
 /* Add a separate class for each race type */
+/**
 .race-event-card.5k {
   background-color: #ffcccb; /* Example color for 5k race type */
+  /**
 }
 
 .race-event-card.10k {
   background-color: #c0ffee; /* Example color for 10k race type */
-}
+/* } */
 
 .race-event-card.half {
   background-color: #ffd700; /* Example color for half marathon race type */
