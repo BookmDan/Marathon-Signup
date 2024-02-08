@@ -1,22 +1,33 @@
-import {useState} from 'react'
-import { Navbar, Nav, NavDropdown } from 'react-bootstrap';
+import {useState, useContext} from 'react'
+import { Navbar, Nav, NavDropdown, Button } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
 import ThemeToggle from '../cards-boxes-search/ThemeToggle';
+import { UserContext } from "../App";
+
 
 const NavigationHeader = ({ onLogout }) => {
   const navigate = useNavigate()
   const [isDarkMode, setIsDarkMode] = useState(false);
     
-  const handleLogout = () => {
-    onLogout(); // Call the provided logout function
-    navigate('/'); // Navigate to the home page or any other desired page after logout
-  };
+  const handleLogoutClick = () => {
+    fetch("/api/logout", { method: "DELETE" }).then((r) => {
+      if (r.ok) {
+        setUser(null);
+      }
+    });
+  }
+  const [user, setUser] = useContext(UserContext)
+  // const handleLogout = () => {
+  //   onLogout(); // Call the provided logout function
+  //   navigate('/'); // Navigate to the home page or any other desired page after logout
+  // };
 
   const handleThemeToggle = (newMode) => {
     setIsDarkMode(newMode);
   };
 
   // <Navbar.Toggle aria-controls="basic-navbar-nav" />
+  // <button onClick={handleLogout}>Logout</button>
   return (
     <div>
       <Navbar bg={isDarkMode ? 'dark' : 'light'} expand="lg">
@@ -52,10 +63,10 @@ const NavigationHeader = ({ onLogout }) => {
                 Directions
               </NavDropdown.Item>
             </NavDropdown>
+            {user && user.isLoggedIn? <Button onClick={handleLogoutClick}>Logout</Button> : ""}
           </Nav>
         </Navbar.Collapse>
       </Navbar>
-      <button onClick={handleLogout}>Logout</button>
     </div>
   )
 };

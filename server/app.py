@@ -21,7 +21,7 @@ def handle_not_found(e):
   )
   return response
 
-api.add_resource(AuthorizedSession, '/api/authorized')
+api.add_resource(AuthorizedSession, '/api/check-session')
 api.add_resource(Signup, '/api/signup')
 api.add_resource(Login, '/api/login')
 api.add_resource(Logout, '/api/logout')
