@@ -11,22 +11,6 @@ class UsersResource(Resource):
     schema = UserSchema(many=True)
     resp = schema.dump(users)
     return make_response(resp, 200)
-
-  # def post(self):
-  #   form_data = request.get_json()
-  #   new_user = User(
-  #     first_name=form_data.get('first_name'),
-  #     last_name=form_data.get('last_name'),
-  #     email=form_data.get('email'),
-  #     phone_number=form_data.get('phone_number'),
-  #   ) 
-    
-  #   db.session.add(new_user)
-  #   db.session.commit()
-  #   session['user_id'] = new_user.id
-
-  #   resp = user_schema.dump(new_user)
-  #   return make_response(resp, 201)
   
 api.add_resource(UsersResource, '/api/users')
 

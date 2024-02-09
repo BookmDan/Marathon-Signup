@@ -1,6 +1,5 @@
 from config import app, db
-from models.models import *
-from sqlalchemy import text
+from models.models import User, RaceSignup, RaceEvent, CreditCardInfo
 
 if __name__ == "__main__":
     with app.app_context():
@@ -9,7 +8,6 @@ if __name__ == "__main__":
         db.session.query(RaceSignup).delete()
         db.session.query(RaceEvent).delete()
         db.session.query(CreditCardInfo).delete()
-        db.session.query(RaceType).delete()
         db.session.commit()
 
         # Create users
@@ -19,28 +17,35 @@ if __name__ == "__main__":
         db.session.commit()
 
         # Create race events
-        # race_event1 = RaceEvent(race_name="Better Half", organization="BigHearts", race_type="5k", price_5k=35.0) #
-        # race_event2 = RaceEvent(race_name="Orca 3000", organization="10000Runs", race_type="10k"  price_10k=45.0) 
+        race_events_data = [
+            {"race_name": "Better Half", "organization": "BigHearts", "race_type": "5k"},
+            {"race_name": "Better Half", "organization": "BigHearts", "race_type": "10k"},
+            {"race_name": "Better Half", "organization": "BigHearts", "race_type": "Half Marathon"},
+            {"race_name": "Better Half", "organization": "BigHearts", "race_type": "Full Marathon"},
+            {"race_name": "Orca 3000", "organization": "10000Runs", "race_type": "5k"},
+            {"race_name": "Orca 3000", "organization": "10000Runs", "race_type": "10k"},
+            {"race_name": "Orca 3000", "organization": "10000Runs", "race_type": "Half Marathon"},
+            {"race_name": "Orca 3000", "organization": "10000Runs", "race_type": "Full Marathon"},
+            {"race_name": "Crazy Dash", "organization": "FunRuns", "race_type": "5k"},
+            {"race_name": "Crazy Dash", "organization": "FunRuns", "race_type": "10k"},
+            {"race_name": "Crazy Dash", "organization": "FunRuns", "race_type": "Half Marathon"},
+            {"race_name": "Crazy Dash", "organization": "FunRuns", "race_type": "Full Marathon"},
+            {"race_name": "Mud Madness", "organization": "ExtremeEvents", "race_type": "5k"},
+            {"race_name": "Mud Madness", "organization": "ExtremeEvents", "race_type": "10k"},
+            {"race_name": "Mud Madness", "organization": "ExtremeEvents", "race_type": "Half Marathon"},
+            {"race_name": "Mud Madness", "organization": "ExtremeEvents", "race_type": "Full Marathon"},
+            {"race_name": "Color Run", "organization": "HappyFeet", "race_type": "5k"},
+            {"race_name": "Color Run", "organization": "HappyFeet", "race_type": "10k"},
+            {"race_name": "Color Run", "organization": "HappyFeet", "race_type": "Half Marathon"},
+            {"race_name": "Color Run", "organization": "HappyFeet", "race_type": "Full Marathon"},
+            # Add more race events with different race names and types
+        ]
 
-        race_event1 = RaceEvent(race_name="Better Half", organization="BigHearts")
-        race_event2 = RaceEvent(race_name="Orca 3000", organization="10000Runs")
-        db.session.add_all([race_event1, race_event2])
-        db.session.commit()
-        # db.session.execute("DELETE FROM sqlite_sequence WHERE name='race_type'")
-        #postgreSQL
-        # db.session.execute(text("ALTER SEQUENCE race_type_id_seq RESTART WITH 1"))
-
-        # Create race types
-        race_type1 = RaceType(race_type="5k", price=35.0, race_event=race_event1)
-        race_type2 = RaceType(race_type="10k", price=45.0, race_event=race_event1)
-        race_type3 = RaceType(race_type="half", price=55.0, race_event=race_event1)
-        race_type4 = RaceType(race_type="5k", price=35.0, race_event=race_event2)
-        race_type5 = RaceType(race_type="10k", price=45.0, race_event=race_event2)
-        db.session.add_all([race_type1, race_type2, race_type3, race_type4, race_type5])
+        # Loop through the race events data and create RaceEvent objects
+        race_event_objects = [RaceEvent(**race_event_data) for race_event_data in race_events_data]
+        db.session.add_all(race_event_objects)
         db.session.commit()
 
-        db.session.add_all([race_type1, race_type2, race_type3, race_type4, race_type5])
-        db.session.commit()
 
         # Create credit card information
         credit_card1 = CreditCardInfo( credit_card_number="1234567890123456", name_on_card="John Doe", expiration_date="12/25", cvv="123", street_address="789 Elm St", country="US", zipcode="67890", city="Villagetown", state="VT", save_my_card=True)
@@ -48,8 +53,39 @@ if __name__ == "__main__":
         db.session.add_all([credit_card1, credit_card2])
         db.session.commit()
 
-        # Create race signups
-        race_signup1 = RaceSignup(waiver_accept=True, tshirt_size="S", coupon_code="DEF456", user=user1, race_event=race_event1)
-        race_signup2 = RaceSignup(waiver_accept=True, tshirt_size="XL", coupon_code="GHI789", user=user2, race_event=race_event2)
-        db.session.add_all([race_signup1, race_signup2])
+        # Loop through the race events data and create RaceEvent objects
+       # Dictionary to store dynamically created race events
+        race_event_dict = {}
+
+        # Loop through the race events data and create RaceEvent objects
+        for i, race_event_data in enumerate(race_events_data, start=1):
+            race_name = race_event_data["race_name"]
+            race_type = race_event_data["race_type"]
+            race_event_name = f"race_event{i}"
+            
+            # Query the database for the specific race event
+            race_event = RaceEvent.query.filter_by(race_name=race_name, race_type=race_type).first()
+            
+            # Assign the queried race event to the dynamically created variable
+            race_event_dict[race_event_name] = race_event
+
+        # Create race signups for each combination of user and race event
+        users = [user1, user2]  # List of User instances
+        race_events = [race_event_dict[f"race_event{i}"] for i in range(1, len(race_events_data) + 1)]  # List of RaceEvent instances
+
+        # Loop through each combination of user and race event
+        for user in users:
+            for race_event in race_events:
+                # Create a RaceSignup instance for each combination
+                race_signup = RaceSignup(waiver_accept=True, tshirt_size="S", coupon_code="DEF456", user=user, race_event=race_event)
+                db.session.add(race_signup)
+
+        # Commit the changes to the database
         db.session.commit()
+
+
+
+        # Create race signups
+        # race_signup1 = RaceSignup(waiver_accept=True, tshirt_size="S", coupon_code="DEF456", user=user1, race_event=race_event1)
+        # race_signup2 = RaceSignup(waiver_accept=True, tshirt_size="XL", coupon_code="GHI789", user=user2, race_event=race_event2)
+

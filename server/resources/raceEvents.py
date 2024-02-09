@@ -20,14 +20,14 @@ class RaceEventsResource(Resource):
       race_type=form_data.get('race_type'))
 
 
-    db.session.add(new_event)
+    db.session.add_all(new_event)
     db.session.commit()
 
 
     resp = schema_instance.dump(new_event)
     return make_response(resp, 201)
 
-api.add_resource(RaceEventsResource, '/api/race-events')
+api.add_resource(RaceEventsResource, '/api/raceEvents')
 
 class RaceEventsById(Resource):
   def get(self,id):
@@ -69,4 +69,4 @@ class RaceEventsById(Resource):
     else:
       return make_response({"message": f"Event {id} not found"})
 
-api.add_resource(RaceEventsById, '/api/race-events/<int:id>')
+api.add_resource(RaceEventsById, '/api/raceEvents/<int:id>')
