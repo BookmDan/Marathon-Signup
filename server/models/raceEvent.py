@@ -20,5 +20,5 @@ class RaceEventSchema(Schema):
   id = fields.Int(dump_only=True)
   race_name = fields.Str(required=True)
   organization = fields.Str()
-  race_types = fields.Nested('RaceTypeSchema', many=True)  # Nested serialization for RaceType
+  race_type = fields.Str()
 

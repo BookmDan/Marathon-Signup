@@ -13,7 +13,7 @@ function RaceEventCard({ raceEvent }) {
   return (
     <Card style={{ width: '18rem' }} className="mx-2 my-3 race-card">
       <Card.Body>
-        <Card.Title className="fs-5 text-info">{race_name}</Card.Title>
+        <Card.Title className="fs-5 text-info"><strong>Race Name:</strong> {race_name}</Card.Title>
         <Card.Text>
           <strong>Organization:</strong> {organization}
         </Card.Text>

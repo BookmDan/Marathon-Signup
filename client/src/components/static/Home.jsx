@@ -45,12 +45,14 @@ function Home() {
 
       <div>
         <h2>Race Events</h2>
-        <input
-          type="text"
-          placeholder="Filter by name"
-          value={filter}
-          onChange={handleFilterChange}
-        />
+        <div className="input-container">
+          <input
+            type="text"
+            placeholder="Filter by Event Name"
+            value={filter}
+            onChange={handleFilterChange}
+          />
+        </div>
         <div className="race-event-cards">
           {filteredEvents.map((event) => (
             <div key={event.id} className="race-event-card">
