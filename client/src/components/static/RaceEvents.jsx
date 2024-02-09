@@ -2,7 +2,7 @@ import { useState } from "react";
 
 const RaceInfo = ({ raceEvents }) => {
   const [filteredEvents, setFilteredEvents] = useState(raceEvents);
-  const [filter, setFilter] = useState('');
+  const [filter, setFilter] = useState("");
 
   const handleFilterChange = (event) => {
     const value = event.target.value;
@@ -11,10 +11,8 @@ const RaceInfo = ({ raceEvents }) => {
   };
 
   const filterEvents = (filterValue) => {
-    const filtered = raceEvents.filter(event =>
-      event.organization.toLowerCase().includes(filterValue.toLowerCase()) ||
-      event.race_name.toLowerCase().includes(filterValue.toLowerCase()) ||
-      event.race_type.toLowerCase().includes(filterValue.toLowerCase())
+    const filtered = raceEvents.filter((event) =>
+      event.race_name.toLowerCase().includes(filterValue.toLowerCase())
     );
     setFilteredEvents(filtered);
   };
@@ -24,12 +22,12 @@ const RaceInfo = ({ raceEvents }) => {
       <h2>Race Events</h2>
       <input
         type="text"
-        placeholder="Filter by name, organization, race type"
+        placeholder="Filter by name"
         value={filter}
         onChange={handleFilterChange}
       />
       <ul>
-        {filteredEvents.map(event => (
+        {filteredEvents.map((event) => (
           <li key={event.id}>
             {event.race_name} - {event.organization} - {event.race_type}
           </li>
@@ -39,4 +37,4 @@ const RaceInfo = ({ raceEvents }) => {
   );
 };
 
-export default RaceInfo
+export default RaceInfo;
