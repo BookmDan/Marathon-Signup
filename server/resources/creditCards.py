@@ -7,10 +7,13 @@ credit_card_info_schema = CreditCardInfoSchema()
 
 class CreditCardsResource(Resource):
   def get(self):
-    credit_cards = CreditCardInfo.query.get(id)
-    schema = CreditCardInfoSchema(many=True)
-    resp = schema.dump(credit_cards)
+     # Retrieve all credit card information from the database
+    credit_cards = CreditCardInfo.query.all()
+    # Serialize the data using the schema
+    resp = credit_card_info_schema.dump(credit_cards)
+    # Return the response
     return make_response(resp, 200)
+
 
   def post(self):
     form_data = request.get_json()
@@ -45,7 +48,7 @@ class CreditCardsResource(Resource):
 
   #   return make_response(resp, status_code)
 
-api.add_resource(CreditCardsResource, '/creditcards')
+api.add_resource(CreditCardsResource, '/api/creditcards')
 
 class CreditCardsById(Resource):
   def get(self, id):

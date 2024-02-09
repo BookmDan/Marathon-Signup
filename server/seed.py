@@ -53,39 +53,20 @@ if __name__ == "__main__":
         db.session.add_all([credit_card1, credit_card2])
         db.session.commit()
 
-        # Loop through the race events data and create RaceEvent objects
-       # Dictionary to store dynamically created race events
-        race_event_dict = {}
-
-        # Loop through the race events data and create RaceEvent objects
-        for i, race_event_data in enumerate(race_events_data, start=1):
-            race_name = race_event_data["race_name"]
-            race_type = race_event_data["race_type"]
-            race_event_name = f"race_event{i}"
-            
-            # Query the database for the specific race event
-            race_event = RaceEvent.query.filter_by(race_name=race_name, race_type=race_type).first()
-            
-            # Assign the queried race event to the dynamically created variable
-            race_event_dict[race_event_name] = race_event
-
-        # Create race signups for each combination of user and race event
-        users = [user1, user2]  # List of User instances
-        race_events = [race_event_dict[f"race_event{i}"] for i in range(1, len(race_events_data) + 1)]  # List of RaceEvent instances
+        race_event1 = race_event_objects[0]
+        race_event2 = race_event_objects[1]
 
         # Loop through each combination of user and race event
-        for user in users:
-            for race_event in race_events:
-                # Create a RaceSignup instance for each combination
-                race_signup = RaceSignup(waiver_accept=True, tshirt_size="S", coupon_code="DEF456", user=user, race_event=race_event)
-                db.session.add(race_signup)
+        for user in [user1, user2]:
+            for race_event in race_event_objects:
+                # Check if the user has already signed up for the race event
+                existing_signup = RaceSignup.query.filter_by(user_id=user.id, race_event_id=race_event.id).first()
+                if existing_signup:
+                    print(f"User {user.id} has already signed up for race event {race_event.id}. Skipping...")
+                else:
+                    # Create a RaceSignup instance for the user and race event
+                    race_signup = RaceSignup(waiver_accept=True, tshirt_size="S", coupon_code="DEF456", user=user, race_event=race_event)
+                    db.session.add(race_signup)
 
         # Commit the changes to the database
         db.session.commit()
-
-
-
-        # Create race signups
-        # race_signup1 = RaceSignup(waiver_accept=True, tshirt_size="S", coupon_code="DEF456", user=user1, race_event=race_event1)
-        # race_signup2 = RaceSignup(waiver_accept=True, tshirt_size="XL", coupon_code="GHI789", user=user2, race_event=race_event2)
-

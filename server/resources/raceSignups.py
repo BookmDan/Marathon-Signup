@@ -28,7 +28,7 @@ class RaceSignupsResource(Resource):
     resp = race_signup_schema.dump(new_signup)
     return make_response(resp, 201)
   
-api.add_resource(RaceSignupsResource, '/race-signups')
+api.add_resource(RaceSignupsResource, '/api/race-signups')
 
 class RaceSignupsById(Resource):
   def get(self, id):
