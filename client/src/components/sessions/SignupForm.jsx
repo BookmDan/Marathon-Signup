@@ -116,9 +116,6 @@ const SignupForm = ({ updateUser }) => {
           <div className="form-error">{formik.errors.password}</div>
         )}
       </div>
-
-
-      <button type="submit">Submit</button>
     </form>
   );
 };
