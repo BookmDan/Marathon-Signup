@@ -12,6 +12,8 @@ import Shop from './static/Shop';
 import RefundPolicy from './RefundPolicy';
 import Directions from './Directions';
 import SelectRace from "./user-flow/SelectRace";
+import TheWhy from "./user-flow/TheWhy";
+import Agreement from "./user-flow/Agreement";
 
 const App = () => {
   const [loading, setLoading] = useState(true);
@@ -104,6 +106,8 @@ const App = () => {
           />
           <Route path="/signup" element={<Authentication />} />
           <Route path="/select-race" element={<SelectRace raceEvents={raceEvents} />} />
+          <Route path="/agreement" element={<Agreement raceEvent={raceEvent}/>} />
+          <Route path="/the-why" element={<TheWhy/>} />
           <Route path="/race-events" element={<RaceEvents />} />
           <Route path="/race-details/:id" component={RaceDetailsPage} />
           <Route path="/results" element={<Results />} />

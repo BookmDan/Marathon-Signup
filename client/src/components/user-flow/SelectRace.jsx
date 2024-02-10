@@ -3,7 +3,8 @@ import RaceEventCard from '../cards-boxes-search/RaceEventCard';
 import { Button } from "react-bootstrap";
 import { useNavigate } from 'react-router-dom';
 
-const SelectRace = ({ raceEvents }) => {
+const SelectRace = (<Agreement raceEvent={/* provide the raceEvent here */} />
+) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [filterType, setFilterType] = useState('all');
   const [selectedRace, setSelectedRace] = useState(null);

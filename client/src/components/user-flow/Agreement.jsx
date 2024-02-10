@@ -1,13 +1,33 @@
-import { useState, useNavigate } from "react";
-import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
 import { Container, Button, Form, Col, Row } from "react-bootstrap";
+import { useNavigate } from 'react-router-dom';
+
 
 const Agreement = ({ raceEvent }) => {
   const navigate = useNavigate()
   const [estimatedFinishTime, setEstimatedFinishTime] = useState("");
   const [understandEventDetails, setUnderstandEventDetails] = useState(false);
   const [packetPickup, setPacketPickup] = useState(false);
+  const [raceEvent, setRaceEvent] = useState(null);
 
+  useEffect(() => {
+    // Fetch race event data from API
+    fetchRaceEventData(); // Implement this function to fetch race event data
+  
+  }, []);
+
+  const fetchRaceEventData = () => {
+    fetch('/api/race-events') // Example endpoint
+      .then(response => response.json())
+      .then(data => {
+        // Store the fetched race event data in state
+        setRaceEvent(data);
+      })
+      .catch(error => {
+        console.error('Error fetching race event data:', error);
+      });
+  };
+  
   const handleContinue = () => {
     navigate("/the-why");
   };
