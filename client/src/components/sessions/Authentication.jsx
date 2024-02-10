@@ -22,7 +22,7 @@ function Authentication({ updateUser }) {
       phoneNumber: '',
       password: '',
       confirmPassword: '',
-    },
+    }, 
   })
 
   const handleFormSubmit = (values) => {
@@ -44,10 +44,10 @@ function Authentication({ updateUser }) {
     .then(data => {
       updateUser(data); // Update user state with the response data
       setSuccess(true); // Set success state to true
-      navigate('/select-race'); // Navigate to the home page or any other desired page
+      navigate('/select-race');
     })
     .catch(error => {
-      setError(error.message); // Set error state with the error message
+      setError(error.message);
     });
   };
 
@@ -60,30 +60,34 @@ function Authentication({ updateUser }) {
         {signUp ? 'Log In' : 'Sign Up'}
       </button>
       <form onSubmit={handleFormSubmit}>
-        <div  className="form-field">
-          <label> Email </label>
-          <input
-            type="text"
-            name="email"
-            value={formik.values.email}
-            onChange={formik.handleChange}
-          />
-        </div>
-        <div  className="form-field">
-          <label> Password </label>
-          <input 
-            type="password"
-            name="password"
-            value={formik.values.password}
-            onChange={formik.handleChange}
-          />
-        {signUp && <SignupForm />}
+        {signUp && <SignupForm handleSubmit={handleFormSubmit} />}
+        {!signUp && (
+          <>
+            <div  className="form-field">
+              <label> Email </label>
+              <input
+                type="text"
+                name="email"
+                value={formik.values.email}
+                onChange={formik.handleChange}
+              />
+            </div>
+            <div  className="form-field">
+              <label> Password </label>
+              <input 
+                type="password"
+                name="password"
+                value={formik.values.password}
+                onChange={formik.handleChange}
+              />
+            </div>
+          </>
+        )}
         {formik.touched.password && formik.errors.password && (
           <div style={{ color: 'red' }}>{formik.errors.password}</div>
         )}
         <div id="button-container">
           <button type="submit">Submit</button>
-        </div>
         </div>
       </form>
     </>

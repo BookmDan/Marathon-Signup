@@ -1,9 +1,7 @@
 import { useFormik } from 'formik';
 import * as yup from 'yup';
-import { useNavigate } from 'react-router-dom';
 
-const SignupForm = ({ updateUser }) => {
-  const navigate = useNavigate();
+const SignupForm = ({ handleSubmit }) => {
 
   const formSchema = yup.object().shape({
     firstName: yup.string().required("Please enter your first name"),
@@ -24,30 +22,7 @@ const SignupForm = ({ updateUser }) => {
       confirmPassword: '',
     },
     validationSchema: formSchema,
-    onSubmit: (values) => {
-      fetch('/api/signup', {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(values),
-      })
-        .then((res) => {
-          if (res.ok) {
-            return res.json();
-          } else {
-            throw new Error('Invalid credentials');
-          }
-        })
-        .then((user) => {
-          updateUser(user);
-          navigate('/select-race');
-        })
-        .catch((err) => {
-          console.error('Signup error:', err);
-          // Handle error and display a message to the user
-        });
-    }
+    onSubmit: handleSubmit,
   });
   
   return (
