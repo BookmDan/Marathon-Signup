@@ -19,7 +19,6 @@ class RaceEventsResource(Resource):
       race_name=form_data.get('race_name'), 
       race_type=form_data.get('race_type'))
 
-
     db.session.add_all(new_event)
     db.session.commit()
 

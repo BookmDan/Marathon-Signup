@@ -26,7 +26,7 @@ const SelectRace = ({ raceEvents }) => {
   return (
     <div>
       <h2>Select Race</h2>
-      <input
+      <input className="input-container"
         type="text"
         placeholder="Search race..."
         value={searchQuery}
@@ -36,12 +36,12 @@ const SelectRace = ({ raceEvents }) => {
         <option value="all">All</option>
         <option value="5k">5k</option>
         <option value="10k">10k</option>
-        <option value="half">Half Marathon</option>
-        <option value="full">Full Marathon</option>
+        <option value="Half Marathon">Half Marathon</option>
+        <option value="Full Marathon">Full Marathon</option>
       </select>
       <div className="race-event-cards">
         {filteredRaceEvents.map((race) => (
-          <div className="race-event-card">
+          <div className="race-event-card" key={race.id}>
             <RaceEventCard
               key={race.id}
               raceEvent={race}
