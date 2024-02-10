@@ -1,13 +1,20 @@
-import{ useState } from 'react';
+import { useState } from 'react';
 import RaceEventCard from '../cards-boxes-search/RaceEventCard';
+import { useNavigate } from 'react-router-dom';
 
 const SelectRace = ({ raceEvents }) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [filterType, setFilterType] = useState('all');
   const [selectedRace, setSelectedRace] = useState(null);
+  const navigate = useNavigate();
 
   const handleRaceClick = (id) => {
     setSelectedRace(id);
+  };
+
+  const handleSelectButtonClick = () => {
+    // Navigate to "TheWhy" page upon selecting a race
+    navigate('/the-why');
   };
 
   const filteredRaceEvents = raceEvents.filter((event) => {
@@ -32,16 +39,19 @@ const SelectRace = ({ raceEvents }) => {
         <option value="half">Half Marathon</option>
         <option value="full">Full Marathon</option>
       </select>
-      <div className="race-event-list">
+      <div className="race-event-cards">
         {filteredRaceEvents.map((race) => (
-          <RaceEventCard
-            key={race.id}
-            raceEvent={race}
-            onClick={() => handleRaceClick(race.id)}
-            isSelected={selectedRace === race.id}
-          />
+          <div className="race-event-card">
+            <RaceEventCard
+              key={race.id}
+              raceEvent={race}
+              onClick={() => handleRaceClick(race.id)}
+              isSelected={selectedRace === race.id}
+            />
+          </div>
         ))}
       </div>
+      <button onClick={handleSelectButtonClick}>Select</button>
     </div>
   );
 };

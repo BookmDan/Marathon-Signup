@@ -14,7 +14,9 @@ import Directions from './Directions';
 import SelectRace from "./user-flow/SelectRace";
 
 const App = () => {
-  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [user, setUser] = useState([]);
+  const [raceEvents, setRaceEvents] = useState(null);
   const [loggedIn, setLoggedIn] = useState(null);
 
   const login = (user) => {
@@ -23,12 +25,28 @@ const App = () => {
   }
   useEffect(() => {
     fetchUser();
-    fetchEvents();
+    fetchRaceEvents();
   }, []);
 
-  const fetchEvents = () => {
+  const fetchRaceEvents = () => {
     fetch('/api/race-events')
-  }
+    .then(res => {
+      if (res.ok) {
+        return res.json();
+      } else {
+        throw new Error('Failed to fetch race events');
+      }
+    })
+    .then(data => {
+      // Update the raceEvents state with the fetched data
+      setRaceEvents(data);
+      setLoading(false)
+    })
+    .catch(error => {
+      console.error('Error fetching race events:', error);
+      setLoading(false)
+    });
+};
 
   const fetchUser = () => {
     fetch('/api/users')
@@ -42,9 +60,6 @@ const App = () => {
       .then(data => {
         setUser(data);
       })
-      // .catch(error => {
-      //   setUser(null);
-      // });
   };
 
   const updateUser = (userData) => {
@@ -75,26 +90,30 @@ const App = () => {
   return (
     <Router>
       <NavigationHeader onLogout={logoutUser} />
-      <Routes>
-        <Route
-          path="/"
-          element={user ? <Home /> : <Authentication updateUser={updateUser} />}
-        />
-        <Route
-          path="/login"
-          element={<Authentication updateUser={updateUser} />}
-        />
-        <Route path="/signup" element={<Authentication />} />
-        <Route path="/select-race" element={<SelectRace />} />
-        <Route path="/race-events" element={<RaceEvents />} />
-        <Route path="/race-details/:id" component={RaceDetailsPage} />
-        <Route path="/results" element={<Results />} />
-        <Route path="/photos" element={<Photos/>} />
-        <Route path="/volunteer" element={<Volunteer />} />
-        <Route path="/shop" element={<Shop />} />
-        <Route path="/refund-policy" element={<RefundPolicy />} />
-        <Route path="/directions" element={<Directions />} />
-      </Routes>
+      {loading ? (
+        <div>Loading...</div>
+      ) : (
+        <Routes>
+          <Route
+            path="/"
+            element={user ? <Home /> : <Authentication updateUser={updateUser} />}
+          />
+          <Route
+            path="/login"
+            element={<Authentication updateUser={updateUser} />}
+          />
+          <Route path="/signup" element={<Authentication />} />
+          <Route path="/select-race" element={<SelectRace raceEvents={raceEvents} />} />
+          <Route path="/race-events" element={<RaceEvents />} />
+          <Route path="/race-details/:id" component={RaceDetailsPage} />
+          <Route path="/results" element={<Results />} />
+          <Route path="/photos" element={<Photos />} />
+          <Route path="/volunteer" element={<Volunteer />} />
+          <Route path="/shop" element={<Shop />} />
+          <Route path="/refund-policy" element={<RefundPolicy />} />
+          <Route path="/directions" element={<Directions />} />
+        </Routes>
+      )}
     </Router>
   );
 };
