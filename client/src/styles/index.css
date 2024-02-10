@@ -142,6 +142,7 @@ button:focus-visible {
   display: flex;
   flex-direction: column;
   margin-right: 20px;
+  margin-left: 20px;
 }
 
 .input-container {
@@ -152,3 +153,58 @@ button:focus-visible {
 .form-error {
   color: red;
 }
+
+.success-message {
+  color: green;
+  margin-bottom: 10px; /* Add some bottom margin for spacing */
+}
+
+.login-signup-button {
+  background-color: #007bff; /* Set the background color */
+  color: #fff; /* Set the text color */
+  padding: 10px 20px; /* Add padding for better appearance */
+  margin-left: 20px;
+  border: none; /* Remove border */
+  border-radius: 5px; /* Add border radius for rounded corners */
+  cursor: pointer; /* Change cursor to pointer on hover */
+}
+
+.login-signup-button:hover {
+  background-color: #0056b3; /* Change background color on hover */
+}
+
+.member-section {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px; /* Add some bottom margin for spacing */
+}
+
+.member-section h2 {
+  margin-right: 10px;
+  margin-left: 30px /* Add some right margin for spacing */
+}
+
+/* Add this if you want to remove the default margin for the button */
+.member-section button {
+  margin: 0;
+}
+
+#button-container {
+  text-align: left; /* Align the button to the center */
+  margin-top: 20px;
+  margin-left: 20px;
+}
+
+#button-container button {
+  padding: 10px 20px; /* Add padding to the button for better appearance */
+  background-color: #007bff; /* Set the background color of the button */
+  color: #fff; /* Set the text color of the button */
+  border: none; /* Remove border from the button */
+  border-radius: 5px; /* Add border radius for rounded corners */
+  cursor: pointer; /* Change cursor to pointer on hover */
+}
+
+#button-container button:hover {
+  background-color: #0056b3; /* Change background color on hover */
+}
+

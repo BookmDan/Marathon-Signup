@@ -53,12 +53,14 @@ function Authentication({ updateUser }) {
 
   return (
     <>
-      <h2 className="form-error">{error}</h2>
-      {success && <h2 style={{ color: 'green' }}>Signup/Login successful! You can now access your account.</h2>}
-      <h2>{signUp ? 'Already a member?' : 'Not a member'}</h2>
-      <button type="button" onClick={handleClick}>
-        {signUp ? 'Log In' : 'Sign Up'}
-      </button>
+      {error && <h2 className="form-error">{error}</h2>}
+      {success && <h2 className="success-message">Signup/Login successful! You can now access your account.</h2>}
+      <div className="member-section">
+        <h2>{signUp ? 'Already a member?' : 'Not a member'}</h2>
+        <button className="login-signup-button" type="button" onClick={handleClick}>
+          {signUp ? 'Log In' : 'Sign Up'}
+        </button>
+      </div>
       <form onSubmit={handleFormSubmit}>
         {signUp && <SignupForm handleSubmit={handleFormSubmit} />}
         {!signUp && (
