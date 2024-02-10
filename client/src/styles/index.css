@@ -208,3 +208,6 @@ button:focus-visible {
   background-color: #0056b3; /* Change background color on hover */
 }
 
+.selected {
+  border: 2px solid yellow;
+}

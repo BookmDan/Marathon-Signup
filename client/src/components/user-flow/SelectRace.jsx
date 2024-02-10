@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import RaceEventCard from '../cards-boxes-search/RaceEventCard';
+import { Button } from "react-bootstrap";
 import { useNavigate } from 'react-router-dom';
 
 const SelectRace = ({ raceEvents }) => {
@@ -14,7 +15,7 @@ const SelectRace = ({ raceEvents }) => {
 
   const handleSelectButtonClick = () => {
     // Navigate to "TheWhy" page upon selecting a race
-    navigate('/the-why');
+    navigate('/agreement');
   };
 
   const filteredRaceEvents = raceEvents.filter((event) => {
@@ -40,18 +41,26 @@ const SelectRace = ({ raceEvents }) => {
         <option value="Full Marathon">Full Marathon</option>
       </select>
       <div className="race-event-cards">
-        {filteredRaceEvents.map((race) => (
-          <div className="race-event-card" key={race.id}>
+        {filteredRaceEvents.map((event) => (
+          <div
+            key={event.id} 
+            className={`race-event-card ${selectedRace && selectedRace.id === event.id ? 'selected' : ''}`}
+              onClick={() => handleRaceClick(event)}
+            // className="race-event-card"
+          >
             <RaceEventCard
-              key={race.id}
-              raceEvent={race}
-              onClick={() => handleRaceClick(race.id)}
-              isSelected={selectedRace === race.id}
+              key={event.id}
+              raceEvent={event}
+              onClick={() => handleRaceClick(event.id)}
+              isSelected={selectedRace === event.id}
             />
+             <Button variant="primary" onClick={handleSelectButtonClick}>Select</Button>
           </div>
         ))}
       </div>
-      <button onClick={handleSelectButtonClick}>Select</button>
+      <div id="button-container">
+        <button onClick={handleSelectButtonClick}>Select</button>
+      </div>
     </div>
   );
 };
