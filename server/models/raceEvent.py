@@ -10,6 +10,11 @@ class RaceEvent(db.Model, SerializerMixin):
   race_name = db.Column(db.String, nullable=False)
   organization = db.Column(db.String) # who is hosting
   race_type = db.Column(db.String)  
+  start_time = db.Column(db.String)  
+  start_day = db.Column(db.String)  
+  packetpickup_day = db.Column(db.String) 
+  packetpickup_location = db.Column(db.String)  
+  location = db.Column(db.String)  
 
   race_signups = db.relationship('RaceSignup', back_populates='race_event')
 
@@ -21,4 +26,8 @@ class RaceEventSchema(Schema):
   race_name = fields.Str(required=True)
   organization = fields.Str()
   race_type = fields.Str()
-
+  start_time = fields.Str()  
+  start_day = fields.Str()  
+  packetpickup_day = fields.Str()  
+  packetpickup_location = fields.Str()
+  location = fields.Str()  
