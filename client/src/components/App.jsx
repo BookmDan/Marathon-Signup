@@ -20,6 +20,7 @@ const App = () => {
   const [user, setUser] = useState([]);
   const [raceEvents, setRaceEvents] = useState(null);
   const [loggedIn, setLoggedIn] = useState(null);
+  const [raceEvent, setRaceEvent] = useState(null);
 
   const login = (user) => {
     setUser(user);
@@ -29,6 +30,21 @@ const App = () => {
     fetchUser();
     fetchRaceEvents();
   }, []);
+
+  useEffect(() => {
+    fetchRaceEventData();
+  }, []);
+
+  const fetchRaceEventData = () => {
+    fetch("/api/race-event")
+      .then((response) => response.json())
+      .then((data) => {
+        setRaceEvent(data); // Set the fetched data to state
+      })
+      .catch((error) => {
+        console.error("Error fetching race event data:", error);
+      });
+  };
 
   const fetchRaceEvents = () => {
     fetch('/api/race-events')
@@ -106,7 +122,7 @@ const App = () => {
           />
           <Route path="/signup" element={<Authentication />} />
           <Route path="/select-race" element={<SelectRace raceEvents={raceEvents} />} />
-          <Route path="/agreement" element={<Agreement raceEvent={raceEvent}/>} />
+          <Route path="/agreement" element={<Agreement raceEvent={raceEvent} />} />
           <Route path="/the-why" element={<TheWhy/>} />
           <Route path="/race-events" element={<RaceEvents />} />
           <Route path="/race-details/:id" component={RaceDetailsPage} />

@@ -14,7 +14,7 @@ class UsersResource(Resource):
   
 api.add_resource(UsersResource, '/api/users')
 
-class UsersById(Resource):
+class UserById(Resource):
   def get(self, id):
     user = User.query.get(id)
 
@@ -41,6 +41,31 @@ class UsersById(Resource):
     else:
       return make_response({"message": f"User {id} not found"})
 
+  def post(self, id):
+    user = User.query.get(id)
+    if user:
+      form_data = request.get_json()
+
+      # Check if estimated finish time data is present in the request
+      if 'estimated_finish_time_hours' in form_data and \
+        'estimated_finish_time_minutes' in form_data and \
+        'estimated_finish_time_seconds' in form_data:
+        estimated_finish_time_hours = form_data.get('estimated_finish_time_hours')
+        estimated_finish_time_minutes = form_data.get('estimated_finish_time_minutes')
+        estimated_finish_time_seconds = form_data.get('estimated_finish_time_seconds')
+        user.estimated_finish_time = (estimated_finish_time_hours * 3600) + \
+        (estimated_finish_time_minutes * 60) + \
+        estimated_finish_time_seconds
+
+        db.session.add(user)
+        db.session.commit()
+
+        return make_response({"message": f"Estimated finish time set for user with ID {id}"}, 200)
+      else:
+        return make_response({"message": "Estimated finish time data not provided in the request"}, 400)
+    else:
+      return make_response({"message": f"User {id} not found"}, 404)
+    
   def delete(self, id):
     user = User.query.filter_by(id=id).first()
     if user:
@@ -54,4 +79,4 @@ class UsersById(Resource):
     else:
       return make_response({"message": f"User {id} not found"})
 # Adding the resource to your API
-api.add_resource(UsersById, '/api/users/<int:id>')
+api.add_resource(UserById, '/api/user/<int:id>')

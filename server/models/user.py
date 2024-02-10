@@ -15,6 +15,7 @@ class User(db.Model, SerializerMixin):
   phone_number = db.Column(db.String)
   _password_hash = db.Column(db.String)
   admin = db.Column(db.String, default = False)
+  estimated_finish_time = db.Column(db.Integer)
 
   @hybrid_property
   def password_hash(self):
@@ -47,5 +48,7 @@ class UserSchema(Schema):
   email = fields.Email(required=True)
   phone_number = fields.Str()
   password = db.Column(db.String)
-  
+  estimated_finish_time_hours = fields.Int(attribute='estimated_finish_time_hours')
+  estimated_finish_time_minutes = fields.Int(attribute='estimated_finish_time_minutes')
+  estimated_finish_time_seconds = fields.Int(attribute='estimated_finish_time_seconds')
 # user_schema = UserSchema()
