@@ -41,7 +41,7 @@ const SignupForm = ({ updateUser }) => {
         })
         .then((user) => {
           updateUser(user);
-          navigate('/');
+          navigate('/select-race');
         })
         .catch((err) => {
           console.error('Signup error:', err);

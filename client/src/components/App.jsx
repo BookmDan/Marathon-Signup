@@ -11,6 +11,7 @@ import Volunteer from './static/Volunteer';
 import Shop from './static/Shop';
 import RefundPolicy from './RefundPolicy';
 import Directions from './Directions';
+import SelectRace from "./user-flow/SelectRace";
 
 const App = () => {
   const [user, setUser] = useState(null);
@@ -83,7 +84,8 @@ const App = () => {
           path="/login"
           element={<Authentication updateUser={updateUser} />}
         />
-        <Route path ="/signup" element={<Authentication/>}/>
+        <Route path="/signup" element={<Authentication />} />
+        <Route path="/select-race" element={<SelectRace />} />
         <Route path="/race-events" element={<RaceEvents />} />
         <Route path="/race-details/:id" component={RaceDetailsPage} />
         <Route path="/results" element={<Results />} />

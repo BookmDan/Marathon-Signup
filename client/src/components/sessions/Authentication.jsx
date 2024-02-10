@@ -44,7 +44,7 @@ function Authentication({ updateUser }) {
     .then(data => {
       updateUser(data); // Update user state with the response data
       setSuccess(true); // Set success state to true
-      navigate('/'); // Navigate to the home page or any other desired page
+      navigate('/select-race'); // Navigate to the home page or any other desired page
     })
     .catch(error => {
       setError(error.message); // Set error state with the error message
