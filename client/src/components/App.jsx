@@ -4,6 +4,7 @@ import Home from "./static/Home";
 import NavigationHeader from "./static/NavigationHeader";
 import Authentication from "./sessions/Authentication";
 import RaceEvents from './static/RaceEvents';
+import RaceDetailsPage from "./static/RaceDetailsPage";
 import Results from './static/Results';
 import Photos from './static/Photos';
 import Volunteer from './static/Volunteer';
@@ -84,6 +85,7 @@ const App = () => {
         />
         <Route path ="/signup" element={<Authentication/>}/>
         <Route path="/race-events" element={<RaceEvents />} />
+        <Route path="/race-details/:id" component={RaceDetailsPage} />
         <Route path="/results" element={<Results />} />
         <Route path="/photos" element={<Photos/>} />
         <Route path="/volunteer" element={<Volunteer />} />

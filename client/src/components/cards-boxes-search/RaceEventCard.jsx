@@ -7,7 +7,7 @@ function RaceEventCard({ raceEvent }) {
   const navigate = useNavigate();
 
   const handleSignUpClick = () => {
-    navigate(`/signup/${id}`);
+    navigate('/signup');
   };
 
   return (
@@ -20,7 +20,8 @@ function RaceEventCard({ raceEvent }) {
         <Card.Text>
           <strong>Race Type:</strong> {race_type}
         </Card.Text>
-        <Button as={Link} to={`/race-events/${id}`} variant="primary">
+        {/* <Button as={Link} to={`/race-events/${id}`} variant="primary"> */}
+        <Button as={Link} to={{ pathname: `/race-details/${raceEvent.id}`, state: { raceInfo: raceEvent } }} variant="primary">
           Learn More
         </Button>
         <Button variant="success" className="ml-2" onClick={handleSignUpClick}>
