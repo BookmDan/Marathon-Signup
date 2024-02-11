@@ -1,6 +1,6 @@
 from config import api, db
 from flask import make_response, request
-from flask_restful import Resource
+from flask_restful import Resource, reqparse
 from models.models import RaceSignup, RaceSignupSchema
 
 race_signup_schema = RaceSignupSchema()
@@ -42,7 +42,28 @@ class RaceSignupsById(Resource):
         status_code = 404
 
     return make_response(resp, status_code)
+  parser = reqparse.RequestParser()
+  parser.add_argument('waiver_accept', type=bool, required=True)
+  parser.add_argument('tshirt_size', type=str, required=True)
+  parser.add_argument('coupon_code', type=str)
 
+  def post(self):
+    args = RaceSignupsById.parser.parse_args()
+    
+    new_signup = RaceSignup(
+      user_id=args['user_id'],
+      race_event_id=args['race_event_id'],
+      waiver_accept=args['waiver_accept'],
+      tshirt_size=args['tshirt_size'],
+      coupon_code=args['coupon_code']
+    )
+
+    db.session.add(new_signup)
+    db.session.commit()
+
+    resp = race_signup_schema.dump(new_signup)
+    return make_response(resp, 201)
+  
   def patch(self, id):
     signup = RaceSignup.query.filter_by(id=id).first()
     if signup:
