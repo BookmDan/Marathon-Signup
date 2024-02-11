@@ -6,15 +6,15 @@ import { useNavigate } from 'react-router-dom';
 const SelectRace = ({ raceEvents }) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [filterType, setFilterType] = useState('all');
-  const [selectedRace, setSelectedRace] = useState(null);
+  // const [selectedRace, setSelectedRace] = useState(null);
   const navigate = useNavigate();
+  const [selectedRaceId, setSelectedRaceId] = useState(null);
 
   const handleRaceClick = (id) => {
-    setSelectedRace(id);
+    setSelectedRaceId(id);
   };
 
   const handleSelectButtonClick = () => {
-    // Navigate to "TheWhy" page upon selecting a race
     navigate('/agreement');
   };
 
@@ -44,15 +44,15 @@ const SelectRace = ({ raceEvents }) => {
         {filteredRaceEvents.map((event) => (
           <div
             key={event.id} 
-            className={`race-event-card ${selectedRace && selectedRace.id === event.id ? 'selected' : ''}`}
-              onClick={() => handleRaceClick(event)}
+            className={`race-event-card ${selectedRaceId === event.id ? 'selected' : ''}`}
+            onClick={() => handleRaceClick(event.id)}
             // className="race-event-card"
           >
             <RaceEventCard
               key={event.id}
               raceEvent={event}
               onClick={() => handleRaceClick(event.id)}
-              isSelected={selectedRace === event.id}
+              isSelected={selectedRaceId === event.id}
             />
              <Button variant="primary" onClick={handleSelectButtonClick}>Select</Button>
           </div>

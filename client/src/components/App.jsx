@@ -30,11 +30,9 @@ const App = () => {
   useEffect(() => {
     fetchUser();
     fetchRaceEvents();
-  }, []);
-
-  useEffect(() => {
     fetchRaceEventData();
   }, []);
+
 
   const fetchRaceEventData = () => {
     fetch("/api/race-event")

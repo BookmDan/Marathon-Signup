@@ -3,7 +3,7 @@ import { Card, Button } from "react-bootstrap";
 import { Link, useNavigate } from 'react-router-dom';
 
 function RaceEventCard({ raceEvent }) {
-  const { id, race_name, organization, race_type } = raceEvent;
+  const {race_name, organization, race_type } = raceEvent;
   const navigate = useNavigate();
 
   const handleSignUpClick = () => {

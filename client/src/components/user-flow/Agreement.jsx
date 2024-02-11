@@ -1,16 +1,33 @@
 import { useState, useEffect } from "react";
 import { Container, Button, Form, Col, Row } from "react-bootstrap";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate,useParams } from 'react-router-dom';
 
 const Agreement = () => {
   const navigate = useNavigate()
   const [understandEventDetails, setUnderstandEventDetails] = useState(false);
   const [packetPickup, setPacketPickup] = useState(false);
-  const [loadedRaceEvent, setLoadedRaceEvent] = useState(null);
   const [hours, setHours] = useState("");
   const [minutes, setMinutes] = useState("");
   const [seconds, setSeconds] = useState("");
   const [shirtSize, setShirtSize] = useState("");
+  const [raceEventData, setRaceEventData] = useState(null);
+  const { id } = useParams(); 
+
+  useEffect(() => {
+    fetch('/api/race-event/${id}')
+      .then(response => {
+        if (response.ok) {
+            return response.json();
+        }
+        throw new Error('Failed to fetch race event data');
+      })
+      .then(data => {
+        setRaceEventData(data);
+      })
+      .catch(error => {
+        console.error('Error fetching race event data:', error);
+      });
+  }, []);
 
   const handleContinue = () => {
     const totalSeconds =
@@ -130,7 +147,10 @@ const Agreement = () => {
           <Col sm={10}>
             <Form.Check
               type="checkbox"
-              label={`I understand that this event occurs on ${loadedRaceEvent ? loadedRaceEvent.start_day : ''} at ${loadedRaceEvent ? loadedRaceEvent.start_time : ''}`}
+              label={`I understand that this event occurs on ${raceEventData ? raceEventData.start_day : ''
+            } at ${
+              raceEventData ? raceEventData.start_time : ''
+            }`}
               checked={understandEventDetails}
               onChange={() => setUnderstandEventDetails(!understandEventDetails)}
             />
@@ -144,7 +164,10 @@ const Agreement = () => {
           <Col sm={10}>
             <Form.Check
               type="checkbox"
-              label={`I will pick up my packet on ${loadedRaceEvent ? loadedRaceEvent.packetpickup_day : ''}`}
+              label={`I will pick up my packet on ${raceEventData ? raceEventData.packetpickup_day : ''
+              } at ${
+                raceEventData ? raceEventData.packetpickup_location : ''
+              }`}
               checked={packetPickup}
               onChange={() => setPacketPickup(!packetPickup)}
             />

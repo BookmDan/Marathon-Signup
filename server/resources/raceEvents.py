@@ -29,17 +29,33 @@ class RaceEventsResource(Resource):
 api.add_resource(RaceEventsResource, '/api/race-events')
 
 class RaceEventsById(Resource):
-  def get(self,id):
-    event = RaceEvent.query.filter_by(id=id).first()
+  # def get(self,id):
+  #   event = RaceEvent.query.filter_by(id=id).first()
 
-    if event:
-      resp = schema_instance.dump(event)
-      status_code = 200
+  #   if event:
+  #     resp = schema_instance.dump(event)
+  #     status_code = 200
+  #   else:
+  #     resp = { "message": f"Event {id} was not found."}
+  #     status_code = 404
+
+  #   return make_response(resp, status_code)
+  def get(self, id=None):
+    if id is None:
+      race_event = RaceEvent.query.first()
     else:
-      resp = { "message": f"Event {id} was not found."}
-      status_code = 404
+      race_event = RaceEvent.query.filter_by(id=id).first()
 
-    return make_response(resp, status_code)
+    if race_event:
+      race_event_data = {
+        'start_day': race_event.start_day,
+        'start_time': race_event.start_time,
+        'packetpickup_day': race_event.packetpickup_day,
+        'packetpickup_location': race_event.packetpickup_location
+      }
+      return make_response(race_event_data), 200
+    else:
+      return make_response({'message': 'Race event data not found'}), 404
   
   def patch(self,id):
     event = RaceEvent.query.filter_by(id=id).first()
@@ -68,4 +84,6 @@ class RaceEventsById(Resource):
     else:
       return make_response({"message": f"Event {id} not found"})
 
-api.add_resource(RaceEventsById, '/api/raceEvents/<int:id>')
+api.add_resource(RaceEventsById, '/api/race-event','/api/race-event/<int:id>')
+
+
