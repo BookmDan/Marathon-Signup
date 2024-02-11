@@ -2,11 +2,14 @@ import { useState } from 'react';
 import { Container, Row, Col, Button, Form } from 'react-bootstrap';
 import autismImage from '../../photos/autism1.jpg';
 import autismImage2 from '../../photos/autism2.jpeg';
+import { useNavigate } from 'react-router-dom';
+
 
 
 const TheWhy = () => {
   const [donationAmount, setDonationAmount] = useState(0);
   const [selectedOption, setSelectedOption] = useState('myself');
+  const navigate = useNavigate()
   
   const handleDonationChange = (amount) => {
     setDonationAmount(amount);
@@ -22,13 +25,13 @@ const TheWhy = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-      // Handle donation submission
+    navigate('/shipmypacket')
   };
 
   return (
-    <div>
+    <div className="form-container">
       <h2>Raise for Autism Awareness</h2>
-      <Container>
+      <Container  className="container-custom">
         <Row className="mt-3">
           <Col className="image-container">
             <img src={autismImage} alt="Autism Awareness" className="img-fluid" />
@@ -49,53 +52,55 @@ const TheWhy = () => {
             </p>
           </Col>
         </Row>
-          <Row className="mt-4">
-            <Col>
-              <h3>Donate Now</h3>
-              <Form onSubmit={handleSubmit}>
-                <Form.Group>
-                  <Button variant="primary" onClick={() => handleDonationChange(100)}>Donate $100</Button>
-                  <Button variant="primary" onClick={() => handleDonationChange(50)}>Donate $50</Button>
-                  <Button variant="primary" onClick={() => handleDonationChange(25)}>Donate $25</Button>
-                  <Button variant="primary" onClick={() => handleDonationChange(10)}>Donate $10</Button>
-                  <h3> Custom Amount</h3>
-                  <p>
-                    Enter a custom donation amount or select a donation level above.
-                  </p>
-                  <Form.Control
-                    type="number"
-                    placeholder="Enter donation amount"
-                    value={donationAmount}
-                    onChange={handleCustomAmountChange}
-                  />
-                </Form.Group>
-                <Form.Group>
-                  <Form.Check
-                    type="radio"
-                    label="On behalf of myself"
-                    value="myself"
-                    checked={selectedOption === 'myself'}
-                    onChange={handleOptionChange}
-                  />
-                  <Form.Check
-                    type="radio"
-                    label="On behalf of anonymous"
-                    value="anonymous"
-                    checked={selectedOption === 'anonymous'}
-                    onChange={handleOptionChange}
-                  />
-                  <Form.Check
-                    type="radio"
-                    label="On behalf of other"
-                    value="other"
-                    checked={selectedOption === 'other'}
-                    onChange={handleOptionChange}
-                  />
-                </Form.Group>
-                <Button type="submit">Donate</Button>
-              </Form>
-            </Col>
-          </Row>
+        <Row className="mt-4">
+          <Col>
+            <h3>Donate Now</h3>
+            <Form onSubmit={handleSubmit}>
+            <Form.Group>
+              <Button variant="primary" onClick={() => handleDonationChange(100)}>Donate $100</Button>
+              <Button variant="primary" onClick={() => handleDonationChange(50)}>Donate $50</Button>
+              <Button variant="primary" onClick={() => handleDonationChange(25)}>Donate $25</Button>
+              <Button variant="primary" onClick={() => handleDonationChange(10)}>Donate $10</Button>
+              <h3> Custom Amount</h3>
+              <p>
+                Enter a custom donation amount or select a donation level above.
+              </p>
+              <Form.Control
+                type="number"
+                placeholder="Enter donation amount"
+                value={donationAmount}
+                onChange={handleCustomAmountChange}
+              />
+            </Form.Group>
+            <Form.Group>
+              <Form.Check
+                type="radio"
+                label="On behalf of myself"
+                value="myself"
+                checked={selectedOption === 'myself'}
+                onChange={handleOptionChange}
+              />
+              <Form.Check
+                type="radio"
+                label="On behalf of anonymous"
+                value="anonymous"
+                checked={selectedOption === 'anonymous'}
+                onChange={handleOptionChange}
+              />
+              <Form.Check
+                type="radio"
+                label="On behalf of other"
+                value="other"
+                checked={selectedOption === 'other'}
+                onChange={handleOptionChange}
+              />
+            </Form.Group>
+            <div id="button-container">
+              <Button type="submit" onClick={handleSubmit}>Donate</Button>
+            </div>
+            </Form>
+          </Col>
+        </Row>
       </Container>
     </div>
   );

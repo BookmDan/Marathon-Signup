@@ -138,6 +138,10 @@ button:focus-visible {
   }
 }
 
+.form-container {
+  margin-left: 20px;
+}
+
 .form-field {
   display: flex;
   flex-direction: column;
@@ -147,6 +151,10 @@ button:focus-visible {
 
 .input-container {
   margin-bottom: 20px; /* Add margin-bottom to create space between the search input and race card events */
+}
+
+.container-custom {
+  margin-left: 20px;
 }
 
 /* Additional styling for error messages */
