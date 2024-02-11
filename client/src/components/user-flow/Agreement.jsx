@@ -79,6 +79,11 @@ const Agreement = () => {
   const handleShirtSizeChange = (e) => {
     setShirtSize(e.target.value);
   };
+
+  const handleBackClick = () => {
+    navigate('/select-race')
+  };
+
   return (
     <Container>
       <h2>T-Shirt Options</h2>
@@ -145,9 +150,15 @@ const Agreement = () => {
             />
           </Col>
         </Form.Group>
-        <div id="button-container">
-          <Button id="" variant="primary" onClick={handleContinue}>Continue</Button>
+        <div style={{ display: 'flex', alignItems: 'center' }}>
+          <div id="button-container">
+            <Button variant="secondary" onClick={handleContinue}>Continue</Button>
+          </div>
+            <Button variant="secondary" onClick={handleBackClick}>Back</Button>
         </div>
+        {/* <div id="button-container">
+          <Button id="" variant="primary" onClick={handleContinue}>Continue</Button>
+        </div> */}
       </Form>
     </Container>
   );

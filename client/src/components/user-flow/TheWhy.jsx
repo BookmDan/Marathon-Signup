@@ -26,6 +26,19 @@ const TheWhy = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     navigate('/shipmypacket')
+  }; 
+
+  const handlePayment = (e) => {
+    e.preventDefault();
+    navigate('/payment')
+  };
+
+  const handleContinueClick = () => {
+    navigate('/ship-packet')
+  };
+
+  const handleBackClick = () => {
+    navigate('/agreement')
   };
 
   return (
@@ -56,7 +69,7 @@ const TheWhy = () => {
           <Col>
             <h3>Donate Now</h3>
             <Form onSubmit={handleSubmit}>
-            <Form.Group>
+            <Form.Group id="button-container">
               <Button variant="primary" onClick={() => handleDonationChange(100)}>Donate $100</Button>
               <Button variant="primary" onClick={() => handleDonationChange(50)}>Donate $50</Button>
               <Button variant="primary" onClick={() => handleDonationChange(25)}>Donate $25</Button>
@@ -65,12 +78,16 @@ const TheWhy = () => {
               <p>
                 Enter a custom donation amount or select a donation level above.
               </p>
-              <Form.Control
-                type="number"
-                placeholder="Enter donation amount"
-                value={donationAmount}
-                onChange={handleCustomAmountChange}
-              />
+              <div style={{ display: 'flex', alignItems: 'center' }}>
+                <Form.Control
+                  type="number"
+                  placeholder="Enter donation amount"
+                  value={donationAmount}
+                  onChange={handleCustomAmountChange}
+                  style={{ marginRight: '10px' }} // Add margin to the right of the input
+                />
+                <Button variant="primary" type="submit" onClick={handlePayment}>Donate</Button>
+              </div>
             </Form.Group>
             <Form.Group>
               <Form.Check
@@ -95,8 +112,11 @@ const TheWhy = () => {
                 onChange={handleOptionChange}
               />
             </Form.Group>
-            <div id="button-container">
-              <Button type="submit" onClick={handleSubmit}>Donate</Button>
+            <div style={{ display: 'flex', alignItems: 'center' }}>
+              <div id="button-container">
+                  <Button variant="secondary" onClick={handleContinueClick}>Continue</Button>
+              </div>
+                <Button variant="secondary" onClick={handleBackClick}>Back</Button>
             </div>
             </Form>
           </Col>
