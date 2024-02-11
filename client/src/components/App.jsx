@@ -14,6 +14,7 @@ import Directions from './Directions';
 import SelectRace from "./user-flow/SelectRace";
 import TheWhy from "./user-flow/TheWhy";
 import Agreement from "./user-flow/Agreement";
+import ShipPacket from "./user-flow/ShipPacket";
 
 const App = () => {
   const [loading, setLoading] = useState(true);
@@ -123,7 +124,8 @@ const App = () => {
           <Route path="/signup" element={<Authentication />} />
           <Route path="/select-race" element={<SelectRace raceEvents={raceEvents} />} />
           <Route path="/agreement" element={<Agreement raceEvent={raceEvent} />} />
-          <Route path="/the-why" element={<TheWhy/>} />
+          <Route path="/the-why" element={<TheWhy />} />
+          <Route path="/ship-packet" element={<ShipPacket/>} />
           <Route path="/race-events" element={<RaceEvents />} />
           <Route path="/race-details/:id" component={RaceDetailsPage} />
           <Route path="/results" element={<Results />} />
