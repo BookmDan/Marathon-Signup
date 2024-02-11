@@ -64,7 +64,13 @@ if __name__ == "__main__":
                     print(f"User {user.id} has already signed up for race event {race_event.id}. Skipping...")
                 else:
                     # Create a RaceSignup instance for the user and race event
-                    race_signup = RaceSignup(waiver_accept=True, tshirt_size="S", coupon_code="DEF456", user=user, race_event=race_event)
+                    race_signup = RaceSignup(
+                        waiver_accept=True, 
+                        tshirt_size="S", 
+                        coupon_code="DEF456", 
+                        ship_packet=True, 
+                        user=user, 
+                        race_event=race_event)
                     db.session.add(race_signup)
 
         # Commit the changes to the database

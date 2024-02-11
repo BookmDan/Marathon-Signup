@@ -8,6 +8,7 @@ class RaceSignup(db.Model, SerializerMixin):
   waiver_accept = db.Column(db.Boolean)
   tshirt_size = db.Column(db.String)
   coupon_code = db.Column(db.String)
+  ship_packet = db.Column(db.Boolean)
 
   user_id = db.Column(db.Integer, db.ForeignKey('user.id'), unique=True)
   user = db.relationship('User', back_populates='race_signups')
@@ -23,5 +24,6 @@ class RaceSignupSchema(Schema):
     waiver_accept = fields.Boolean()
     tshirt_size = fields.Str()
     coupon_code = fields.Str()
+    ship_packet = fields.Boolean() 
 
 # race_signup_schema = RaceSignupSchema()
