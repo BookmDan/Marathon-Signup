@@ -31,26 +31,6 @@ const Agreement = () => {
       estimated_finish_time: totalSeconds,
     };
 
-    // Send a POST request to your backend API
-    fetch("/api/user/:id", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(finishTimeData),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        // Handle success response
-        console.log("Estimated finish time data sent successfully:", data);
-        navigate("/the-why"); // Navigate to the next page after successful submission
-      })
-      .catch((error) => {
-        // Handle error
-        console.error("Error sending estimated finish time data:", error);
-      });
-    // navigate("/the-why");
-
     fetch("/api/race-signups/<int:id>", {
       method: "POST",
       headers: {
@@ -62,25 +42,26 @@ const Agreement = () => {
       .then((data) => {
         console.log("Race signup data sent successfully:", data);
         // After successful race signup, send estimated finish time data
-        fetch("/api/user/:id", {
-          method: "POST",
-          headers: {
-              "Content-Type": "application/json",
-          },
-          body: JSON.stringify(finishTimeData),
-        })
-          .then((response) => response.json())
-          .then((data) => {
-              console.log("Estimated finish time data sent successfully:", data);
-              navigate("/the-why");
-          })
-          .catch((error) => {
-              console.error("Error sending estimated finish time data:", error);
-          });
+    fetch("/api/user/:id", {
+      method: "POST",
+      headers: {
+          "Content-Type": "application/json",
+      },
+      body: JSON.stringify(finishTimeData),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+          console.log("Estimated finish time data sent successfully:", data);
+          navigate("/the-why");
       })
       .catch((error) => {
-          console.error("Error sending race signup data:", error);
+          console.error("Error sending estimated finish time data:", error);
       });
+    })
+    .catch((error) => {
+        console.error("Error sending race signup data:", error);
+    });
+    navigate("/the-why");
   };
 
   const handleHoursChange = (e) => {

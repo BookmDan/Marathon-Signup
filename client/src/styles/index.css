@@ -211,3 +211,12 @@ button:focus-visible {
 .selected {
   border: 2px solid yellow;
 }
+
+.image-container {
+  display: flex;
+}
+
+.image-container img {
+  width: 30%; /* Adjust the width as needed */
+  margin-right: 10px; /* Adjust the spacing between images */
+}
