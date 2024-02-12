@@ -8,13 +8,13 @@ import RaceDetailsPage from "./static/RaceDetailsPage";
 import Results from './static/Results';
 import Photos from './static/Photos';
 import Volunteer from './static/Volunteer';
-import Shop from './static/Shop';
 import RefundPolicy from './RefundPolicy';
 import Directions from './Directions';
 import SelectRace from "./user-flow/SelectRace";
 import TheWhy from "./user-flow/TheWhy";
 import Agreement from "./user-flow/Agreement";
 import ShipPacket from "./user-flow/ShipPacket";
+import Shop from "./user-flow/Shop";
 
 const App = () => {
   const [loading, setLoading] = useState(true);

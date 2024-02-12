@@ -1,8 +1,45 @@
-import { Container, Form } from "react-bootstrap";
-import {useState} from 'react'
+import { Container, Form, Button } from "react-bootstrap";
+import { useState } from 'react'
+import { useNavigate } from "react-router-dom";
 
 const ShipPacket = () => {
   const [quantity, setQuantity] = useState(0); 
+  const [quantityIncreased, setQuantityIncreased] = useState(false);
+  const navigate = useNavigate()
+
+  const handleSubmit = () => {
+    // setQuantity(prevQuantity => prevQuantity + 1);
+    if (quantity > 0) {
+      // If quantity is greater than 0, set the boolean to true and submit
+      setQuantityIncreased(true);
+    // Make a fetch post request to submit the race signup data to the backend
+      fetch('/api/race-signups', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            quantity: quantity,
+            // Other race signup data...
+        })
+      })
+      .then(response => {
+        if (response.ok) {
+            // Handle successful response
+          console.log('Race signup submitted successfully.');
+        } else {
+            // Handle error response
+          console.error('Error submitting race signup.');
+        }
+      })
+      .catch(error => {
+        console.error('Error submitting race signup:', error);
+      });
+    } else {
+      setQuantityIncreased(false);
+    }
+    navigate('/shop')
+  };
   return (
     <Container>
       <h2>Ship My Packet</h2>
@@ -21,16 +58,20 @@ const ShipPacket = () => {
       <p>
         Ship my Packet - $25.00 
       </p>
-      <Form>
+      <Form onSubmit={handleSubmit}>
         <Form.Group>
           <Form.Label>Quantity:</Form.Label>
           <input
             type="number"
             placeholder="Enter quantity"
             value={quantity}
-            onChange={(e) => setQuantity(e.target.value)}
+            onChange={(e) => setQuantity(Math.min(e.target.value, 1))}
+            max={1}
           />
         </Form.Group>
+          <div id="button-container">
+            <Button type="submit">Continue</Button>
+          </div>
       </Form>
     </Container>
   );

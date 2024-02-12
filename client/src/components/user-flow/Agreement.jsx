@@ -11,7 +11,7 @@ const Agreement = () => {
   const [seconds, setSeconds] = useState("");
   const [shirtSize, setShirtSize] = useState("");
   const [raceEventData, setRaceEventData] = useState(null);
-  const { id } = useParams(); 
+  // const { id } = useParams(); 
 
   useEffect(() => {
     fetch('/api/race-event/${id}')
