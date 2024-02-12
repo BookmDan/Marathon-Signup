@@ -15,6 +15,7 @@ import TheWhy from "./user-flow/TheWhy";
 import Agreement from "./user-flow/Agreement";
 import ShipPacket from "./user-flow/ShipPacket";
 import Shop from "./user-flow/Shop";
+import Payment from "./user-flow/Payment";
 
 const App = () => {
   const [loading, setLoading] = useState(true);
@@ -129,6 +130,7 @@ const App = () => {
           <Route path="/results" element={<Results />} />
           <Route path="/photos" element={<Photos />} />
           <Route path="/volunteer" element={<Volunteer />} />
+          <Route path="/payment" element={<Payment />} />
           <Route path="/shop" element={<Shop />} />
           <Route path="/refund-policy" element={<RefundPolicy />} />
           <Route path="/directions" element={<Directions />} />

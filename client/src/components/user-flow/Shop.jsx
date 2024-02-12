@@ -1,52 +1,52 @@
-import { Container, Row, Col } from 'react-bootstrap';
+import { Container, Row, Col, Button } from 'react-bootstrap';
 import MerchCard from '../cards-boxes-search/MerchCard';
 import babybib from "../../photos/shop/babybib.jpg"
 import mug1 from "../../photos/shop/mug1.jpg"
 import mug2 from "../../photos/shop/mug2.jpg"
 import triathlete from "../../photos/shop/triathlete.jpg"
 import triwrist from "../../photos/shop/triwrist.jpg"
-
+import { useNavigate } from "react-router-dom";
 
 const Shop = () => {
-  
+  const navigate = useNavigate()
+
   // Define shop items with their respective details
-  
   const shopItems = [
     {
-      name: 'T-shirt',
-      // imageUrl:  "../../photos/shop/triathlete.jpg",
-      options: [
+      name: 'T-shirt', imageUrl: triathlete, options: [
         { value: 's', label: 'Small' },
         { value: 'm', label: 'Medium' },
-        { value: 'l', label: 'Large' },
-      ]
-    },
-    // Add more items as needed
+        { value: 'l', label: 'Large' },] },
+    { name: 'Mug', imageUrl: mug1 },
+    { name: 'Mug2', imageUrl: mug2 },
+    { name: 'Baby Bib', imageUrl: babybib },
+    { name: 'Wristband', imageUrl: triwrist },
   ];
-  // const shopItems = [
-  //   { name: 'T-shirt', imageUrl: triathlete, options: ['Small', 'Medium', 'Large'] },
-  //   { name: 'Mug', imageUrl: [mug1, mug2] },
-  //   { name: 'Baby Bib', imageUrl: babybib },
-  //   { name: 'Wristband', imageUrl: triwrist },
-  // ];
+
+  const handleContinueClick = () => {
+    navigate('/payment')
+  };
+
+  const handleBackClick = () => {
+    navigate('/ship-packet')
+  };
 
   return (
     <Container>
       <h2>Shop</h2>
-      <Col className="image-container">
-        <img src={babybib}/>
-        <img src={mug1}/>
-        <img src={mug2}/>
-        <img src={triwrist}/>
-        <img src={triathlete} />
-      </Col>
-      <Row>
-        {shopItems.map((item, index) => (
-          <Col key={index}>
-            <MerchCard item={item} />
-          </Col>
-        ))}
-      </Row>
+        <Row className="image-container row-cols-1 row-cols-md-2 row-cols-lg-3">
+          {shopItems.map((item, index) => (
+            <Col key={index} xs={12} sm={6} lg={4} className="mb-4">
+              <MerchCard item={item} />
+            </Col>
+          ))}
+        </Row>
+        <div style={{ display: 'flex', alignItems: 'center' }}>
+          <div id="button-container">
+            <Button variant="secondary" onClick={handleContinueClick}>Continue</Button>
+          </div>
+            <Button variant="secondary" onClick={handleBackClick}>Back</Button>
+        </div>
     </Container>
   );
 };

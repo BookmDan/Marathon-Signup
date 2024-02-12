@@ -10,7 +10,7 @@ const MerchCard = ({ item }) => {
       <Card.Body>
         <Card.Title>{name}</Card.Title>
         <Form.Select aria-label="Select option">
-          {options.map((option, index) => (
+          {options && options.map((option, index) => (
             <option key={index} value={option.value}>{option.label}</option>
           ))}
         </Form.Select>
