@@ -65,7 +65,7 @@ const ShipPacket = () => {
             type="number"
             placeholder="Enter quantity"
             value={quantity}
-            onChange={(e) => setQuantity(Math.min(e.target.value, 1))}
+            onChange={(e) => setQuantity(Math.max(Number(e.target.value), 0))}
             max={1}
           />
         </Form.Group>

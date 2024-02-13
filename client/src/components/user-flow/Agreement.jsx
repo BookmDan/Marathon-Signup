@@ -82,15 +82,15 @@ const Agreement = () => {
   };
 
   const handleHoursChange = (e) => {
-    setHours(e.target.value);
+    setHours(Math.max(Number(e.target.value), 0));
   };
 
   const handleMinutesChange = (e) => {
-    setMinutes(e.target.value);
+    setMinutes(Math.max(Number(e.target.value), 0));
   };
 
   const handleSecondsChange = (e) => {
-    setSeconds(e.target.value);
+    setSeconds(Math.max(Number(e.target.value), 0));
   };
 
   const handleShirtSizeChange = (e) => {
