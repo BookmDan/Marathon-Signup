@@ -1,3 +1,34 @@
+// import { Card, Button, InputGroup, FormControl } from 'react-bootstrap';
+
+// const MerchCard = ({ item, handleQuantityChange }) => {
+//   return (
+//     <Card>
+//       <Card.Body>
+//         <Card.Title>{item.name}</Card.Title>
+//         <Card.Text>
+//           Price: ${item.price}
+//         </Card.Text>
+//         <InputGroup className="mb-3">
+//           {/* <Button variant="outline-secondary" onClick={() => handleQuantityChange(item.id - 1, -1)}>
+//             -
+//           </Button> */}
+//           <FormControl
+//             type="number"
+//             value={item.quantity}
+//             onChange={(e) => handleQuantityChange(item.id - 1, e.target.value)}
+//           />
+//           {/* <Button variant="outline-secondary" onClick={() => handleQuantityChange(item.id - 1, 1)}>
+//             +
+//           </Button> */}
+//         </InputGroup>
+//       </Card.Body>
+//     </Card>
+//   );
+// };
+
+// export default MerchCard;
+
+
 import { Card, Button, Form } from 'react-bootstrap';
 
 const MerchCard = ({ item }) => {
