@@ -1,7 +1,9 @@
-import React from 'react';
 import { useFormik } from 'formik';
+import { Button } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 
 const Payment = () => {
+  const navigate = useNavigate()
   const formik = useFormik({
     initialValues: {
       credit_card_number: '',
@@ -20,6 +22,14 @@ const Payment = () => {
       console.log(values);
     },
   });
+
+  const handleContinueClick = () => {
+    navigate('/purchase-summary')
+  };
+
+  const handleBackClick = () => {
+    navigate('/shop')
+  };
 
   return (
     <form onSubmit={formik.handleSubmit}>
@@ -81,6 +91,12 @@ const Payment = () => {
         </label>
       </div>
       <button type="submit">Submit</button>
+      <div style={{ display: 'flex', alignItems: 'center' }}>
+        <div id="button-container">
+          <Button variant="secondary" onClick={handleContinueClick}>Continue</Button>
+        </div>
+        <Button variant="secondary" onClick={handleBackClick}>Back</Button>
+      </div>
     </form>
   );
 };
