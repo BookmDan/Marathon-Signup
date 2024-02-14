@@ -17,6 +17,7 @@ import ShipPacket from "./user-flow/ShipPacket";
 import Shop from "./user-flow/Shop";
 import Payment from "./user-flow/Payment";
 import PurchaseSummary from "./user-flow/PurchaseSummary";
+import { CostProvider } from './user-flow/CostContext';
 
 
 const App = () => {
@@ -113,31 +114,33 @@ const App = () => {
       {loading ? (
         <div>Loading...</div>
       ) : (
-        <Routes>
-          <Route
-            path="/"
-            element={user ? <Home /> : <Authentication updateUser={updateUser} />}
-          />
-          <Route
-            path="/login"
-            element={<Authentication updateUser={updateUser} />}
-          />
-          <Route path="/signup" element={<Authentication />} />
-          <Route path="/select-race" element={<SelectRace raceEvents={raceEvents} />} />
-          <Route path="/agreement" element={<Agreement raceEvent={raceEvent} />} />
-          <Route path="/the-why" element={<TheWhy />} />
-          <Route path="/ship-packet" element={<ShipPacket/>} />
-          <Route path="/race-events" element={<RaceEvents />} />
-          <Route path="/race-details/:id" component={RaceDetailsPage} />
-          <Route path="/results" element={<Results />} />
-          <Route path="/photos" element={<Photos />} />
-          <Route path="/volunteer" element={<Volunteer />} />
-          <Route path="/payment" element={<Payment />} />
-          <Route path="/shop" element={<Shop />} />
-          <Route path="/purchase-summary" element={<PurchaseSummary />} />
-          <Route path="/refund-policy" element={<RefundPolicy />} />
-          <Route path="/directions" element={<Directions />} />
-        </Routes>
+        <CostProvider>
+          <Routes>
+            <Route
+              path="/"
+              element={user ? <Home /> : <Authentication updateUser={updateUser} />}
+            />
+            <Route
+              path="/login"
+              element={<Authentication updateUser={updateUser} />}
+            />
+            <Route path="/signup" element={<Authentication />} />
+            <Route path="/agreement" element={<Agreement raceEvent={raceEvent} />} />
+            <Route path="/the-why" element={<TheWhy />} />
+            <Route path="/race-events" element={<RaceEvents />} />
+            <Route path="/race-details/:id" component={RaceDetailsPage} />
+            <Route path="/results" element={<Results />} />
+            <Route path="/photos" element={<Photos />} />
+            <Route path="/volunteer" element={<Volunteer />} />
+            <Route path="/select-race" element={<SelectRace raceEvents={raceEvents} />} />
+            <Route path="/ship-packet" element={<ShipPacket/>} />
+            <Route path="/shop" element={<Shop />} />
+            <Route path="/purchase-summary" element={<PurchaseSummary/>} />
+            <Route path="/payment" element={<Payment />} />
+            <Route path="/refund-policy" element={<RefundPolicy />} />
+            <Route path="/directions" element={<Directions />} />
+          </Routes>
+        </CostProvider>
       )}
     </Router>
   );

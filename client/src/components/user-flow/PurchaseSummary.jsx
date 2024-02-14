@@ -1,19 +1,23 @@
 import { Card, Button, Form } from 'react-bootstrap';
+import { useCost } from './CostContext'; 
 import { useNavigate } from "react-router-dom";
 
-const PurchaseSummary = ({ event, tShirtSize, couponCode, baseCost }) => {
-  const navigate = useNavigate()
-  // Dummy data for demonstration
-  const tShirtPrice = 0.00;
-  const processingFee = 3.70;
+const PurchaseSummary = () => {
+  const navigate = useNavigate();
+  const { selectedRaceCost, shipPacketCost, cartItemsCost } = useCost(); // Access the cost-related state from the CostContext
+
+  // Calculate total cost
+  const baseCost = selectedRaceCost + shipPacketCost + cartItemsCost;
+  const tShirtPrice = 0.00; // Assuming a fixed price for the T-shirt
+  const processingFee = 3.70; // Assuming a fixed processing fee
   const totalCost = baseCost + tShirtPrice + processingFee;
 
   const handleContinueClick = () => {
-    navigate('/purchase-summary')
+    navigate('/purchase-summary');
   };
 
   const handleBackClick = () => {
-    navigate('/shop')
+    navigate('/shop');
   };
 
   return (
@@ -22,11 +26,13 @@ const PurchaseSummary = ({ event, tShirtSize, couponCode, baseCost }) => {
         <Card.Body>
           <Card.Title>Purchase Summary</Card.Title>
           <Card.Text>
-            <strong>Event:</strong> {event}
+            <strong>Selected Race Cost:</strong> ${selectedRaceCost.toFixed(2)}
             <br />
-            <strong>Item:</strong> T-shirt (Size: {tShirtSize})
+            <strong>Ship Packet Cost:</strong> ${shipPacketCost.toFixed(2)}
             <br />
-            <strong>Total:</strong> ${baseCost.toFixed(2)}
+            <strong>Cart Items Cost:</strong> ${cartItemsCost.toFixed(2)}
+            <br />
+            <strong>Base Cost:</strong> ${baseCost.toFixed(2)}
             <br />
             <strong>T-shirt:</strong> ${tShirtPrice.toFixed(2)}
             <br />
@@ -35,11 +41,7 @@ const PurchaseSummary = ({ event, tShirtSize, couponCode, baseCost }) => {
               <Form.Control type="text" placeholder="Enter coupon code" />
             </Form.Group>
             <Button variant="primary">Apply</Button>
-          </Card.Text>
-          <hr />
-          <Card.Text>
-            <strong>Base Cost:</strong> ${baseCost.toFixed(2)}
-            <br />
+            <hr />
             <strong>Processing Fee:</strong> ${processingFee.toFixed(2)}
             <br />
             <strong>Total:</strong> ${totalCost.toFixed(2)}

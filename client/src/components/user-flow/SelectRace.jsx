@@ -2,6 +2,7 @@ import { useState } from 'react';
 import RaceEventCard from '../cards-boxes-search/RaceEventCard';
 import { Button } from "react-bootstrap";
 import { useNavigate } from 'react-router-dom';
+import { useCost } from './CostContext';
 
 const SelectRace = ({ raceEvents }) => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -9,6 +10,7 @@ const SelectRace = ({ raceEvents }) => {
   // const [selectedRace, setSelectedRace] = useState(null);
   const navigate = useNavigate();
   const [selectedRaceId, setSelectedRaceId] = useState(null);
+  const { setSelectedRaceCost } = useCost();
 
   const handleRaceClick = (id) => {
     setSelectedRaceId(id);

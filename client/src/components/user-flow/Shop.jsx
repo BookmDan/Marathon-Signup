@@ -6,10 +6,13 @@ import mug2 from "../../photos/shop/mug2.jpg"
 import triathlete from "../../photos/shop/triathlete.jpg"
 import triwrist from "../../photos/shop/triwrist.jpg"
 import { useNavigate } from "react-router-dom";
-import {useState} from 'react'
+import { useState } from 'react'
+import { useCost } from './CostContext';
+
+
 const Shop = () => {
   const navigate = useNavigate()
-
+  const { setCartItemsCost } = useCost();
   // Define shop items with their respective details
   const [shopItems, setShopItems] = useState([
     {
