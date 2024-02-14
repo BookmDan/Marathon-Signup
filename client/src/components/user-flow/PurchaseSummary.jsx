@@ -24,7 +24,7 @@ const PurchaseSummary = () => {
     <>
       <Card>
         <Card.Body>
-          <Card.Title>Purchase Summary</Card.Title>
+          <Card.Title className="customTitle">Purchase Summary</Card.Title>
           <Card.Text>
             <strong>Selected Race Cost:</strong> ${selectedRaceCost.toFixed(2)}
             <br />
