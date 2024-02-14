@@ -12,8 +12,9 @@ const SelectRace = ({ raceEvents }) => {
   const [selectedRaceId, setSelectedRaceId] = useState(null);
   const { setSelectedRaceCost } = useCost();
 
-  const handleRaceClick = (id) => {
+  const handleRaceClick = (id, raceEvent) => {
     setSelectedRaceId(id);
+    setSelectedRaceCost(raceEvent.race_cost);
   };
 
   const handleSelectButtonClick = () => {
@@ -47,13 +48,12 @@ const SelectRace = ({ raceEvents }) => {
           <div
             key={event.id} 
             className={`race-event-card ${selectedRaceId === event.id ? 'selected' : ''}`}
-            onClick={() => handleRaceClick(event.id)}
-            // className="race-event-card"
+            onClick={() => handleRaceClick(event.id,event)}
           >
             <RaceEventCard
               key={event.id}
               raceEvent={event}
-              onClick={() => handleRaceClick(event.id)}
+              onClick={() => handleRaceClick(event.id, event)}
               isSelected={selectedRaceId === event.id}
             />
              <Button variant="primary" onClick={handleSelectButtonClick}>Select</Button>

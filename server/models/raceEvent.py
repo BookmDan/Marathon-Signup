@@ -15,11 +15,12 @@ class RaceEvent(db.Model, SerializerMixin):
   packetpickup_day = db.Column(db.String) 
   packetpickup_location = db.Column(db.String)  
   location = db.Column(db.String)  
+  race_cost = db.Column(db.Float, nullable=False) 
 
   race_signups = db.relationship('RaceSignup', back_populates='race_event')
 
   def __repr__(self):
-    return f'<RaceEvent id={self.id}  organization={self.organization} race_type={self.race_type}>'
+    return f'<RaceEvent id={self.id}  organization={self.organization} race_type={self.race_type}race_cost={self.race_cost}>'
   
 class RaceEventSchema(Schema):
   id = fields.Int(dump_only=True)
@@ -31,3 +32,4 @@ class RaceEventSchema(Schema):
   packetpickup_day = fields.Str()  
   packetpickup_location = fields.Str()
   location = fields.Str()  
+  race_cost = fields.Float(required=True)

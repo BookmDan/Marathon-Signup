@@ -3,7 +3,7 @@ import { Card, Button } from "react-bootstrap";
 import { Link, useNavigate } from 'react-router-dom';
 
 function RaceEventCard({ raceEvent }) {
-  const {race_name, organization, race_type } = raceEvent;
+  const {race_name, organization, race_type, race_cost } = raceEvent;
   const navigate = useNavigate();
 
   const handleSignUpClick = () => {
@@ -20,7 +20,9 @@ function RaceEventCard({ raceEvent }) {
         <Card.Text>
           <strong>Race Type:</strong> {race_type}
         </Card.Text>
-        {/* <Button as={Link} to={`/race-events/${id}`} variant="primary"> */}
+        <Card.Text>
+          <strong>Race Cost:</strong> ${race_cost.toFixed(2)}
+        </Card.Text>
         <Button as={Link} to={{ pathname: `/race-details/${raceEvent.id}`, state: { raceInfo: raceEvent } }} variant="primary">
           Learn More
         </Button>

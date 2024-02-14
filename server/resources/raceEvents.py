@@ -17,7 +17,9 @@ class RaceEventsResource(Resource):
     new_event = RaceEvent(
       organization=form_data.get('organization'), 
       race_name=form_data.get('race_name'), 
-      race_type=form_data.get('race_type'))
+      race_type=form_data.get('race_type'),
+      race_cost=form_data.get('race_cost'))
+
 
     db.session.add_all(new_event)
     db.session.commit()
@@ -29,17 +31,7 @@ class RaceEventsResource(Resource):
 api.add_resource(RaceEventsResource, '/api/race-events')
 
 class RaceEventsById(Resource):
-  # def get(self,id):
-  #   event = RaceEvent.query.filter_by(id=id).first()
 
-  #   if event:
-  #     resp = schema_instance.dump(event)
-  #     status_code = 200
-  #   else:
-  #     resp = { "message": f"Event {id} was not found."}
-  #     status_code = 404
-
-  #   return make_response(resp, status_code)
   def get(self, id=None):
     if id is None:
       race_event = RaceEvent.query.first()
