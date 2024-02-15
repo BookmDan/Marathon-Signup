@@ -36,23 +36,6 @@ function Authentication({ updateUser }) {
       navigate('/');
     }
   });
-  //     fetch('/api/signup', {
-  //       method: 'POST',
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //       },
-  //       body: JSON.stringify(values),
-  //     })
-  //     .then(response => response.json())
-  //     .then(data => {
-  //       console.log('Signup success:', data);
-  //       navigate('/');
-  //     })
-  //     .catch((error) => {
-  //       console.error('Signup error:', error);
-  //     });
-  //   },
-  // });
 
   const handleFormSubmit = (values) => {
     const endpoint = signUp ? '/api/signup' : '/api/login'; // Determine the endpoint based on signUp state

@@ -1,5 +1,5 @@
 from config import api, db
-from flask import make_response, request
+from flask import jsonify, request
 from flask_restful import Resource, reqparse
 from models.models import RaceSignup, RaceSignupSchema
 
@@ -10,7 +10,7 @@ class RaceSignupsResource(Resource):
     signups = RaceSignup.query.all()
     schema = RaceSignupSchema(many=True)
     resp = schema.dump(signups)
-    return make_response(resp, 200)
+    return jsonify(resp, 200)
 
   def post(self):
     form_data = request.get_json()
@@ -27,7 +27,7 @@ class RaceSignupsResource(Resource):
     db.session.commit()
 
     resp = race_signup_schema.dump(new_signup)
-    return make_response(resp, 201)
+    return jsonify(resp, 201)
   
 api.add_resource(RaceSignupsResource, '/api/race-signups')
 
@@ -42,7 +42,7 @@ class RaceSignupsById(Resource):
         resp = {"message": f"RaceSignup with ID {id} was not found."}
         status_code = 404
 
-    return make_response(resp, status_code)
+    return jsonify(resp, status_code)
   parser = reqparse.RequestParser()
   parser.add_argument('waiver_accept', type=bool, required=True)
   parser.add_argument('tshirt_size', type=str, required=True)
@@ -65,7 +65,7 @@ class RaceSignupsById(Resource):
     db.session.commit()
 
     resp = race_signup_schema.dump(new_signup)
-    return make_response(resp, 201)
+    return jsonify(resp), 201
   
   def patch(self, id):
     signup = RaceSignup.query.filter_by(id=id).first()
@@ -77,9 +77,9 @@ class RaceSignupsById(Resource):
       db.session.add(signup)
       db.session.commit()
 
-      return make_response(signup.to_dict(), 200)
+      return jsonify(signup.to_dict(), 200)
     else:
-      return make_response({"message": f"Signup {id} not found"})
+      return jsonify({"message": f"Signup {id} not found"})
 
   def delete(self, id):
     signup = RaceSignup.query.filter_by(id=id).first()
@@ -90,8 +90,8 @@ class RaceSignupsById(Resource):
           "message": f"Signup {signup.id} successfully deleted",
           "id": id
       }
-      return make_response(resp_body, 200)
+      return jsonify(resp_body, 200)
     else:
-      return make_response({"message": f"Signup {id} not found"})
+      return jsonify({"message": f"Signup {id} not found"})
 # Adding the resource to your API
 api.add_resource(RaceSignupsById, '/api/race-signups/<int:id>')

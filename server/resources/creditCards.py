@@ -34,7 +34,7 @@ class CreditCardsResource(Resource):
     db.session.commit()
 
     resp = credit_card_info_schema.dump(new_credit_card)
-    return make_response(resp, 201)
+    return jsonify(resp), 201
 
   # def get_by_ccid(self, ccid):
   #   credit_card = CreditCardInfo.query.get(ccid)
@@ -61,7 +61,7 @@ class CreditCardsById(Resource):
       resp = {"message": f"Credit card with number {id} was not found."}
       status_code = 404
 
-    return make_response(resp, status_code)
+    return jsonify(resp), status_code
   
   def patch(self, id):
     credit_card = CreditCardInfo.query.filter_by(id=id).first()
@@ -73,9 +73,9 @@ class CreditCardsById(Resource):
       db.session.add(credit_card)
       db.session.commit()
 
-      return make_response(credit_card.to_dict(), 200)
+      return jsonify(credit_card.to_dict(), 200)
     else:
-      return make_response({"message": f"Credit Card {id} not found"})
+      return jsonify({"message": f"Credit Card {id} not found"})
 
   def delete(self, id):
     credit_card = CreditCardInfo.query.filter_by(id=id).first()
@@ -86,8 +86,8 @@ class CreditCardsById(Resource):
           "message": f"Credit Card {credit_card.credit_card_number} successfully deleted",
           "id": id
       }
-      return make_response(resp_body, 200)
+      return jsonify(resp_body, 200)
     else:
-      return make_response({"message": f"Credit Card {id} not found"})
+      return jsonify({"message": f"Credit Card {id} not found"})
 # Adding the resource to your API
 api.add_resource(CreditCardsById, '/api/creditcards/<int:id>')

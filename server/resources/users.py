@@ -1,5 +1,5 @@
 from config import api, db
-from flask import make_response, request, session
+from flask import jsonify, request, session
 from flask_restful import Resource
 from models.models import User, UserSchema
 
@@ -10,7 +10,7 @@ class UsersResource(Resource):
     users = User.query.all()
     schema = UserSchema(many=True)
     resp = schema.dump(users)
-    return make_response(resp, 200)
+    return jsonify(resp, 200)
   
 api.add_resource(UsersResource, '/api/users')
 
@@ -25,7 +25,7 @@ class UserById(Resource):
       resp = {"message": f"User with ID {id} was not found."}
       status_code = 404
 
-    return make_response(resp, status_code)
+    return jsonify(resp), status_code
   
   def patch(self, id):
     user = User.query.filter_by(id=id).first()
@@ -37,9 +37,9 @@ class UserById(Resource):
       db.session.add(user)
       db.session.commit()
 
-      return make_response(user.to_dict(), 200)
+      return jsonify(user.to_dict(), 200)
     else:
-      return make_response({"message": f"User {id} not found"})
+      return jsonify({"message": f"User {id} not found"})
 
   def post(self, id):
     user = User.query.get(id)
@@ -60,11 +60,11 @@ class UserById(Resource):
         db.session.add(user)
         db.session.commit()
 
-        return make_response({"message": f"Estimated finish time set for user with ID {id}"}, 200)
+        return jsonify({"message": f"Estimated finish time set for user with ID {id}"}, 200)
       else:
-        return make_response({"message": "Estimated finish time data not provided in the request"}, 400)
+        return jsonify({"message": "Estimated finish time data not provided in the request"}, 400)
     else:
-      return make_response({"message": f"User {id} not found"}, 404)
+      return jsonify({"message": f"User {id} not found"}, 404)
     
   def delete(self, id):
     user = User.query.filter_by(id=id).first()
@@ -75,8 +75,8 @@ class UserById(Resource):
           "message": f"User {user.name} successfully deleted",
           "id": id
       }
-      return make_response(resp_body, 200)
+      return jsonify(resp_body, 200)
     else:
-      return make_response({"message": f"User {id} not found"})
+      return jsonify({"message": f"User {id} not found"})
 # Adding the resource to your API
 api.add_resource(UserById, '/api/user/<int:id>')
