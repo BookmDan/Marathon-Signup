@@ -58,15 +58,20 @@ const PurchaseSummary = () => {
       </Card>
       <div className="mt-4">
         <h5>Payment Method:</h5>
-        {creditCardInfo.name_on_card && (
-        <Button
-            variant="primary"
-            onClick={() => handlePaymentMethodClick(creditCardInfo.name_on_card)}
-            className={selectedPaymentMethod === creditCardInfo.name_on_card ? 'highlighted-blue me-2' : 'me-2'}
-            >
-            {`${creditCardInfo.name_on_card}'s Credit Card`}
+        {creditCardInfo && (
+        <Button variant="primary">
+          {creditCardInfo.name_on_card}'s Credit Card
         </Button>
-      )}
+        )}
+        {/* {creditCardInfo.name_on_card && (
+        <Button
+          variant="primary"
+          onClick={() => handlePaymentMethodClick(creditCardInfo.name_on_card)}
+          className={selectedPaymentMethod === creditCardInfo.name_on_card ? 'highlighted-blue me-2' : 'me-2'}
+          >
+          {`${creditCardInfo.name_on_card}'s Credit Card`}
+        </Button>
+        )} */}
         <Button
           variant="secondary"
           onClick={() => handlePaymentMethodClick('Visa')}
