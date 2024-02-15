@@ -1,4 +1,4 @@
-from flask import abort, session, request
+from flask import abort, session, request, make_response
 from flask_restful import Resource
 from config import api, db
 
@@ -12,7 +12,6 @@ class Login(Resource):
 
     # try:
     user = User.query.filter_by(email=email).first()
-
     if user:
       if user.authenticate(password):
           #session set at login and signup
@@ -28,16 +27,18 @@ class Login(Resource):
 
 
 class Logout(Resource):
-  def delete(self):
-    user = User.query.filter_by(id = session.get('user_id')).first()
-    if user:
-      del session['user_id']
-      return {'message': 'Logout successful'}, 200
-      # session['user_id'] = None
-      # return {}, 200
-    else:
-      return {"error": "You are already logged out"}, 401
-
+  def post(self):
+    session.pop('user_id', None)
+    return make_response({'message': 'Logout successful'}, 200)
+  # def delete(self):
+  #   user = User.query.filter_by(id = session.get('user_id')).first()
+  #   if user:
+  #     del session['user_id']
+  #     return {'message': 'Logout successful'}, 200
+  #     # session['user_id'] = None
+  #     # return {}, 200
+  #   else:
+  #     return {"error": "You are already logged out"}, 401
 
 class Signup(Resource):
   def post(self):
@@ -57,7 +58,7 @@ class Signup(Resource):
 
       session['user_id'] = user.id
 
-      return user.to_dict(), 201
+      return make_response({'message': 'Signup successful', 'user': user.to_dict()}, 201)
     
     except Exception as err:
       return {"errors": [str(err)]}, 422
