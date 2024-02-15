@@ -2,7 +2,7 @@ import { useState } from 'react';
 import RaceEventCard from '../cards-boxes-search/RaceEventCard';
 import { Button } from "react-bootstrap";
 import { useNavigate } from 'react-router-dom';
-import { useCost } from './CostContext';
+import { useCost } from '../../context/CostContext';
 
 const SelectRace = ({ raceEvents }) => {
   const [searchQuery, setSearchQuery] = useState('');

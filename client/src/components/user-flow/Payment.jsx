@@ -1,9 +1,12 @@
 import { useFormik } from 'formik';
 import { Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
+import { useCreditCard } from '../../context/CreditCardContext';
 
 const Payment = () => {
   const navigate = useNavigate()
+  const { storeCreditCardInfo } = useCreditCard();
+  
   const formik = useFormik({
     initialValues: {
       credit_card_number: '',
@@ -20,6 +23,8 @@ const Payment = () => {
     onSubmit: values => {
       // Handle form submission
       console.log(values);
+      storeCreditCardInfo(values);
+      navigate('/purchase-summary');
     },
   });
 

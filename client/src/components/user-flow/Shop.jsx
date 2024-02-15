@@ -7,7 +7,7 @@ import triathlete from "../../photos/shop/triathlete.jpg"
 import triwrist from "../../photos/shop/triwrist.jpg"
 import { useNavigate } from "react-router-dom";
 import { useState } from 'react'
-import { useCost } from './CostContext';
+import { useCost } from '../../context/CostContext';
 
 
 const Shop = () => {

@@ -1,7 +1,7 @@
 import { Container, Form, Button } from "react-bootstrap";
 import { useState } from 'react'
 import { useNavigate } from "react-router-dom";
-import { useCost } from './CostContext';
+import { useCost } from '../../context/CostContext';
 
 const ShipPacket = () => {
   const [quantity, setQuantity] = useState(0); 

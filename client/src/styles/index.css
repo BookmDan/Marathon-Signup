@@ -241,3 +241,8 @@ button:focus-visible {
 .customTitle {
   font-size: 2rem;
 }
+
+.highlighted-blue {
+  background-color: blue !important;
+  color: white !important;
+}

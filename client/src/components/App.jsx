@@ -17,7 +17,7 @@ import ShipPacket from "./user-flow/ShipPacket";
 import Shop from "./user-flow/Shop";
 import Payment from "./user-flow/Payment";
 import PurchaseSummary from "./user-flow/PurchaseSummary";
-import { CostProvider } from './user-flow/CostContext';
+import { CostProvider } from '../context/CostContext';
 
 
 const App = () => {
