@@ -32,14 +32,13 @@ function Authentication({ updateUser }) {
     validationSchema: validationSchema,
     onSubmit: (values) => {
       console.log('Login submitted with:', values);
-
       navigate('/');
     }
   });
 
   const handleFormSubmit = (values) => {
-    const endpoint = signUp ? '/api/signup' : '/api/login'; // Determine the endpoint based on signUp state
-    fetch(endpoint, {
+    // const endpoint = signUp ? '/api/signup' : '/api/login'; 
+    fetch("/api/signup", {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

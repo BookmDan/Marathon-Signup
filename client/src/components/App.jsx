@@ -18,6 +18,7 @@ import Shop from "./user-flow/Shop";
 import Payment from "./user-flow/Payment";
 import PurchaseSummary from "./user-flow/PurchaseSummary";
 import { CostProvider } from '../context/CostContext';
+import SignupForm from "./sessions/SignupForm";
 
 
 const App = () => {
@@ -124,7 +125,7 @@ const App = () => {
               path="/login"
               element={<Authentication updateUser={updateUser} />}
             />
-            <Route path="/signup" element={<Authentication />} />
+            <Route path="/signup" element={<SignupForm />} />
             <Route path="/agreement/:id" element={<Agreement raceEvent={raceEvent} />} />
             <Route path="/the-why" element={<TheWhy />} />
             <Route path="/race-events" element={<RaceEvents />} />
