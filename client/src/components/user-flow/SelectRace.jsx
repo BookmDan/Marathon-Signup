@@ -18,7 +18,8 @@ const SelectRace = ({ raceEvents }) => {
   };
 
   const handleSelectButtonClick = () => {
-    navigate('/agreement');
+    navigate(`/agreement/${selectedRaceId}`);
+    // give info about raceId I'm selecting
   };
 
   const filteredRaceEvents = raceEvents.filter((event) => {

@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Container, Button, Form, Col, Row } from "react-bootstrap";
-import { useNavigate,useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 const Agreement = () => {
   const navigate = useNavigate()
@@ -11,10 +11,10 @@ const Agreement = () => {
   const [seconds, setSeconds] = useState("");
   const [shirtSize, setShirtSize] = useState("");
   const [raceEventData, setRaceEventData] = useState(null);
-  // const { id } = useParams(); 
+  const { id } = useParams(); 
 
   useEffect(() => {
-    fetch('/api/race-event/${id}')
+    fetch(`/api/race-event/${id}`) 
       .then(response => {
         if (response.ok) {
             return response.json();

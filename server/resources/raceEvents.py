@@ -1,5 +1,5 @@
 from config import api, db, app
-from flask import request, jsonify
+from flask import request, jsonify, make_response
 from flask_restful import Resource
 from models.models import RaceEvent, RaceEventSchema
 
@@ -10,7 +10,7 @@ class RaceEventsResource(Resource):
     events = RaceEvent.query.all()
     schema = RaceEventSchema(many=True)
     resp = schema.dump(events)
-    return jsonify(resp), 200
+    return resp, 200
   
   def post(self):
     form_data = request.get_json()
@@ -24,7 +24,7 @@ class RaceEventsResource(Resource):
 
 
     resp = schema_instance.dump(new_event)
-    return jsonify(resp), 201
+    return resp, 201
 
 api.add_resource(RaceEventsResource, '/api/race-events')
 
@@ -53,9 +53,9 @@ class RaceEventsById(Resource):
         'packetpickup_day': race_event.packetpickup_day,
         'packetpickup_location': race_event.packetpickup_location
       }
-      return jsonify(race_event_data), 200
+      return (race_event_data), 200
     else:
-      return jsonify({'message': 'Race event data not found'}), 404
+      return {'message': 'Race event data not found'}, 404
   
   def patch(self,id):
     event = RaceEvent.query.filter_by(id=id).first()
@@ -67,9 +67,9 @@ class RaceEventsById(Resource):
       db.session.add(event)
       db.session.commit()
 
-      return jsonify(event.to_dict(), 200)
+      return event.to_dict(), 200
     else:
-      return jsonify({"message": f"Event {id} not found"})
+      return {"message": f"Event {id} not found"}
   
   def delete(self,id):
     event = RaceEvent.query.filter_by(id=id).first()  
@@ -80,8 +80,8 @@ class RaceEventsById(Resource):
         "message": f"Event {event.race_name} successfully deleted",
         "id": id
       }
-      return jsonify(resp_body,200)
+      return resp_body,200
     else:
-      return jsonify({"message": f"Event {id} not found"})
+      return ({"message": f"Event {id} not found"})
 
 api.add_resource(RaceEventsById, '/api/race-event','/api/race-event/<int:id>')

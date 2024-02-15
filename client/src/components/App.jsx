@@ -125,7 +125,7 @@ const App = () => {
               element={<Authentication updateUser={updateUser} />}
             />
             <Route path="/signup" element={<Authentication />} />
-            <Route path="/agreement" element={<Agreement raceEvent={raceEvent} />} />
+            <Route path="/agreement/:id" element={<Agreement raceEvent={raceEvent} />} />
             <Route path="/the-why" element={<TheWhy />} />
             <Route path="/race-events" element={<RaceEvents />} />
             <Route path="/race-details/:id" component={RaceDetailsPage} />

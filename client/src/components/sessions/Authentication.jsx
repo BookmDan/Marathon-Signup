@@ -73,37 +73,37 @@ function Authentication({ updateUser }) {
           {signUp ? 'Log In' : 'Sign Up'}
         </button>
       </div>
-      <form onSubmit={handleFormSubmit}>
-        {signUp && <SignupForm handleSubmit={handleFormSubmit} />}
-        {!signUp && (
-          <>
-            <div  className="form-field">
-              <label> Email </label>
-              <input
-                type="text"
-                name="email"
-                value={formik.values.email}
-                onChange={formik.handleChange}
-              />
-            </div>
-            <div  className="form-field">
-              <label> Password </label>
-              <input 
-                type="password"
-                name="password"
-                value={formik.values.password}
-                onChange={formik.handleChange}
-              />
-            </div>
-          </>
-        )}
-        {formik.touched.password && formik.errors.password && (
-          <div style={{ color: 'red' }}>{formik.errors.password}</div>
-        )}
-        <div id="button-container">
-          <button type="submit">Submit</button>
-        </div>
-      </form>
+      {/* <form onSubmit={handleFormSubmit}> */}
+      {signUp && <SignupForm handleSubmit={handleFormSubmit} />}
+      {!signUp && (
+        <>
+          <div  className="form-field">
+            <label> Email </label>
+            <input
+              type="text"
+              name="email"
+              value={formik.values.email}
+              onChange={formik.handleChange}
+            />
+          </div>
+          <div  className="form-field">
+            <label> Password </label>
+            <input 
+              type="password"
+              name="password"
+              value={formik.values.password}
+              onChange={formik.handleChange}
+            />
+          </div>
+        </>
+      )}
+      {formik.touched.password && formik.errors.password && (
+        <div style={{ color: 'red' }}>{formik.errors.password}</div>
+      )}
+      <div id="button-container">
+        <button type="submit">Submit</button>
+      </div>
+      {/* </form> */}
     </>
   );
 }
