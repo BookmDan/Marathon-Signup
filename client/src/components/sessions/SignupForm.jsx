@@ -1,7 +1,9 @@
 import { useFormik } from 'formik';
 import * as yup from 'yup';
-
-const SignupForm = ({ handleSubmit }) => {
+import { useNavigate } from 'react-router-dom';
+// { handleSubmit }
+const SignupForm = () => {
+  const navigate = useNavigate();
 
   const formSchema = yup.object().shape({
     firstName: yup.string().required("Please enter your first name"),
@@ -22,8 +24,28 @@ const SignupForm = ({ handleSubmit }) => {
       confirmPassword: '',
     },
     validationSchema: formSchema,
-    onSubmit: handleSubmit,
+    onSubmit:(values) => {
+      fetch('/api/signup', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(values),
+      })
+      .then(response => response.json())
+      .then(data => {
+        console.log('Signup success:', data);
+        navigate('/');
+      })
+      .catch((error) => {
+        console.error('Signup error:', error);
+      });
+    },
   });
+      
+      
+      // handleSubmit,
+  // });
   
   return (
     <form onSubmit={formik.handleSubmit}>

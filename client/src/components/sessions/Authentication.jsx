@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useFormik } from 'formik';
 import SignupForm from './SignupForm'; 
+import * as yup from 'yup';
 
 function Authentication({ updateUser }) {
   const [signUp, setSignUp] = useState(false);
@@ -14,6 +15,11 @@ function Authentication({ updateUser }) {
     setSuccess(false);
     setError(false);
   };
+  const validationSchema = yup.object({
+    email: yup.string().email('Invalid email format').required('Email required'),
+    password: yup.string().required('Password required'),
+  });
+
   const formik = useFormik({
     initialValues: {
       firstName: '',
@@ -22,8 +28,31 @@ function Authentication({ updateUser }) {
       phoneNumber: '',
       password: '',
       confirmPassword: '',
-    }, 
-  })
+    },
+    validationSchema: validationSchema,
+    onSubmit: (values) => {
+      console.log('Login submitted with:', values);
+
+      navigate('/');
+    }
+  });
+  //     fetch('/api/signup', {
+  //       method: 'POST',
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //       },
+  //       body: JSON.stringify(values),
+  //     })
+  //     .then(response => response.json())
+  //     .then(data => {
+  //       console.log('Signup success:', data);
+  //       navigate('/');
+  //     })
+  //     .catch((error) => {
+  //       console.error('Signup error:', error);
+  //     });
+  //   },
+  // });
 
   const handleFormSubmit = (values) => {
     const endpoint = signUp ? '/api/signup' : '/api/login'; // Determine the endpoint based on signUp state

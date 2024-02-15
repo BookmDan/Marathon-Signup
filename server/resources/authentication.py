@@ -1,4 +1,4 @@
-from flask import abort, session, request, make_response
+from flask import abort, session, request, jsonify 
 from flask_restful import Resource
 from config import api, db
 
@@ -12,15 +12,15 @@ class Login(Resource):
 
     # try:
     user = User.query.filter_by(email=email).first()
-    if user:
-      if user.authenticate(password):
-          #session set at login and signup
-        session['user_id'] = user.id
-        return user.to_dict(),200
-      else:
-        print("password login attempt failed.")
+    if user and user.authenticate(password):
+      session['user_id'] = user.id
+      response_body = user.to_dict(rules=('-_password_hash',))
+      return response_body, 200
+        # return user.to_dict(),200
     else:
-      return {"errors": "Username or Password didn't match."}, 422
+      return {"errors": ["Invalid username and/or password"]}, 401
+    # else:
+    #   return {"errors": "Username or Password didn't match."}, 422
       
   # def get(self):
   #   return ({"message": "hi"}, 200)
@@ -29,17 +29,8 @@ class Login(Resource):
 class Logout(Resource):
   def post(self):
     session.pop('user_id', None)
-    return make_response({'message': 'Logout successful'}, 200)
-  # def delete(self):
-  #   user = User.query.filter_by(id = session.get('user_id')).first()
-  #   if user:
-  #     del session['user_id']
-  #     return {'message': 'Logout successful'}, 200
-  #     # session['user_id'] = None
-  #     # return {}, 200
-  #   else:
-  #     return {"error": "You are already logged out"}, 401
-
+    return jsonify({'message': 'Logout successful'}, 200)
+  
 class Signup(Resource):
   def post(self):
     json = request.get_json()
@@ -58,7 +49,9 @@ class Signup(Resource):
 
       session['user_id'] = user.id
 
-      return make_response({'message': 'Signup successful', 'user': user.to_dict()}, 201)
+      return user.to_dict(), 201
+    
+    # jsonify({'message': 'Signup successful', 'user': user.to_dict()}, 201)
     
     except Exception as err:
       return {"errors": [str(err)]}, 422

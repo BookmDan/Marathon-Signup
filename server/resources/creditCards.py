@@ -1,4 +1,4 @@
-from flask import make_response, request
+from flask import request, jsonify
 from flask_restful import Resource
 from models.models import CreditCardInfo, CreditCardInfoSchema
 from config import db, api
@@ -12,7 +12,7 @@ class CreditCardsResource(Resource):
     # Serialize the data using the schema
     resp = credit_card_info_schema.dump(credit_cards)
     # Return the response
-    return make_response(resp, 200)
+    return jsonify(resp), 200
 
 
   def post(self):
