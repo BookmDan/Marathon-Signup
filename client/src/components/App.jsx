@@ -2,7 +2,7 @@ import { useState, useEffect, createContext } from "react";
 import { BrowserRouter as Router, Routes, Route} from "react-router-dom";
 import Home from "./static/Home";
 import NavigationHeader from "./static/NavigationHeader";
-import Authentication from "./sessions/Authentication";
+import Login from "./sessions/Login";
 import RaceEvents from './static/RaceEvents';
 import RaceDetailsPage from "./static/RaceDetailsPage";
 import Results from './static/Results';
@@ -18,16 +18,15 @@ import Shop from "./user-flow/Shop";
 import Payment from "./user-flow/Payment";
 import PurchaseSummary from "./user-flow/PurchaseSummary";
 import { CostProvider } from '../context/CostContext';
-import Login from "./sessions/Authentication"
 
 export const UserContext = createContext(null)
 
 const App = () => {
-  const [loading, setLoading] = useState(true);
   const [user, setUser] = useState([]);
   const [raceEvents, setRaceEvents] = useState(null);
-  const [loggedIn, setLoggedIn] = useState(null);
   const [raceEvent, setRaceEvent] = useState(null);
+  const [loggedIn, setLoggedIn] = useState(null);
+  // const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     fetch("/api/check-session")
@@ -41,7 +40,7 @@ const App = () => {
   if (!user) return (
     <div>
     <UserContext.Provider value={[user, setUser]}>
-      <Header />
+      <NavigationHeader />
       <Login onLogin={setUser}/>
     </UserContext.Provider>
   </div>
@@ -81,11 +80,9 @@ const App = () => {
     .then(data => {
       // Update the raceEvents state with the fetched data
       setRaceEvents(data);
-      setLoading(false)
     })
     .catch(error => {
       console.error('Error fetching race events:', error);
-      setLoading(false)
     });
 };
 
@@ -103,9 +100,9 @@ const App = () => {
       })
   };
 
-  const updateUser = (userData) => {
-    setUser(userData);
-  };
+  // const updateUser = (userData) => {
+  //   setUser(userData);
+  // };
 
   const logoutUser = () => {
     fetch("/api/logout", {
@@ -127,42 +124,39 @@ const App = () => {
       });
   };
 
+  // {/* <Route */}
+  //   path="/"
+  //   element={user ? <Home /> : <Authentication updateUser={updateUser} />}
+  // {/* /> */}
+  // {/* <Route */}
+  //   path="/login"
+  //   element={<Authentication updateUser={updateUser} />}
+  // {/* /> */}
+  // {/* <Route path="/signup" element={<SignupForm />} /> */}
   return (
     <div>
       <UserContext.Provider value={[user, setUser]}>
         <Router>
           <NavigationHeader onLogout={logoutUser} />
-          {loading ? (
-            <div>Loading...</div>
-          ) : (
-            <CostProvider>
-              <Routes>
-                <Route
-                  path="/"
-                  element={user ? <Home /> : <Authentication updateUser={updateUser} />}
-                />
-                <Route
-                  path="/login"
-                  element={<Authentication updateUser={updateUser} />}
-                />
-                <Route path="/signup" element={<SignupForm />} />
-                <Route path="/agreement/:id" element={<Agreement raceEvent={raceEvent} />} />
-                <Route path="/the-why" element={<TheWhy />} />
-                <Route path="/race-events" element={<RaceEvents />} />
-                <Route path="/race-details/:id" component={RaceDetailsPage} />
-                <Route path="/results" element={<Results />} />
-                <Route path="/photos" element={<Photos />} />
-                <Route path="/volunteer" element={<Volunteer />} />
-                <Route path="/select-race" element={<SelectRace raceEvents={raceEvents} />} />
-                <Route path="/ship-packet" element={<ShipPacket/>} />
-                <Route path="/shop" element={<Shop />} />
-                <Route path="/purchase-summary" element={<PurchaseSummary/>} />
-                <Route path="/payment" element={<Payment />} />
-                <Route path="/refund-policy" element={<RefundPolicy />} />
-                <Route path="/directions" element={<Directions />} />
-              </Routes>
-            </CostProvider>
-          )}
+          <CostProvider>
+            <Routes>
+              <Route path="/" element={Home}/>
+              <Route path="/agreement/:id" element={<Agreement raceEvent={raceEvent} />} />
+              <Route path="/the-why" element={<TheWhy />} />
+              <Route path="/race-events" element={<RaceEvents />} />
+              <Route path="/race-details/:id" component={RaceDetailsPage} />
+              <Route path="/results" element={<Results />} />
+              <Route path="/photos" element={<Photos />} />
+              <Route path="/volunteer" element={<Volunteer />} />
+              <Route path="/select-race" element={<SelectRace raceEvents={raceEvents} />} />
+              <Route path="/ship-packet" element={<ShipPacket/>} />
+              <Route path="/shop" element={<Shop />} />
+              <Route path="/purchase-summary" element={<PurchaseSummary/>} />
+              <Route path="/payment" element={<Payment />} />
+              <Route path="/refund-policy" element={<RefundPolicy />} />
+              <Route path="/directions" element={<Directions />} />
+            </Routes>
+          </CostProvider>
         </Router>
       </UserContext.Provider>
     </div>

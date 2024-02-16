@@ -1,19 +1,21 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useFormik } from 'formik';
+import { Form, Button, Col } from "react-bootstrap";
 import * as yup from 'yup';
 
-function Authentication({ updateUser }) {
-  const [signUp, setSignUp] = useState(false);
+function LoginForm({ onLogin, setSignupMode, signupMode }) {
+  // const [signUp, setSignUp] = useState(false);
   const [error, setError] = useState(false);
   const [success, setSuccess] = useState(false);
   const navigate = useNavigate();
 
   const handleClick = () => {
-    setSignUp((prevSignUp) => !prevSignUp);
+    setSignupMode(!signupMode)
     setSuccess(false);
     setError(false);
   };
+
   const validationSchema = yup.object({
     email: yup.string().email('Invalid email format').required('Email required'),
     password: yup.string().required('Password required'),
@@ -30,39 +32,52 @@ function Authentication({ updateUser }) {
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
+      fetch("/api/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(values),
+    }).then(r => {
+      if (r.ok) {
+        r.json().then(user =>onLogin(user))
+        navigate('/')    
+      } else {
+        r.json().then(err => {
+          // setIsLoading(false)
+          console.log(err.errors)
+          setError(err.errors)
+        })
+      }
+    })
       console.log('Login submitted with:', values);
       navigate('/');
     }
   });
 
-  const handleFormSubmit = (values) => {
-    // const endpoint = signUp ? '/api/signup' : '/api/login'; 
-    fetch("/api/signup", {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(values),
-    })
-    .then(response => {
-      if (response.ok) {
-        return response.json();
-      } else {
-        throw new Error('Invalid credentials');
-      }
-    })
-    .then(data => {
-      updateUser(data); // Update user state with the response data
-      setSuccess(true); // Set success state to true
-      navigate('/select-race');
-    })
-    .catch(error => {
-      setError(error.message);
-    });
-  };
-
   return (
-    <>
+    <div>
+      <Col lg="5" className="mx-auto">
+        <h3 className="m-5">
+          Please log in to view page
+        </h3>    
+        <Form className="m-4" onSubmit={formik.handleSubmit} >
+          {/* <div  className="form-field"> */}
+          <Form.Group className="m-3 form-floating" >
+            <label> Email </label>
+            <Form.Control
+                type="text"
+                name="email"
+                placeholder='Email'
+                value={formik.values.email}
+                onChange={formik.handleChange}
+            />
+            <Form.Label >Email</Form.Label>
+              {formik.errors.username ? <div className="text-danger" >{formik.errors.username}</div> : ""}
+          </Form.Group>
+        </Form>
+      </Col>
+{/*       
       {error && <h2 className="form-error">{error}</h2>}
       {success && <h2 className="success-message">Signup/Login successful! You can now access your account.</h2>}
       <div className="member-section">
@@ -70,38 +85,29 @@ function Authentication({ updateUser }) {
         <button className="login-signup-button" type="button" onClick={handleClick}>
           {signUp ? 'Log In' : 'Sign Up'}
         </button>
-      </div>
-      {signUp && <SignupForm handleSubmit={handleFormSubmit} />}
-      {!signUp && (
-        <>
-          <div  className="form-field">
-            <label> Email </label>
-            <input
-              type="text"
-              name="email"
-              value={formik.values.email}
-              onChange={formik.handleChange}
-            />
-          </div>
-          <div  className="form-field">
-            <label> Password </label>
-            <input 
-              type="password"
-              name="password"
-              value={formik.values.password}
-              onChange={formik.handleChange}
-            />
-          </div>
-        </>
-      )}
-      {formik.touched.password && formik.errors.password && (
-        <div style={{ color: 'red' }}>{formik.errors.password}</div>
-      )}
+      </div> */}
+      <Form.Group className="m-3 form-floating" >
+        <Form.Control 
+          type="password"
+          name="password"
+          placeholder='Password'
+          value={formik.values.password}
+          onChange={formik.handleChange}
+        />
+        <Form.Label>Password</Form.Label>
+          {formik.errors.password ? <div className="text-danger" >{formik.errors.password}</div> : ""}
+      </Form.Group>
+        {error.map((err) => (
+          <p className="text-danger m-3" key={err}>{err}</p>
+        ))}
       <div id="button-container">
         <button type="submit">Log In</button>
       </div>
-    </>
+      <div className="ms-4">
+        <Button className="m-3 btn-dark" onClick={handleClick} >Click here to create an account</Button>
+      </div>
+    </div>
   );
 }
 
-export default Authentication;
+export default LoginForm;

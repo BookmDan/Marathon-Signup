@@ -1,10 +1,8 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useFormik } from 'formik';
 import SignupForm from './SignupForm'; 
 import LoginForm from './LoginForm'; 
 
-function Authentication({ onLogin }) {
+function Login({ onLogin }) {
   // const [signUp, setSignUp] = useState(false);
   // const [error, setError] = useState(false);
   // const [success, setSuccess] = useState(false);
@@ -27,4 +25,4 @@ function Authentication({ onLogin }) {
   );
 }
 
-export default Authentication;
+export default Login;

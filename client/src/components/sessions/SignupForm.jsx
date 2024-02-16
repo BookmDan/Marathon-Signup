@@ -1,4 +1,4 @@
-import { useFormik } from 'formik';
+import { useFormik, displayErrors } from 'formik';
 import * as yup from 'yup';
 
 const SignupForm = ({ handleSubmit }) => {
@@ -62,9 +62,8 @@ const SignupForm = ({ handleSubmit }) => {
           value={formik.values.email}
           onChange={formik.handleChange}
         />
-        {formik.touched.email && formik.errors.email && (
-          <div className="form-error">{formik.errors.email}</div>
-        )}
+        {displayErrors(formik.errors.email)}
+      
       </div>
 
       <div className="form-field">
@@ -75,9 +74,8 @@ const SignupForm = ({ handleSubmit }) => {
           value={formik.values.phoneNumber}
           onChange={formik.handleChange}
         />
-        {formik.touched.phoneNumber && formik.errors.phoneNumber && (
-          <div className="form-error">{formik.errors.phoneNumber}</div>
-        )}
+        {displayErrors(formik.errors.password)}
+      
       </div>
 
       <div className="form-field">
