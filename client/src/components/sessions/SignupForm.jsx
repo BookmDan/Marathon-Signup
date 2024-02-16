@@ -92,9 +92,9 @@ const SignupForm = ({ handleSubmit }) => {
           <div className="form-error">{formik.errors.password}</div>
         )}
       </div>
-      {/* <div id="button-container">
-        <button type="submit">Submit</button>
-      </div> */}
+      <div id="button-container">
+        <button type="submit">Sign Up</button>
+      </div>
     </form>
   );
 };

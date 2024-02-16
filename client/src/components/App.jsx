@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, createContext } from "react";
 import { BrowserRouter as Router, Routes, Route} from "react-router-dom";
 import Home from "./static/Home";
 import NavigationHeader from "./static/NavigationHeader";
@@ -18,8 +18,9 @@ import Shop from "./user-flow/Shop";
 import Payment from "./user-flow/Payment";
 import PurchaseSummary from "./user-flow/PurchaseSummary";
 import { CostProvider } from '../context/CostContext';
-import SignupForm from "./sessions/SignupForm";
+import Login from "./sessions/Authentication"
 
+export const UserContext = createContext(null)
 
 const App = () => {
   const [loading, setLoading] = useState(true);
@@ -28,6 +29,24 @@ const App = () => {
   const [loggedIn, setLoggedIn] = useState(null);
   const [raceEvent, setRaceEvent] = useState(null);
 
+  useEffect(() => {
+    fetch("/api/check-session")
+      .then(r => {
+        if (r.ok) {
+          r.json().then(user => setUser(user))
+        }
+      })
+  }, [])
+  
+  if (!user) return (
+    <div>
+    <UserContext.Provider value={[user, setUser]}>
+      <Header />
+      <Login onLogin={setUser}/>
+    </UserContext.Provider>
+  </div>
+  )
+   
   const login = (user) => {
     setUser(user);
     setLoggedIn(true)
@@ -108,42 +127,45 @@ const App = () => {
       });
   };
 
-  // <Route path="/" element={<Home />} />
   return (
-    <Router>
-      <NavigationHeader onLogout={logoutUser} />
-      {loading ? (
-        <div>Loading...</div>
-      ) : (
-        <CostProvider>
-          <Routes>
-            <Route
-              path="/"
-              element={user ? <Home /> : <Authentication updateUser={updateUser} />}
-            />
-            <Route
-              path="/login"
-              element={<Authentication updateUser={updateUser} />}
-            />
-            <Route path="/signup" element={<SignupForm />} />
-            <Route path="/agreement/:id" element={<Agreement raceEvent={raceEvent} />} />
-            <Route path="/the-why" element={<TheWhy />} />
-            <Route path="/race-events" element={<RaceEvents />} />
-            <Route path="/race-details/:id" component={RaceDetailsPage} />
-            <Route path="/results" element={<Results />} />
-            <Route path="/photos" element={<Photos />} />
-            <Route path="/volunteer" element={<Volunteer />} />
-            <Route path="/select-race" element={<SelectRace raceEvents={raceEvents} />} />
-            <Route path="/ship-packet" element={<ShipPacket/>} />
-            <Route path="/shop" element={<Shop />} />
-            <Route path="/purchase-summary" element={<PurchaseSummary/>} />
-            <Route path="/payment" element={<Payment />} />
-            <Route path="/refund-policy" element={<RefundPolicy />} />
-            <Route path="/directions" element={<Directions />} />
-          </Routes>
-        </CostProvider>
-      )}
-    </Router>
+    <div>
+      <UserContext.Provider value={[user, setUser]}>
+        <Router>
+          <NavigationHeader onLogout={logoutUser} />
+          {loading ? (
+            <div>Loading...</div>
+          ) : (
+            <CostProvider>
+              <Routes>
+                <Route
+                  path="/"
+                  element={user ? <Home /> : <Authentication updateUser={updateUser} />}
+                />
+                <Route
+                  path="/login"
+                  element={<Authentication updateUser={updateUser} />}
+                />
+                <Route path="/signup" element={<SignupForm />} />
+                <Route path="/agreement/:id" element={<Agreement raceEvent={raceEvent} />} />
+                <Route path="/the-why" element={<TheWhy />} />
+                <Route path="/race-events" element={<RaceEvents />} />
+                <Route path="/race-details/:id" component={RaceDetailsPage} />
+                <Route path="/results" element={<Results />} />
+                <Route path="/photos" element={<Photos />} />
+                <Route path="/volunteer" element={<Volunteer />} />
+                <Route path="/select-race" element={<SelectRace raceEvents={raceEvents} />} />
+                <Route path="/ship-packet" element={<ShipPacket/>} />
+                <Route path="/shop" element={<Shop />} />
+                <Route path="/purchase-summary" element={<PurchaseSummary/>} />
+                <Route path="/payment" element={<Payment />} />
+                <Route path="/refund-policy" element={<RefundPolicy />} />
+                <Route path="/directions" element={<Directions />} />
+              </Routes>
+            </CostProvider>
+          )}
+        </Router>
+      </UserContext.Provider>
+    </div>
   );
 };
 export default App;
