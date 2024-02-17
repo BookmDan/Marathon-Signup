@@ -17,9 +17,9 @@ function Login({ onLogin }) {
         setSignupMode={setSignupMode} 
         onLogin={onLogin} /> :
       <LoginForm
-        onLogin={onLogin} 
         setSignupMode={setSignupMode} 
         signupMode={signupMode}
+        onLogin={onLogin} 
       /> }
     </div>
   );

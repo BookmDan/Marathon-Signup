@@ -15,7 +15,6 @@ const SignupForm = ({ signupMode, setSignupMode, onLogin }) => {
     email: yup.string().email("Invalid email address").required("Email is required"),
     phoneNumber: yup.string().matches(/^\d{10}$/, "Phone number must be 10 digits").required("Phone number is required"),
     password: yup.string().required("Password is required"),
-    confirmPassword: yup.string().required("Please confirm password").oneOf([yup.ref("password"), null], "Passwords must match"),
   });
 
   const formik = useFormik({
@@ -25,7 +24,6 @@ const SignupForm = ({ signupMode, setSignupMode, onLogin }) => {
       email: '',
       phoneNumber: '',
       password: '',
-      confirmPassword: '',
     },
     validationSchema: formSchema,
     onSubmit: (values) => {
@@ -41,7 +39,7 @@ const SignupForm = ({ signupMode, setSignupMode, onLogin }) => {
           r.json().then(user => onLogin(user))
           navigate('/')
         } else {
-          r.json().then(err => setErrors((currentErrors) => [...currentErrors, err.errors]))
+          r.json().then(err => setErrors(err.errors))
         }
       })
     }
