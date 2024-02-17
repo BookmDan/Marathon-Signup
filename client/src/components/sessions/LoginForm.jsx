@@ -64,7 +64,7 @@ function LoginForm({ onLogin, setSignupMode, signupMode }) {
         <Form className="m-4" onSubmit={formik.handleSubmit} >
           {/* <div  className="form-field"> */}
           <Form.Group className="m-3 form-floating" >
-            <label> Email </label>
+            <Form.Label >Email</Form.Label>
             <Form.Control
                 type="text"
                 name="email"
@@ -72,21 +72,13 @@ function LoginForm({ onLogin, setSignupMode, signupMode }) {
                 value={formik.values.email}
                 onChange={formik.handleChange}
             />
-            <Form.Label >Email</Form.Label>
-              {formik.errors.username ? <div className="text-danger" >{formik.errors.username}</div> : ""}
+            {formik.errors.username ? <div className="text-danger" >{formik.errors.username}</div> : ""}
           </Form.Group>
         </Form>
       </Col>
-{/*       
-      {error && <h2 className="form-error">{error}</h2>}
-      {success && <h2 className="success-message">Signup/Login successful! You can now access your account.</h2>}
-      <div className="member-section">
-        <h2>{signUp ? 'Already a member?' : 'Not a member'}</h2>
-        <button className="login-signup-button" type="button" onClick={handleClick}>
-          {signUp ? 'Log In' : 'Sign Up'}
-        </button>
-      </div> */}
+
       <Form.Group className="m-3 form-floating" >
+        <Form.Label>Password</Form.Label>
         <Form.Control 
           type="password"
           name="password"
@@ -94,12 +86,8 @@ function LoginForm({ onLogin, setSignupMode, signupMode }) {
           value={formik.values.password}
           onChange={formik.handleChange}
         />
-        <Form.Label>Password</Form.Label>
-          {formik.errors.password ? <div className="text-danger" >{formik.errors.password}</div> : ""}
+        {formik.errors.password ? <div className="text-danger" >{formik.errors.password}</div> : ""}
       </Form.Group>
-        {error.map((err) => (
-          <p className="text-danger m-3" key={err}>{err}</p>
-        ))}
       <div id="button-container">
         <button type="submit">Log In</button>
       </div>
