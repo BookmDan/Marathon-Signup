@@ -47,6 +47,9 @@ const SignupForm = ({ signupMode, setSignupMode, onLogin }) => {
     }
   })
   
+  const dislpayErrors =(error) =>{
+    return error ? <p style={{ color: "red" }}>{error}</p> : null
+  }
   const handleReturnClick = () => {
     setSignupMode(!signupMode)
   }
@@ -67,9 +70,8 @@ const SignupForm = ({ signupMode, setSignupMode, onLogin }) => {
             value={formik.values.firstName}
             onChange={formik.handleChange}
           />
-          {formik.errors.firstName ? <div className="text-danger" >{formik.errors.firstName}</div> : ""}
+          {dislpayErrors(formik.errors.firstName)}
         </div>
-
         <div className="form-field">
           <label>Last Name</label>
           <input
@@ -78,7 +80,7 @@ const SignupForm = ({ signupMode, setSignupMode, onLogin }) => {
             value={formik.values.lastName}
             onChange={formik.handleChange}
           />
-          {formik.errors.lastName ? <div className="text-danger" >{formik.errors.lastName}</div> : ""}
+          {dislpayErrors(formik.errors.lastName)}
         </div>
 
         <div className="form-field">
@@ -89,9 +91,8 @@ const SignupForm = ({ signupMode, setSignupMode, onLogin }) => {
             value={formik.values.email}
             onChange={formik.handleChange}
           />
-          {formik.errors.email ? <div className="text-danger" >{formik.errors.email}</div> : ""}
+          {dislpayErrors(formik.errors.email)}
         </div>
-
         <div className="form-field">
           <label>Phone Number</label>
           <input
@@ -100,7 +101,7 @@ const SignupForm = ({ signupMode, setSignupMode, onLogin }) => {
             value={formik.values.phoneNumber}
             onChange={formik.handleChange}
           />
-          {formik.errors.phoneNumber ? <div className="text-danger" >{formik.errors.phoneNumber}</div> : ""}
+          {dislpayErrors(formik.errors.phoneNumber)}
         </div>
         <div className="form-field">
           <label>Password</label>
@@ -110,7 +111,7 @@ const SignupForm = ({ signupMode, setSignupMode, onLogin }) => {
             value={formik.values.password}
             onChange={formik.handleChange}
           />
-          {formik.errors.password ? <div className="text-danger" >{formik.errors.password}</div> : ""}  
+          {dislpayErrors(formik.errors.password)}
         </div>
         <div id="button-container">
           <button type="submit">Sign Up</button>
