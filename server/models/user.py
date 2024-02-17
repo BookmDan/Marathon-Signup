@@ -1,6 +1,7 @@
 from sqlalchemy_serializer import SerializerMixin
 from sqlalchemy.ext.hybrid import hybrid_property
 from marshmallow import Schema, fields
+from sqlalchemy.orm import validates
 
 # from dotenv import load_dotenv
 
@@ -37,6 +38,12 @@ class User(db.Model, SerializerMixin):
   credit_card_info = db.relationship('CreditCardInfo', back_populates='user') 
 
   serialize_rules = ('-_password_hash',)
+
+  @validates("email")
+  def check_email(self, key, email):
+    if '@' not in email:
+      raise ValueError("Email must contain '@' symbol.")
+    return email
 
   def __repr__(self):
     return f'<User id={self.id} first_name={self.first_name} last_name={self.last_name} email={self.email}>'

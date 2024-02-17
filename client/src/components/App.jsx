@@ -36,9 +36,9 @@ const App = () => {
           r.json().then(user => setUser(user))
         }
       })
-      fetchUser();
-      fetchRaceEvents();
-      fetchRaceEventData();
+      // fetchUser();
+      // fetchRaceEvents();
+      // fetchRaceEventData();
   }, [])
   
   if (!user) return (
@@ -56,11 +56,11 @@ const App = () => {
     setUser(user);
     setLoggedIn(true)
   }
-  // useEffect(() => {
-  //   fetchUser();
-  //   fetchRaceEvents();
-  //   fetchRaceEventData();
-  // }, []);
+  useEffect(() => {
+    fetchUser();
+    fetchRaceEvents();
+    fetchRaceEventData();
+  }, []);
 
 
   const fetchRaceEventData = () => {
