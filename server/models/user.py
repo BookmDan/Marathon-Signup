@@ -18,6 +18,8 @@ class User(db.Model, SerializerMixin):
   admin = db.Column(db.Boolean, default=False)
   estimated_finish_time = db.Column(db.Integer)
 
+  results = db.relationship("Results", back_populates="user")
+  
   @property
   def password_hash(self):
     raise Exception("You cannot view the password hash.")

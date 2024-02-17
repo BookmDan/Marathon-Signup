@@ -20,8 +20,8 @@ class Results(db.Model, SerializerMixin):
 
   user_id = db.Column(db.Integer, db.ForeignKey('user.id'), unique=True)
   user = db.relationship('User', back_populates='results')
-  race_event_id = db.Column(db.Integer, db.ForeignKey('race_event.id'))
-  race_event = db.relationship('RaceEvent', back_populates='results')
+  # race_event_id = db.Column(db.Integer, db.ForeignKey('race_event.id'))
+  # race_event = db.relationship('RaceEvent', back_populates='results')
 
   def __repr__(self):
     return f'<RaceSignup id={self.id} race_place={self.race_place} bib_number={self.bib_number}>'
