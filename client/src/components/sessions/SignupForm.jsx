@@ -24,6 +24,7 @@ const SignupForm = ({ signupMode, setSignupMode, onLogin }) => {
       email: '',
       phoneNumber: '',
       password: '',
+
     },
     validationSchema: formSchema,
     onSubmit: (values) => {

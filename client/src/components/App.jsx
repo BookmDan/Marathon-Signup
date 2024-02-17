@@ -18,7 +18,7 @@ import Shop from "./user-flow/Shop";
 import Payment from "./user-flow/Payment";
 import PurchaseSummary from "./user-flow/PurchaseSummary";
 import { CostProvider } from '../context/CostContext';
-import SignupForm from "./sessions/SignupForm";
+// import { UserProvider } from "../context/UserContext";
 
 export const UserContext = createContext(null)
 
@@ -43,19 +43,19 @@ const App = () => {
   
   if (!user) return (
     <div>
-    <UserContext.Provider value={[user, setUser]}>
+    <UserProvider>
       <NavigationHeader />
-        <Login onLogin={setUser}/>
-    </UserContext.Provider>
+        <Login />
+    </UserProvider>
   </div>
   )
   //***** */ move fetchRaceEvents to the event cards or places where they should be fetched 
   
 
-  const login = (user) => {
-    setUser(user);
-    setLoggedIn(true)
-  }
+  // const login = (user) => {
+  //   setUser(user);
+  //   setLoggedIn(true)
+  // }
   useEffect(() => {
     fetchUser();
     fetchRaceEvents();
@@ -132,8 +132,9 @@ const App = () => {
 
   return (
     <div>
-      <UserContext.Provider value={[user, setUser]}>
-        <Router>
+      <Router>
+        <UserContext.Provider value={[user, setUser]}>
+        {/* <UserProvider> */}
           <NavigationHeader onLogout={logoutUser} />
           <CostProvider>
             <Routes>
@@ -159,8 +160,9 @@ const App = () => {
               <Route path="/directions" element={<Directions />} />
             </Routes>
           </CostProvider>
-        </Router>
-      </UserContext.Provider>
+        {/* </UserProvider> */}
+        </UserContext.Provider>
+      </Router>
     </div>
   );
 };

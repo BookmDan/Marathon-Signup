@@ -4,8 +4,7 @@ import { useFormik } from 'formik';
 import { Form, Button, Col } from "react-bootstrap";
 import * as yup from 'yup';
 
-function LoginForm({ onLogin, setSignupMode, signupMode, displayErrors }) {
-  // const [signUp, setSignUp] = useState(false);
+function LoginForm({ setSignupMode, signupMode,onLogin}) {
   const [error, setError] = useState(false);
   const [success, setSuccess] = useState(false);
   const navigate = useNavigate();
@@ -76,7 +75,6 @@ function LoginForm({ onLogin, setSignupMode, signupMode, displayErrors }) {
                 onChange={formik.handleChange}
             />
             {dislpayErrors(formik.errors.email)}
-            {/* {formik.errors.username ? <div className="text-danger" >{formik.errors.username}</div> : ""} */}
           </Form.Group>
           <Form.Group className="m-3 form-floating" >
             <Form.Label>Password</Form.Label>
