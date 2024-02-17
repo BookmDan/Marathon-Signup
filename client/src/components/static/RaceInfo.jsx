@@ -1,6 +1,6 @@
 const RaceInfo = () => {
   return (
-    <div>
+    <div className="form-container">
       <h2>Race Distances and Time Limits</h2>
       
       <h3>5K Distance:</h3>

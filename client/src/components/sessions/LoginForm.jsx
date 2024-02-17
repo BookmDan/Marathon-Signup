@@ -64,7 +64,6 @@ function LoginForm({ setSignupMode, signupMode,onLogin}) {
           Please log in to view page
         </h3>    
         <Form className="m-4" onSubmit={formik.handleSubmit} >
-          {/* <div  className="form-field"> */}
           <Form.Group className="m-3 form-floating" >
             <Form.Label >Email</Form.Label>
             <Form.Control

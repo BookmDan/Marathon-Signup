@@ -1,5 +1,5 @@
 from config import app, db
-from models.models import User, RaceSignup, RaceEvent, CreditCardInfo
+from models.models import User, RaceSignup, RaceEvent, CreditCardInfo, Results
 
 if __name__ == "__main__":
     with app.app_context():
@@ -8,6 +8,7 @@ if __name__ == "__main__":
         db.session.query(RaceSignup).delete()
         db.session.query(RaceEvent).delete()
         db.session.query(CreditCardInfo).delete()
+        db.session.query(Results).delete()
         db.session.commit()
 
         # Create users
@@ -16,6 +17,14 @@ if __name__ == "__main__":
         db.session.add_all([user1, user2])
         db.session.commit()
 
+        results = [
+            User(1, 101, 'John Doe', 'Male', 30, 'New York', 'NY', '1:30:00', 1, '30-39', 1, '7:00'),
+            User(2, 102, 'Jane Smith', 'Female', 35, 'Los Angeles', 'CA', '1:35:00', 1, '30-39', 2, '7:15'),
+        ]
+
+        db.session.add_all(results)
+        db.session.commit()
+        
         # Create race events
         race_events_data = [
             {"race_name": "Better Half", "organization": "BigHearts", "race_type": "5k", "start_time": "8:00 AM",
