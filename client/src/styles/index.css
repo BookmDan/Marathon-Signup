@@ -5,12 +5,61 @@
 
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  background-color: #eba0a0;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+light-mode {
+  background-color: #ffffff;
+  color: #d14b4b;
+}
+
+.light-mode button {
+  background-color: #007bff;
+  color: #ffffff;
+}
+
+.light-mode header {
+  background-color: #007bff;
+  color: #ffffff;
+}
+
+.App.dark {
+  --font-color: rgb(255, 255, 255);
+  --background: rgb(131, 123, 123);
+  --background-light: rgb(210, 91, 155);
+  transition: all 0.3s;
+  background-color: rgb(100, 99, 99);
+  color: white;
+}
+
+.dark-mode .card {
+  border-color: #222; /* Adjust border color for dark mode */
+  background-color: #333; /* Adjust background color for dark mode */
+  color: #fff; /* Adjust text color for dark mode */
+}
+
+.dark {
+  background-color: #121212;
+  color: white;
+}
+.dark-mode {
+  background-color: #121212;
+  color: white;
+}
+
+.dark-mode button {
+  background-color: #333;
+  color: white;
+}
+
+
+.dark-mode header {
+  background-color: #121212;
+  color: white;
 }
 
 /* h2 {

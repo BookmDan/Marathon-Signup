@@ -27,9 +27,13 @@ const App = () => {
   const [raceEvents, setRaceEvents] = useState(null);
   const [raceEvent, setRaceEvent] = useState(null);
   const [loggedIn, setLoggedIn] = useState(null);
+  const [isDarkMode, setIsDarkMode] = useState(false);
   // const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    const savedTheme = localStorage.getItem('theme');
+    setIsDarkMode(savedTheme === 'dark');
+
     fetch("/api/check-session")
       .then(r => {
         if (r.ok) {
@@ -41,6 +45,10 @@ const App = () => {
       // fetchRaceEventData();
   }, [])
   
+  const handleToggleTheme = (newMode) => {
+    setIsDarkMode(newMode);
+  };
+
   if (!user) return (
     <div>
     <UserContext.Provider value={[user, setUser]}>
@@ -51,7 +59,6 @@ const App = () => {
   )
   //***** */ move fetchRaceEvents to the event cards or places where they should be fetched 
   
-
   // const login = (user) => {
   //   setUser(user);
   //   setLoggedIn(true)
@@ -131,15 +138,16 @@ const App = () => {
   };
 
   return (
-    <div>
+    <div  className={isDarkMode ? 'dark' : ''}>
       <Router>
         <UserContext.Provider value={[user, setUser]}>
-          <NavigationHeader onLogout={logoutUser} />
+          <NavigationHeader onLogout={logoutUser} isDarkMode={isDarkMode} handleToggleTheme={handleToggleTheme} />
           <CostProvider>
             <Routes>
               <Route
                 path="/"
-                element={user ? <Home /> : <Login updateUser={updateUser} />}
+                element={user ? <Home /> : <Login
+                  updateUser={updateUser} />}
               />
               {/* <Route path="/" element={Home} /> */}
               <Route path="/signup" element={<Login />} />
