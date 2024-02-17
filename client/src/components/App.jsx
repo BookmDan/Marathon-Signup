@@ -42,70 +42,70 @@ const App = () => {
     <div>
     <UserContext.Provider value={[user, setUser]}>
       <NavigationHeader />
-      <Login onLogin={setUser}/>
+        <Login onLogin={setUser}/>
     </UserContext.Provider>
   </div>
   )
   //***** */ move fetchRaceEvents to the event cards or places where they should be fetched 
   
 
-  // const login = (user) => {
-  //   setUser(user);
-  //   setLoggedIn(true)
-  // }
-  // useEffect(() => {
-  //   fetchUser();
-  //   fetchRaceEvents();
-  //   fetchRaceEventData();
-  // }, []);
+  const login = (user) => {
+    setUser(user);
+    setLoggedIn(true)
+  }
+  useEffect(() => {
+    fetchUser();
+    fetchRaceEvents();
+    fetchRaceEventData();
+  }, []);
 
 
-  // const fetchRaceEventData = () => {
-  //   fetch("/api/race-event")
-  //     .then((response) => response.json())
-  //     .then((data) => {
-  //       setRaceEvent(data); // Set the fetched data to state
-  //     })
-  //     .catch((error) => {
-  //       console.error("Error fetching race event data:", error);
-  //     });
-  // };
+  const fetchRaceEventData = () => {
+    fetch("/api/race-event")
+      .then((response) => response.json())
+      .then((data) => {
+        setRaceEvent(data); // Set the fetched data to state
+      })
+      .catch((error) => {
+        console.error("Error fetching race event data:", error);
+      });
+  };
 
-//   const fetchRaceEvents = () => {
-//     fetch('/api/race-events')
-//     .then(res => {
-//       if (res.ok) {
-//         return res.json();
-//       } else {
-//         throw new Error('Failed to fetch race events');
-//       }
-//     })
-//     .then(data => {
-//       // Update the raceEvents state with the fetched data
-//       setRaceEvents(data);
-//     })
-//     .catch(error => {
-//       console.error('Error fetching race events:', error);
-//     });
-// };
+  const fetchRaceEvents = () => {
+    fetch('/api/race-events')
+    .then(res => {
+      if (res.ok) {
+        return res.json();
+      } else {
+        throw new Error('Failed to fetch race events');
+      }
+    })
+    .then(data => {
+      // Update the raceEvents state with the fetched data
+      setRaceEvents(data);
+    })
+    .catch(error => {
+      console.error('Error fetching race events:', error);
+    });
+};
 
-  // const fetchUser = () => {
-  //   fetch('/api/users')
-  //     .then(res => {
-  //       if (res.ok) {
-  //         return res.json();
-  //       } else {
-  //         throw new Error('User not authenticated');
-  //       }
-  //     })
-  //     .then(data => {
-  //       setUser(data);
-  //     })
-  // };
+  const fetchUser = () => {
+    fetch('/api/users')
+      .then(res => {
+        if (res.ok) {
+          return res.json();
+        } else {
+          throw new Error('User not authenticated');
+        }
+      })
+      .then(data => {
+        setUser(data);
+      })
+  };
 
-  // const updateUser = (userData) => {
-  //   setUser(userData);
-  // };
+  const updateUser = (userData) => {
+    setUser(userData);
+  };
 
   const logoutUser = () => {
     fetch("/api/logout", {
@@ -144,7 +144,11 @@ const App = () => {
           <NavigationHeader onLogout={logoutUser} />
           <CostProvider>
             <Routes>
-              <Route path="/" element={Home} />
+              <Route
+                path="/"
+                element={user ? <Home /> : <Login updateUser={updateUser} />}
+              />
+              {/* <Route path="/" element={Home} /> */}
               <Route path="/signup" element={<Login />} />
               <Route path="/agreement/:id" element={<Agreement raceEvent={raceEvent} />} />
               <Route path="/the-why" element={<TheWhy />} />

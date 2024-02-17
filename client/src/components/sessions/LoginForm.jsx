@@ -4,7 +4,7 @@ import { useFormik } from 'formik';
 import { Form, Button, Col } from "react-bootstrap";
 import * as yup from 'yup';
 
-function LoginForm({ onLogin, setSignupMode, signupMode }) {
+function LoginForm({ onLogin, setSignupMode, signupMode, displayErrors }) {
   // const [signUp, setSignUp] = useState(false);
   const [error, setError] = useState(false);
   const [success, setSuccess] = useState(false);
@@ -55,6 +55,9 @@ function LoginForm({ onLogin, setSignupMode, signupMode }) {
     }
   });
 
+  const dislpayErrors =(error) =>{
+    return error ? <p style={{ color: "red" }}>{error}</p> : null
+  }
   return (
     <div>
       <Col lg="5" className="mx-auto">
@@ -72,28 +75,28 @@ function LoginForm({ onLogin, setSignupMode, signupMode }) {
                 value={formik.values.email}
                 onChange={formik.handleChange}
             />
-            {formik.errors.username ? <div className="text-danger" >{formik.errors.username}</div> : ""}
+            {dislpayErrors(formik.errors.email)}
+            {/* {formik.errors.username ? <div className="text-danger" >{formik.errors.username}</div> : ""} */}
           </Form.Group>
+          <Form.Group className="m-3 form-floating" >
+            <Form.Label>Password</Form.Label>
+            <Form.Control 
+              type="password"
+              name="password"
+              placeholder='Password'
+              value={formik.values.password}
+              onChange={formik.handleChange}
+            />
+            {dislpayErrors(formik.errors.password)}
+          </Form.Group>
+          <div id="button-container">
+            <button type="submit">Log In</button>
+          </div>
+          <div className="ms-4">
+            <Button className="m-3 btn-dark" onClick={handleClick} >Click here to create an account</Button>
+          </div>
         </Form>
       </Col>
-
-      <Form.Group className="m-3 form-floating" >
-        <Form.Label>Password</Form.Label>
-        <Form.Control 
-          type="password"
-          name="password"
-          placeholder='Password'
-          value={formik.values.password}
-          onChange={formik.handleChange}
-        />
-        {formik.errors.password ? <div className="text-danger" >{formik.errors.password}</div> : ""}
-      </Form.Group>
-      <div id="button-container">
-        <button type="submit">Log In</button>
-      </div>
-      <div className="ms-4">
-        <Button className="m-3 btn-dark" onClick={handleClick} >Click here to create an account</Button>
-      </div>
     </div>
   );
 }

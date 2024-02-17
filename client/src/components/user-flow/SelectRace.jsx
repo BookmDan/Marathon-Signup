@@ -28,6 +28,13 @@ const SelectRace = ({ raceEvents }) => {
     return typeMatch && nameMatch;
   });
 
+  const filterEvents = (filterValue) => {
+    const filtered = raceEvents.filter((event) =>
+      event.race_name.toLowerCase().includes(filterValue.toLowerCase())
+    );
+    setFilteredEvents(filtered);
+  };
+
   return (
     <div>
       <h2>Select Race</h2>
