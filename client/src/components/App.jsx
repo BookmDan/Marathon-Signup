@@ -43,10 +43,10 @@ const App = () => {
   
   if (!user) return (
     <div>
-    <UserProvider>
+    <UserContext.Provider value={[user, setUser]}>
       <NavigationHeader />
-        <Login />
-    </UserProvider>
+        <Login onLogin={setUser}/>
+    </UserContext.Provider>
   </div>
   )
   //***** */ move fetchRaceEvents to the event cards or places where they should be fetched 
@@ -134,15 +134,14 @@ const App = () => {
     <div>
       <Router>
         <UserContext.Provider value={[user, setUser]}>
-        {/* <UserProvider> */}
           <NavigationHeader onLogout={logoutUser} />
           <CostProvider>
             <Routes>
-              {/* <Route
+              <Route
                 path="/"
                 element={user ? <Home /> : <Login updateUser={updateUser} />}
-              /> */}
-              <Route path="/" element={Home} />
+              />
+              {/* <Route path="/" element={Home} /> */}
               <Route path="/signup" element={<Login />} />
               <Route path="/agreement/:id" element={<Agreement raceEvent={raceEvent} />} />
               <Route path="/the-why" element={<TheWhy />} />
@@ -160,7 +159,6 @@ const App = () => {
               <Route path="/directions" element={<Directions />} />
             </Routes>
           </CostProvider>
-        {/* </UserProvider> */}
         </UserContext.Provider>
       </Router>
     </div>
