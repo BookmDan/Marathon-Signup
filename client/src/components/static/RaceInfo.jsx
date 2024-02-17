@@ -1,3 +1,5 @@
+import route from "../../photos/5k_route.png"
+
 const RaceInfo = () => {
   return (
     <div className="form-container">
@@ -23,18 +25,25 @@ const RaceInfo = () => {
         The full marathon race spans the traditional marathon distance of 26.2 miles. Participants undertaking the full marathon must finish the course within a maximum time limit of 8 hours.
       </p>
       
-      <h2>Route Map for the 5K Race:</h2>
+      <h2>How to Prepare for Race Day:</h2>
+
+      
+      {/* YouTube Video Embed */}
+      <iframe
+        width="560"
+        height="315"
+        src="https://www.youtube.com/embed/4or6NrlDaOM"
+        title="Race Day Preparation"
+        frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen
+        style={{ marginBottom: '20px' }}
+      ></iframe>
+      
       <p>
-        Below is a generic Google Map showcasing the route for the 5K race. Please note that this map is for illustrative purposes and may not represent the exact course of the event.
+        Google Map showcasing the route for the 5K race. Please note that this map is for illustrative purposes and may not represent the exact course of the event.
       </p>
-      
-      {/* Insert Google Map Embed Here */}
-      
-      {/* Replace the below div with the actual Google Map Embed code */}
-      <div style={{ border: '1px solid #ccc', padding: '10px', margin: '10px 0' }}>
-        [Insert Google Map Embed Here]
-      </div>
-      
+      <img src={route} alt="5K Race Route" />
       <p>
         This information provides an overview of the various race distances offered and their corresponding time limits. Additionally, the map offers a visual representation of the 5K race route. Participants should familiarize themselves with the course and adhere to the specified time limits to ensure a safe and enjoyable racing experience.
       </p>

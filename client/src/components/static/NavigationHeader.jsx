@@ -26,17 +26,9 @@ const NavigationHeader = ({ onLogout, isDarkMode,handleToggleTheme }) => {
             <Nav.Link as={Link} to="/results">Results</Nav.Link>
             <Nav.Link as={Link} to="/photos">Photos</Nav.Link>
             <Nav.Link as={Link} to="/volunteer">Volunteer</Nav.Link>
-            <NavDropdown title="More" id="basic-nav-dropdown">
-              <NavDropdown.Item as={Link} to="/shop">
-                Shop
-              </NavDropdown.Item>
-              <NavDropdown.Item as={Link} to="/refund-policy">
-                Refund Policy
-              </NavDropdown.Item>
-              <NavDropdown.Item as={Link} to="/directions">
-                Directions
-              </NavDropdown.Item>
-            </NavDropdown>
+            <Nav.Link as={Link} to="/shop">
+              Shop
+            </Nav.Link>
           </Nav>
         </Navbar.Collapse>
       </Navbar>
