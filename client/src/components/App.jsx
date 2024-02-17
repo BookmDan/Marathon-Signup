@@ -36,6 +36,9 @@ const App = () => {
           r.json().then(user => setUser(user))
         }
       })
+      fetchUser();
+      fetchRaceEvents();
+      fetchRaceEventData();
   }, [])
   
   if (!user) return (
@@ -53,11 +56,11 @@ const App = () => {
     setUser(user);
     setLoggedIn(true)
   }
-  useEffect(() => {
-    fetchUser();
-    fetchRaceEvents();
-    fetchRaceEventData();
-  }, []);
+  // useEffect(() => {
+  //   fetchUser();
+  //   fetchRaceEvents();
+  //   fetchRaceEventData();
+  // }, []);
 
 
   const fetchRaceEventData = () => {
@@ -127,16 +130,6 @@ const App = () => {
       });
   };
 
-  // {/* <Route */}
-  //   path="/"
-  //   element={user ? <Home /> : <Authentication updateUser={updateUser} />}
-  // {/* /> */}
-  // {/* <Route */}
-  //   path="/login"
-  //   element={<Authentication updateUser={updateUser} />}
-  // {/* /> */}
-  <Route path="/signup" element={<SignupForm />} />
-  {/* <Route path="/signup" element={<SignupForm />} /> */}
   return (
     <div>
       <UserContext.Provider value={[user, setUser]}>
@@ -144,11 +137,11 @@ const App = () => {
           <NavigationHeader onLogout={logoutUser} />
           <CostProvider>
             <Routes>
-              <Route
+              {/* <Route
                 path="/"
                 element={user ? <Home /> : <Login updateUser={updateUser} />}
-              />
-              {/* <Route path="/" element={Home} /> */}
+              /> */}
+              <Route path="/" element={Home} />
               <Route path="/signup" element={<Login />} />
               <Route path="/agreement/:id" element={<Agreement raceEvent={raceEvent} />} />
               <Route path="/the-why" element={<TheWhy />} />
