@@ -12,7 +12,7 @@ class Login(Resource):
 
     # try:
     user = User.query.filter_by(email=email).first()
-    if user and user.authenticate(password):
+    if user and user.check_password(password):
       session['user_id'] = user.id
       response_body = user.to_dict(rules=('-_password_hash',))
       return response_body, 200
@@ -27,10 +27,19 @@ class Login(Resource):
 
 
 class Logout(Resource):
-  def post(self):
-    session.pop('user_id', None)
-    return jsonify({'message': 'Logout successful'}, 200)
-  
+  # def post(self):
+  #   session.pop('user_id', None)
+  #   return jsonify({'message': 'Logout successful'}, 200)
+  def delete(self):
+
+    user = User.query.filter_by(id = session.get('user_id')).first()
+
+    if user:
+      session['user_id'] = None
+      return {}, 200
+    else:
+      return {"errors": "Error: cannot log out, you are not logged in"}, 401
+
 class Signup(Resource):
   def post(self):
     json = request.get_json()

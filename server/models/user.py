@@ -15,24 +15,23 @@ class User(db.Model, SerializerMixin):
   email = db.Column(db.String, unique=True, nullable=False)
   phone_number = db.Column(db.String)
   _password_hash = db.Column(db.String)
-  admin = db.Column(db.String, default = False)
+  admin = db.Column(db.Boolean, default=False)
   estimated_finish_time = db.Column(db.Integer)
 
-  @hybrid_property
+  @property
   def password_hash(self):
     raise Exception("You cannot view the password hash.")
     return self._password_hash
 
-  #user.password_haseh('cow')
   @password_hash.setter
   def password_hash(self, password):
     if len(password) < 8:
       raise ValueError("Passwords must be 8 or more characters")
-    password_hash = bcrypt.generate_password_hash(password.encode('utf-8'))
-    self._password_hash = password_hash.decode('utf-8') 
+    self._password_hash = bcrypt.generate_password_hash(password.encode('utf-8'))
 
-  def authenticate(self, password):
-    return bcrypt.check_password_hash(self._password_hash, password.encode('utf-8'))
+  def check_password(self, password):
+        return bcrypt.check_password_hash(self._password_hash, password)
+  
   
   race_signups = db.relationship('RaceSignup', back_populates='user', uselist=False)
   credit_card_info = db.relationship('CreditCardInfo', back_populates='user') 
@@ -42,7 +41,7 @@ class User(db.Model, SerializerMixin):
   @validates("email")
   def check_email(self, key, email):
     if '@' not in email:
-      raise ValueError("Email must contain '@' symbol.")
+      raise ValueError("Invalid email format.Email must contain '@' symbol.")
     return email
 
   def __repr__(self):
