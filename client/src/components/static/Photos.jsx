@@ -2,14 +2,14 @@ import { useState, useEffect } from 'react';
 import PhotoGallery from './PhotoGallery';
 
 import running from "../../photos/gallery/5k.jpg";
-import drone from "../../photos/gallery/drone.jpg";
+import Drone from "../../photos/gallery/drone.jpg";
 
 const Photos = () => {
   return (
     <div>
       <h2>Photo Gallery</h2>
       <img src={running}/> 
-      <img2 src={drone}/> 
+      <img2 src={Drone}/> 
     </div>
   );
 };

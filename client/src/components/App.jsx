@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Routes, Route} from "react-router-dom";
 import Home from "./static/Home";
 import NavigationHeader from "./static/NavigationHeader";
 import Login from "./sessions/Login";
-import RaceEvents from './static/RaceEvents';
+import RaceInfo from './static/RaceInfo';
 import RaceDetailsPage from "./static/RaceDetailsPage";
 import Results from './static/Results';
 import Photos from './static/Photos';
@@ -153,8 +153,8 @@ const App = () => {
               <Route path="/signup" element={<Login />} />
               <Route path="/agreement/:id" element={<Agreement raceEvent={raceEvent} />} />
               <Route path="/the-why" element={<TheWhy />} />
-              <Route path="/race-events" element={<RaceEvents />} />
               <Route path="/race-details/:id" component={RaceDetailsPage} />
+              <Route path="/race-info" element={<RaceInfo />} />
               <Route path="/results" element={<Results />} />
               <Route path="/photos" element={<Photos />} />
               <Route path="/volunteer" element={<Volunteer />} />
