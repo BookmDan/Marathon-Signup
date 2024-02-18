@@ -1,6 +1,3 @@
-import { useState, useEffect } from 'react';
-import PhotoGallery from './PhotoGallery';
-
 import running from "../../photos/gallery/5k.jpg";
 import Drone from "../../photos/gallery/drone.jpg";
 import lucy from "../../photos/gallery/lucy-running.jpg";
