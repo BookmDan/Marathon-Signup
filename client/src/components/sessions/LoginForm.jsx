@@ -27,7 +27,6 @@ function LoginForm({ setSignupMode, signupMode,onLogin}) {
       email: '',
       phoneNumber: '',
       password: '',
-      confirmPassword: '',
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
@@ -40,7 +39,7 @@ function LoginForm({ setSignupMode, signupMode,onLogin}) {
     }).then(r => {
       if (r.ok) {
         r.json().then(user =>onLogin(user))
-        navigate('/')    
+        navigate('/select-race')    
       } else {
         r.json().then(err => {
           // setIsLoading(false)

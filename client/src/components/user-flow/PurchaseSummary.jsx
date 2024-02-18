@@ -16,12 +16,12 @@ const PurchaseSummary = () => {
   const processingFee = 3.70; // Assuming a fixed processing fee
   const totalCost = baseCost + tShirtPrice + processingFee;
 
-  const handleContinueClick = () => {
-    navigate('/purchase-summary');
+  const handleConfirmClick = () => {
+    navigate('/thank-you');
   };
 
   const handleBackClick = () => {
-    navigate('/shop');
+    navigate('/payment');
   };
 
   const handlePaymentMethodClick = (paymentMethod) => {
@@ -58,11 +58,6 @@ const PurchaseSummary = () => {
       </Card>
       <div className="mt-4">
         <h5>Payment Method:</h5>
-        {/* {creditCardInfo && (
-        <Button variant="primary">
-          {creditCardInfo.name_on_card}'s Credit Card
-        </Button>
-        )} */}
         {creditCardInfo && (
         <Button
           variant="primary"
@@ -86,7 +81,7 @@ const PurchaseSummary = () => {
       </div>
       <div style={{ display: 'flex', alignItems: 'center' }}>
         <div id="button-container">
-          <Button variant="secondary" onClick={handleContinueClick}>Continue</Button>
+          <Button variant="secondary" onClick={handleConfirmClick}>Confirm Payment ${totalCost.toFixed(2)} </Button>
         </div>
         <Button variant="secondary" onClick={handleBackClick}>Back</Button>
       </div>
