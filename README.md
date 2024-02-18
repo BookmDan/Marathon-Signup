@@ -7,7 +7,7 @@ to get it started:
 - **npm install**
 - **pipenv install && pipenv shell**
 - **export FLASK_APP=app.py**
-- **export FLASK_RUN_PORT=5555 **
+- **export FLASK_RUN_PORT=5555**
 - '**flask db upgrade**' to generate your database.
 - '**python seed.py**' to populate it.
 
