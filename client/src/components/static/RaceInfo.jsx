@@ -34,9 +34,7 @@ const RaceInfo = () => {
         height="315"
         src="https://www.youtube.com/embed/4or6NrlDaOM"
         title="Race Day Preparation"
-        frameborder="0"
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-        allowfullscreen
         style={{ marginBottom: '20px' }}
       ></iframe>
       
