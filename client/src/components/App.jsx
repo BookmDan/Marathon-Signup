@@ -8,8 +8,6 @@ import RaceDetailsPage from "./static/RaceDetailsPage";
 import Results from './static/Results';
 import Photos from './static/Photos';
 import Volunteer from './static/Volunteer';
-import RefundPolicy from './RefundPolicy';
-import Directions from './Directions';
 import SelectRace from "./user-flow/SelectRace";
 import TheWhy from "./user-flow/TheWhy";
 import Agreement from "./user-flow/Agreement";
@@ -18,6 +16,7 @@ import Shop from "./user-flow/Shop";
 import Payment from "./user-flow/Payment";
 import PurchaseSummary from "./user-flow/PurchaseSummary";
 import { CostProvider } from '../context/CostContext';
+import ThankYou from "./user-flow/ThankYou";
 // import { UserProvider } from "../context/UserContext";
 
 export const UserContext = createContext(null)
@@ -150,20 +149,19 @@ const App = () => {
               />
               {/* <Route path="/" element={Home} /> */}
               <Route path="/signup" element={<Login />} />
+              <Route path="/select-race" element={<SelectRace raceEvents={raceEvents} />} />
               <Route path="/agreement/:id" element={<Agreement raceEvent={raceEvent} />} />
               <Route path="/the-why" element={<TheWhy />} />
+              <Route path="/ship-packet" element={<ShipPacket/>} />
+              <Route path="/shop" element={<Shop />} />
+              <Route path="/payment" element={<Payment />} />
+              <Route path="/purchase-summary" element={<PurchaseSummary />} />
+              <Route path="/thank-you" element={<ThankYou/>} />
               <Route path="/race-details/:id" component={RaceDetailsPage} />
               <Route path="/race-info" element={<RaceInfo />} />
               <Route path="/results" element={<Results />} />
               <Route path="/photos" element={<Photos />} />
               <Route path="/volunteer" element={<Volunteer />} />
-              <Route path="/select-race" element={<SelectRace raceEvents={raceEvents} />} />
-              <Route path="/ship-packet" element={<ShipPacket/>} />
-              <Route path="/shop" element={<Shop />} />
-              <Route path="/purchase-summary" element={<PurchaseSummary/>} />
-              <Route path="/payment" element={<Payment />} />
-              <Route path="/refund-policy" element={<RefundPolicy />} />
-              <Route path="/directions" element={<Directions />} />
             </Routes>
           </CostProvider>
         </UserContext.Provider>
