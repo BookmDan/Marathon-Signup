@@ -1,38 +1,20 @@
-import { useLocation } from 'react-router-dom';
+import { useRace } from '../../context/RaceContext'; // Import the RaceContext
 
-const ThankYou = () => {
-  // Get race information from location state
-  const location = useLocation();
-  const { raceName, organization, raceType, startTime, startDay, packetPickupDay, packetPickupLocation } = location.state;
-
-  // Format date
-  const formatDate = (dateString) => {
-    const date = new Date(dateString);
-    return date.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
-  };
-
-  // Format time
-  const formatTime = (timeString) => {
-    const time = new Date(timeString);
-    return time.toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true });
-  };
+const Thankyou = () => {
+  const { selectedRace } = useRace(); // Get the selected race data from the RaceContext
 
   return (
-    <div className="container mt-5">
-      <h2>Congrats on registering!</h2>
+    <div>
+      <h1>Congrats on registering!</h1>
       <p>Don't forget to visit the RunYourSocksOff website and home page menu for more information about the race.</p>
-      <h3>Race Details:</h3>
-      <p><strong>Race Name:</strong> {raceName}</p>
-      <p><strong>Organization:</strong> {organization}</p>
-      <p><strong>Race Type:</strong> {raceType}</p>
-      <p><strong>Race Start Time:</strong> {formatTime(startTime)}</p>
-      <p><strong>Race Date:</strong> {formatDate(startDay)}</p>
-      <p><strong>Packet Pickup Date:</strong> {formatDate(packetPickupDay)}</p>
-      <p><strong>Packet Pickup Location:</strong> {packetPickupLocation}</p>
-      <p><strong>Registered:</strong> {new Date().toLocaleString()}</p>
-      <p><strong>Registrant:</strong> {location.state.userName}</p>
+      <p>Packet Pick Up Location: {selectedRace?.packetpickup_location}</p>
+      <p>Race Date: {selectedRace?.start_day}</p>
+      <p>Registered: {new Date().toLocaleString()}</p>
+      <h2>Registrant:</h2>
+      <p>Bring back user name and raceEventData:</p>
+      <pre>{JSON.stringify(selectedRace, null, 2)}</pre>
     </div>
   );
 };
 
-export default ThankYou;
+export default Thankyou;
