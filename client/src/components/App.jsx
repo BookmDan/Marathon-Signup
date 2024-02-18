@@ -120,7 +120,6 @@ const App = () => {
   const logoutUser = () => {
     fetch("/api/logout", {
       method: "DELETE",
-      credentials: "include", // include credentials such as cookies
     })
       .then((response) => {
         if (response.ok) {

@@ -27,18 +27,22 @@ class Login(Resource):
 
 
 class Logout(Resource):
+  def delete(self): # just add this line!
+    session['user_id'] = None
+    return {'message': '204: No Content'}, 204
+
+    # user = User.query.filter_by(id = session.get('user_id')).first()
+
+    # if user:
+    #   session['user_id'] = None
+    #   return {}, 200
+    # else:
+    #   return {"errors": "Error: cannot log out, you are not logged in"}, 401
+
   # def post(self):
   #   session.pop('user_id', None)
   #   return jsonify({'message': 'Logout successful'}, 200)
-  def delete(self):
-
-    user = User.query.filter_by(id = session.get('user_id')).first()
-
-    if user:
-      session['user_id'] = None
-      return {}, 200
-    else:
-      return {"errors": "Error: cannot log out, you are not logged in"}, 401
+  # def delete(self):
 
 class Signup(Resource):
   def post(self):
