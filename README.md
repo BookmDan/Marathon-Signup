@@ -16,4 +16,14 @@ to get it started:
 
 Marathon Sign Up Form Walkthrough 🏃‍♂️ ### - Watch Video
 
+<div>
+    <a href="https://www.loom.com/share/b059241f27c44ee6acd4fdf31554ee2e">
+      <p>Marathon Sign Up Form Walkthrough 🏃‍♂️
+### - Watch Video</p>
+    </a>
+    <a href="https://www.loom.com/share/b059241f27c44ee6acd4fdf31554ee2e">
+      <img style="max-width:300px;" src="https://cdn.loom.com/sessions/thumbnails/b059241f27c44ee6acd4fdf31554ee2e-with-play.gif">
+    </a>
+  </div>
+
 <div style="position: relative; padding-bottom: 56.25%; height: 0;"><iframe src="https://www.loom.com/embed/b059241f27c44ee6acd4fdf31554ee2e?sid=518354d4-0255-48cb-aed3-dbb5dbdac890" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
