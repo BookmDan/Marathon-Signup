@@ -1,8 +1,6 @@
-import { useRace } from '../../context/RaceContext'; // Import the RaceContext
+import React from 'react';
 
-const Thankyou = () => {
-  const { selectedRace } = useRace(); // Get the selected race data from the RaceContext
-
+const ThankYou = ({ selectedRace }) => {
   return (
     <div>
       <h1>Congrats on registering!</h1>
@@ -11,10 +9,9 @@ const Thankyou = () => {
       <p>Race Date: {selectedRace?.start_day}</p>
       <p>Registered: {new Date().toLocaleString()}</p>
       <h2>Registrant:</h2>
-      <p>Bring back user name and raceEventData:</p>
-      <pre>{JSON.stringify(selectedRace, null, 2)}</pre>
+      {/* Add registrant information here */}
     </div>
   );
 };
 
-export default Thankyou;
+export default ThankYou;
