@@ -31,10 +31,11 @@ class Results(Resource):
         df.to_excel('results.xlsx', index=False)
         # Send Excel file as attachment
         return send_file('results.xlsx', as_attachment=True)
+        os.remove('results.xlsx')
       else:
         return {"errors": "User not found"}, 404
     else:
       return {"errors": "User not logged in"}, 401
 
 # Route to handle authorized session and download results as Excel file
-api.add_resource(Results, '/results')
+api.add_resource(Results, '/api/results')
