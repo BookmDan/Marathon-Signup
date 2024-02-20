@@ -19,7 +19,7 @@ if __name__ == "__main__":
         db.session.commit()
 
         athletes_data = [
-            {"full_name": "John Doe", "gender": "Male", "age": 30, "city": "New York", "state": "NY", "run_time": "1:30:00", "race_place": 1, "gender_place": 1},
+            {"full_name": "Joahn Doe", "gender": "Male", "age": 30, "city": "New York", "state": "NY", "run_time": "1:30:00", "race_place": 1, "gender_place": 1},
             {"full_name": "Jane Smith", "gender": "Female", "age": 35, "city": "Los Angeles", "state": "CA", "run_time": "1:35:00", "race_place": 2, "gender_place": 1},
         ]
         for idx, data in enumerate(athletes_data, start=1):
@@ -31,32 +31,32 @@ if __name__ == "__main__":
             else:
                 age_group = "40+"
 
-        # Calculate overall pace (assuming 10k race)
-        total_seconds = sum(int(x) * 60 ** i for i, x in enumerate(reversed(data["run_time"].split(":"))))
-        overall_pace_seconds = total_seconds / 10  # 10k race distance
-        overall_pace_minutes, overall_pace_seconds = divmod(overall_pace_seconds, 60)
-        overall_pace = f"{int(overall_pace_minutes)}:{int(overall_pace_seconds)}"
+            # Calculate overall pace (assuming 10k race)
+            total_seconds = sum(int(x) * 60 ** i for i, x in enumerate(reversed(data["run_time"].split(":"))))
+            overall_pace_seconds = total_seconds / 10  # 10k race distance
+            overall_pace_minutes, overall_pace_seconds = divmod(overall_pace_seconds, 60)
+            overall_pace = f"{int(overall_pace_minutes)}:{int(overall_pace_seconds)}"
 
-        # Calculate age place (assuming 10 athletes)
-        age_place = idx
+            # Calculate age place (assuming 10 athletes)
+            age_place = idx
 
-        # Create Results object
-        result = Results(
-            full_name=data["full_name"],
-            gender=data["gender"],
-            age=data["age"],
-            city=data["city"],
-            state=data["state"],
-            run_time=data["run_time"],
-            race_place=data["race_place"],
-            gender_place=data["gender_place"],
-            age_group=age_group,
-            age_place=age_place,
-            overall_pace=overall_pace
-        )
+            # Create Results object
+            result = Results(
+                full_name=data["full_name"],
+                gender=data["gender"],
+                age=data["age"],
+                city=data["city"],
+                state=data["state"],
+                run_time=data["run_time"],
+                race_place=data["race_place"],
+                gender_place=data["gender_place"],
+                age_group=age_group,
+                age_place=age_place,
+                overall_pace=overall_pace
+            )
 
-        # Add Results object to session
-        db.session.add(result)
+            # Add Results object to session
+            db.session.add(result)
 
         # Commit changes to the database
         db.session.commit()

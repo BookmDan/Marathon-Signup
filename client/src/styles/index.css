@@ -351,3 +351,34 @@ textarea.form-input {
   width: 100%; /* Ensure images fill grid cells */
   height: auto; /* Maintain aspect ratio */
 }
+
+.results-container table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.results-container th, .results-container td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+.results-container th {
+  cursor: pointer;
+}
+
+.results-container .even-row {
+  background-color: #f2f2f2;
+}
+
+.results-container .odd-row {
+  background-color: #fff;
+}
+
+.results-container th:hover {
+  background-color: #ddd;
+}
+
+.narrow-column {
+  width: 100px; 
+}
