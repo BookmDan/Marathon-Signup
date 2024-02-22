@@ -3,7 +3,7 @@ from sqlalchemy_serializer import SerializerMixin
 from marshmallow import Schema, fields
 
 class RaceSignup(db.Model, SerializerMixin):
-  __tablename__ = "race_signup"
+  __tablename__ = "race_signups"
   id = db.Column(db.Integer, primary_key=True)
   waiver_accept = db.Column(db.Boolean)
   tshirt_size = db.Column(db.String)
@@ -12,7 +12,7 @@ class RaceSignup(db.Model, SerializerMixin):
 
   user_id = db.Column(db.Integer, db.ForeignKey('user.id'), unique=True)
   race_event_id = db.Column(db.Integer, db.ForeignKey('race_event.id'))
-  
+
   user = db.relationship('User', back_populates='race_signups')
   race_event = db.relationship('RaceEvent', back_populates='race_signups')
 

@@ -4,7 +4,7 @@ from marshmallow import Schema, fields
 from sqlalchemy import text
   
 class RaceEvent(db.Model, SerializerMixin):
-  __tablename__ = 'race_event'
+  __tablename__ = 'race_events'
 
   id = db.Column(db.Integer, primary_key=True)
   race_name = db.Column(db.String, nullable=False)
