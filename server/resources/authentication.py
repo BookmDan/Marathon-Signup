@@ -10,21 +10,13 @@ class Login(Resource):
     email = data.get("email")
     password = data.get("password")
 
-    # try:
     user = User.query.filter_by(email=email).first()
     if user and user.check_password(password):
       session['user_id'] = user.id
       response_body = user.to_dict(rules=('-_password_hash',))
       return response_body, 200
-        # return user.to_dict(),200
     else:
       return {"errors": ["Invalid username and/or password"]}, 401
-    # else:
-    #   return {"errors": "Username or Password didn't match."}, 422
-      
-  # def get(self):
-  #   return ({"message": "hi"}, 200)
-
 
 class Logout(Resource):
   def delete(self): # just add this line!

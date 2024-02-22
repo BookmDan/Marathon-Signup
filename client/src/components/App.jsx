@@ -22,6 +22,8 @@ import ThankYou from "./user-flow/ThankYou";
 export const UserContext = createContext(null)
 
 const App = () => {
+  // const {loading} = useContext(LoadingContext)
+  const [loading, setLoading] = useState(true)
   const [user, setUser] = useState([]);
   const [raceEvents, setRaceEvents] = useState(null);
   const [raceEvent, setRaceEvent] = useState(null);
@@ -36,12 +38,18 @@ const App = () => {
     fetch("/api/check-session")
       .then(r => {
         if (r.ok) {
-          r.json().then(user => setUser(user))
+          r.json().then(user =>
+            // Login(user)
+            // setLoading(user)
+            setUser(user))
         }
+        // else {
+        //   setLoading(false)
+        // }
       })
-      // fetchUser();
-      // fetchRaceEvents();
-      // fetchRaceEventData();
+      fetchUser();
+      fetchRaceEvents();
+      fetchRaceEventData();
   }, [])
   
   const handleToggleTheme = (newMode) => {
@@ -62,12 +70,6 @@ const App = () => {
   //   setUser(user);
   //   setLoggedIn(true)
   // }
-  useEffect(() => {
-    fetchUser();
-    fetchRaceEvents();
-    fetchRaceEventData();
-  }, []);
-
 
   const fetchRaceEventData = () => {
     fetch("/api/race-event")
@@ -141,28 +143,30 @@ const App = () => {
         <UserContext.Provider value={[user, setUser]}>
           <NavigationHeader onLogout={logoutUser} isDarkMode={isDarkMode} handleToggleTheme={handleToggleTheme} />
           <CostProvider>
-            <Routes>
-              <Route
-                path="/"
-                element={user ? <Home /> : <Login
-                  updateUser={updateUser} />}
-              />
-              {/* <Route path="/" element={Home} /> */}
-              <Route path="/signup" element={<Login />} />
-              <Route path="/select-race" element={<SelectRace raceEvents={raceEvents} />} />
-              <Route path="/agreement/:id" element={<Agreement raceEvent={raceEvent} />} />
-              <Route path="/the-why" element={<TheWhy />} />
-              <Route path="/ship-packet" element={<ShipPacket/>} />
-              <Route path="/shop" element={<Shop />} />
-              <Route path="/payment" element={<Payment />} />
-              <Route path="/purchase-summary" element={<PurchaseSummary />} />
-              <Route path="/thank-you" element={<ThankYou />} />
-              <Route path="/race-details/:id" component={RaceDetailsPage} />
-              <Route path="/race-info" element={<RaceInfo />} />
-              <Route path="/results" element={<Results />} />
-              <Route path="/photos" element={<Photos />} />
-              <Route path="/volunteer" element={<Volunteer />} />
-            </Routes>
+            {false ? <h1>Loading...</h1> :
+              <Routes>
+                <Route
+                  path="/"
+                  element={user ? <Home /> : <Login
+                    updateUser={updateUser} />}
+                />
+                {/* <Route path="/" element={Home} /> */}
+                <Route path="/signup" element={<Login />} />
+                <Route path="/select-race" element={<SelectRace raceEvents={raceEvents} />} />
+                <Route path="/agreement/:id" element={<Agreement raceEvent={raceEvent} />} />
+                <Route path="/the-why" element={<TheWhy />} />
+                <Route path="/ship-packet" element={<ShipPacket />} />
+                <Route path="/shop" element={<Shop />} />
+                <Route path="/payment" element={<Payment />} />
+                <Route path="/purchase-summary" element={<PurchaseSummary />} />
+                <Route path="/thank-you" element={<ThankYou />} />
+                <Route path="/race-details/:id" component={RaceDetailsPage} />
+                <Route path="/race-info" element={<RaceInfo />} />
+                <Route path="/results" element={<Results />} />
+                <Route path="/photos" element={<Photos />} />
+                <Route path="/volunteer" element={<Volunteer />} />
+              </Routes>
+            }
           </CostProvider>
         </UserContext.Provider>
       </Router>

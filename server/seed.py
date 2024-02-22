@@ -13,8 +13,10 @@ if __name__ == "__main__":
         db.session.commit()
 
         # Create users
-        user1 = User(first_name="John", last_name="Doe", email="john@example.com", phone_number="1234567890", _password_hash="12341234",estimated_finish_time=3600, )
-        user2 = User(first_name="Jane", last_name="Doe", email="jane@example.com", phone_number="9876543210", _password_hash="12342345",estimated_finish_time=3600,)
+        user1 = User(first_name="John", last_name="Doe", email="john@example.com", phone_number="1234567890",estimated_finish_time=3600, )
+        user2 = User(first_name="Jane", last_name="Doe", email="jane@example.com", phone_number="9876543210", estimated_finish_time=3600,)
+        user1.password_hash = "12341234"
+        user2.password_hash = "13241324"
         db.session.add_all([user1, user2])
         db.session.commit()
 
