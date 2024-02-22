@@ -5,7 +5,6 @@ from sqlalchemy import text
   
 class RaceEvent(db.Model, SerializerMixin):
   __tablename__ = 'race_events'
-
   id = db.Column(db.Integer, primary_key=True)
   race_name = db.Column(db.String, nullable=False)
   organization = db.Column(db.String) # who is hosting
@@ -18,7 +17,7 @@ class RaceEvent(db.Model, SerializerMixin):
   race_cost = db.Column(db.Float, nullable=False) 
 
   race_signups = db.relationship('RaceSignup', back_populates='race_event')
-  users = db.relationship("User", secondary="race_signups", back_populates="race_events")
+  users = db.relationship("User", secondary="race_signup", back_populates="race_events")
 
   serialize_rules = ('-users','-race_signups',)
   

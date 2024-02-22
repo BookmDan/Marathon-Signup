@@ -19,7 +19,7 @@ class Results(db.Model, SerializerMixin):
   overall_pace = db.Column(db.String)
 
   user_id = db.Column(db.Integer, db.ForeignKey('user.id'), unique=True)
-  user = db.relationship('User', back_populates='results')
+  user = db.relationship('User', primaryjoin="Results.user_id == User.id",back_populates='results')
   # race_event_id = db.Column(db.Integer, db.ForeignKey('race_event.id'))
   # race_event = db.relationship('RaceEvent', back_populates='results')
 
