@@ -11,8 +11,9 @@ class RaceSignup(db.Model, SerializerMixin):
   ship_packet = db.Column(db.Boolean)
 
   user_id = db.Column(db.Integer, db.ForeignKey('user.id'), unique=True)
-  user = db.relationship('User', back_populates='race_signups')
   race_event_id = db.Column(db.Integer, db.ForeignKey('race_event.id'))
+  
+  user = db.relationship('User', back_populates='race_signups')
   race_event = db.relationship('RaceEvent', back_populates='race_signups')
 
 
