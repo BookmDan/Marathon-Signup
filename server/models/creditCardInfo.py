@@ -3,7 +3,7 @@ from sqlalchemy_serializer import SerializerMixin
 from marshmallow import Schema, fields
   
 class CreditCardInfo(db.Model, SerializerMixin):
-  __tablename__ = 'credit_card_info'
+  __tablename__ = 'credit_card_infos'
   id = db.Column(db.Integer, primary_key=True)
   credit_card_number = db.Column(db.String, nullable=False, unique=True)
   name_on_card = db.Column(db.String)
@@ -16,8 +16,9 @@ class CreditCardInfo(db.Model, SerializerMixin):
   state = db.Column(db.String)
   save_my_card = db.Column(db.Boolean)
 
-  user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-  user = db.relationship('User', back_populates='credit_card_info')
+  # user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+  user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+  user = db.relationship('User', back_populates='credit_card_infos')
 
   def __repr__(self):
     return f'<CreditCardInfo id={self.id} credit_card_number={self.credit_card_number} name_on_card={self.name_on_card}>'

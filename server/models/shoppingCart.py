@@ -5,7 +5,7 @@ from sqlalchemy import text
 from marshmallow import Schema, fields
 
 class ShoppingCart(db.Model):
-  __tablename__ = "shopping_cart"
+  __tablename__ = "shopping_carts"
   id = db.Column(db.Integer, primary_key=True)
   race_cost = db.Column(db.Float)
   ship_packet_cost = db.Column(db.Float)

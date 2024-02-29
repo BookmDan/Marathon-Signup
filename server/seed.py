@@ -1,5 +1,5 @@
 from config import app, db
-from models.models import User, RaceSignup, RaceEvent, CreditCardInfo, Results, ShoppingCart
+from models.models import User, RaceSignup, RaceEvent, CreditCardInfo,ShoppingCart
 
 if __name__ == "__main__":
     with app.app_context():
@@ -8,7 +8,7 @@ if __name__ == "__main__":
         db.session.query(RaceSignup).delete()
         db.session.query(RaceEvent).delete()
         db.session.query(CreditCardInfo).delete()
-        db.session.query(Results).delete()
+        # db.session.query(Results).delete()
         db.session.query(ShoppingCart).delete()
         db.session.commit()
 
@@ -43,25 +43,25 @@ if __name__ == "__main__":
             age_place = idx
 
             # Create Results object
-            result = Results(
-                full_name=data["full_name"],
-                gender=data["gender"],
-                age=data["age"],
-                city=data["city"],
-                state=data["state"],
-                run_time=data["run_time"],
-                race_place=data["race_place"],
-                gender_place=data["gender_place"],
-                age_group=age_group,
-                age_place=age_place,
-                overall_pace=overall_pace
-            )
+        #     result = Results(
+        #         full_name=data["full_name"],
+        #         gender=data["gender"],
+        #         age=data["age"],
+        #         city=data["city"],
+        #         state=data["state"],
+        #         run_time=data["run_time"],
+        #         race_place=data["race_place"],
+        #         gender_place=data["gender_place"],
+        #         age_group=age_group,
+        #         age_place=age_place,
+        #         overall_pace=overall_pace
+        #     )
 
-            # Add Results object to session
-            db.session.add(result)
+        #     # Add Results object to session
+        #     db.session.add(result)
 
-        # Commit changes to the database
-        db.session.commit()
+        # # Commit changes to the database
+        # db.session.commit()
         
         shopping_cart1 = ShoppingCart(race_cost=50.00, ship_packet_cost=5.00, cart_items=3, tshirt_size='M', coupon_code='ABC123')
         shopping_cart2 = ShoppingCart(race_cost=60.00, ship_packet_cost=7.00, cart_items=2, tshirt_size='L', coupon_code='DEF456')
