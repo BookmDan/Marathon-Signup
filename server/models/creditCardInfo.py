@@ -21,8 +21,6 @@ class CreditCardInfo(db.Model, SerializerMixin):
 
   def __repr__(self):
     return f'<CreditCardInfo id={self.id} credit_card_number={self.credit_card_number} name_on_card={self.name_on_card}>'
-
-    # return f'<CreditCardInfo creditCardNumber={self.creditCardNumber} user_id={self.user_id}>'
   
 class CreditCardInfoSchema(Schema):
   id = fields.Int(dump_only=True, primary_key=True)

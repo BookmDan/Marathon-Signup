@@ -18,7 +18,7 @@ class User(db.Model, SerializerMixin):
   admin = db.Column(db.Boolean, default=False)
   estimated_finish_time = db.Column(db.Integer)
 
-  results = db.relationship("Results", back_populates="user")
+  # results = db.relationship("Results", back_populates="user")
   
   @property
   def password_hash(self):
@@ -38,7 +38,8 @@ class User(db.Model, SerializerMixin):
   credit_card_info = db.relationship('CreditCardInfo', back_populates='user') 
   race_events = db.relationship("RaceEvent", secondary="race_signup", back_populates="users")
 
-  serialize_rules = ('-_password_hash', '-race_signups.user', '-race_signups.race_event','-credit_card_info.user', '-race_events',)
+  serialize_rules = ('-_password_hash',  '-race_signups.user', '-race_signups.race_event','-credit_card_info.user', '-race_events', )
+
   # only for front end 
 
   @validates("email")

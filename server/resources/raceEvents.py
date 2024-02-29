@@ -29,17 +29,6 @@ class RaceEventsResource(Resource):
 api.add_resource(RaceEventsResource, '/api/race-events')
 
 class RaceEventsById(Resource):
-  # def get(self,id):
-  #   event = RaceEvent.query.filter_by(id=id).first()
-
-  #   if event:
-  #     resp = schema_instance.dump(event)
-  #     status_code = 200
-  #   else:
-  #     resp = { "message": f"Event {id} was not found."}
-  #     status_code = 404
-
-  #   return make_response(resp, status_code)
   def get(self, id=None):
     if id is None:
       race_event = RaceEvent.query.first()

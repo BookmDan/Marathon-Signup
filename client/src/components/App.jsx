@@ -143,7 +143,7 @@ const App = () => {
         <UserContext.Provider value={[user, setUser]}>
           <NavigationHeader onLogout={logoutUser} isDarkMode={isDarkMode} handleToggleTheme={handleToggleTheme} />
           <CostProvider>
-            {false ? <h1>Loading...</h1> :
+            {/* {false ? <h1>Loading...</h1> : */}
               <Routes>
                 <Route
                   path="/"
