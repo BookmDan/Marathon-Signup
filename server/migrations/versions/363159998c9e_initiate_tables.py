@@ -1,8 +1,8 @@
-"""generate
+"""initiate tables
 
-Revision ID: 549b8516ab22
-Revises: 049e457a8be2
-Create Date: 2024-02-29 09:33:39.154839
+Revision ID: 363159998c9e
+Revises: 
+Create Date: 2024-03-04 11:59:26.481460
 
 """
 from alembic import op
@@ -10,8 +10,8 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '549b8516ab22'
-down_revision = '049e457a8be2'
+revision = '363159998c9e'
+down_revision = None
 branch_labels = None
 depends_on = None
 
@@ -73,8 +73,6 @@ def upgrade():
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('waiver_accept', sa.Boolean(), nullable=True),
     sa.Column('tshirt_size', sa.String(), nullable=True),
-    sa.Column('coupon_code', sa.String(), nullable=True),
-    sa.Column('ship_packet', sa.Boolean(), nullable=True),
     sa.Column('user_id', sa.Integer(), nullable=True),
     sa.Column('race_event_id', sa.Integer(), nullable=True),
     sa.ForeignKeyConstraint(['race_event_id'], ['race_events.id'], name=op.f('fk_race_signups_race_event_id_race_events')),
