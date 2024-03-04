@@ -1,12 +1,12 @@
 import { useState, useEffect } from "react";
 import { Container, Button, Form, Col, Row } from "react-bootstrap";
 import { useNavigate, useParams } from 'react-router-dom';
-// import { useAuth } from '../../context/UserContext';
+import { UserProvider } from '../../context/UserContext';
 // import LoginForm from '../sessions/LoginForm'
 
 const Agreement = () => {
   const navigate = useNavigate()
-  // const { user } = useAuth();
+  const { user } = UserProvider();
   const [packetPickup, setPacketPickup] = useState(false);
   const [hours, setHours] = useState("");
   const [minutes, setMinutes] = useState("");
@@ -38,10 +38,11 @@ const Agreement = () => {
       parseInt(hours) * 3600 + parseInt(minutes) * 60 + parseInt(seconds);
 
     const raceSignupData = {
-      user_id: userId, 
-      race_event_id: raceEventId, 
+      user_id: 123, 
+      race_event_id: raceEventId,
       waiver_accept: waiverAccept,
       tshirt_size: shirtSize,
+      coupon_code: "SPECIALOFFER",
     };
     // Prepare the data object to send to the backend API
     const finishTimeData = {

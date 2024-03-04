@@ -62,9 +62,10 @@ if __name__ == "__main__":
 
         # # Commit changes to the database
         # db.session.commit()
-        
-        shopping_cart1 = ShoppingCart(race_cost=50.00, ship_packet_cost=5.00, cart_items=3, tshirt_size='M', coupon_code='ABC123')
-        shopping_cart2 = ShoppingCart(race_cost=60.00, ship_packet_cost=7.00, cart_items=2, tshirt_size='L', coupon_code='DEF456')
+        # coupon_code='ABC123', ship_packet_cost=5.00,
+            # ship_packet_cost=7.00,coupon_code='DEF456'
+        shopping_cart1 = ShoppingCart(race_cost=50.00,  cart_items=3, tshirt_size='M')
+        shopping_cart2 = ShoppingCart(race_cost=60.00,  cart_items=2, tshirt_size='L' )
 
         db.session.add_all([shopping_cart1, shopping_cart2])
         db.session.commit()
@@ -163,8 +164,8 @@ if __name__ == "__main__":
                     race_signup = RaceSignup(
                         waiver_accept=True, 
                         tshirt_size="S", 
-                        coupon_code="DEF456", 
-                        ship_packet=True, 
+                        # coupon_code="DEF456", 
+                        # ship_packet=True, 
                         user=user, 
                         race_event=race_event)
                     db.session.add(race_signup)

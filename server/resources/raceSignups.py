@@ -19,8 +19,8 @@ class RaceSignupsResource(Resource):
       race_event_id=form_data.get('race_event_id'),
       waiver_accept=form_data.get('waiver_accept'),
       tshirt_size=form_data.get('tshirt_size'),
-      coupon_code=form_data.get('coupon_code'),
-      ship_packet=form_data.get('ship_packet', False) 
+      # coupon_code=form_data.get('coupon_code'),
+      # ship_packet=form_data.get('ship_packet', False) 
     )
 
     db.session.add(new_signup)
@@ -46,8 +46,8 @@ class RaceSignupsById(Resource):
   parser = reqparse.RequestParser()
   parser.add_argument('waiver_accept', type=bool, required=True)
   parser.add_argument('tshirt_size', type=str, required=True)
-  parser.add_argument('coupon_code', type=str)
-  parser.add_argument('ship_packet', type=bool, default=False) 
+  # parser.add_argument('coupon_code', type=str)
+  # parser.add_argument('ship_packet', type=bool, default=False) 
 
   def post(self):
     args = RaceSignupsById.parser.parse_args()

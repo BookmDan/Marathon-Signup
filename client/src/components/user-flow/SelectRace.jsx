@@ -56,7 +56,7 @@ const SelectRace = ({ raceEvents }) => {
               onClick={() => handleRaceClick(event.id, event)}
               isSelected={selectedRaceId === event.id}
             />
-             <Button variant="primary" onClick={handleSelectButtonClick(event.id)}>Select</Button>
+             <Button variant="primary" onClick={handleSelectButtonClick}>Select</Button>
           </div>
         ))}
       </div>
@@ -66,5 +66,6 @@ const SelectRace = ({ raceEvents }) => {
     </div>
   );
 };
+// (event.id)
 
 export default SelectRace;

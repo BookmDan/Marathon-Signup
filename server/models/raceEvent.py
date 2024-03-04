@@ -16,7 +16,7 @@ class RaceEvent(db.Model, SerializerMixin):
   location = db.Column(db.String)  
   race_cost = db.Column(db.Float, nullable=False) 
 
-  race_signups = db.relationship('RaceSignup', back_populates='race_event')
+  race_signups = db.relationship('RaceSignup', back_populates='race_event',    overlaps="race_event" )
   users = db.relationship("User", secondary="race_signups", back_populates="race_events")
   serialize_rules = ('-users','-race_signups',)
   
