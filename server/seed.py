@@ -152,7 +152,6 @@ if __name__ == "__main__":
         race_event1 = race_event_objects[0]
         race_event2 = race_event_objects[1]
 
-        # Loop through each combination of user and race event
         for user in [user1, user2]:
             for race_event in race_event_objects:
                 # Check if the user has already signed up for the race event
@@ -160,14 +159,13 @@ if __name__ == "__main__":
                 if existing_signup:
                     print(f"User {user.id} has already signed up for race event {race_event.id}. Skipping...")
                 else:
-                    # Create a RaceSignup instance for the user and race event
                     race_signup = RaceSignup(
+                        user_id = user.id,
+                        race_event_id=race_event.id,
                         waiver_accept=True, 
-                        tshirt_size="S", 
+                        tshirt_size="S")
                         # coupon_code="DEF456", 
                         # ship_packet=True, 
-                        user=user, 
-                        race_event=race_event)
                     db.session.add(race_signup)
 
         # Commit the changes to the database

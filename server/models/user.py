@@ -34,7 +34,7 @@ class User(db.Model, SerializerMixin):
   def check_password(self, password):
         return bcrypt.check_password_hash(self._password_hash, password)
   
-  race_signups = db.relationship('RaceSignup', back_populates='user', uselist=False)
+  race_signups = db.relationship('RaceSignup', back_populates='user')
   credit_card_infos = db.relationship('CreditCardInfo', back_populates='user') 
   race_events = db.relationship("RaceEvent", secondary="race_signups", back_populates="users", overlaps="race_event,race_signups")
 

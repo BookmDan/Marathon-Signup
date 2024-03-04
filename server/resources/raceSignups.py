@@ -19,8 +19,8 @@ class RaceSignupsResource(Resource):
       race_event_id=form_data.get('race_event_id'),
       waiver_accept=form_data.get('waiver_accept'),
       tshirt_size=form_data.get('tshirt_size'),
-      # coupon_code=form_data.get('coupon_code'),
-      # ship_packet=form_data.get('ship_packet', False) 
+      coupon_code=form_data.get('coupon_code'),
+      ship_packet=form_data.get('ship_packet', False) 
     )
 
     db.session.add(new_signup)
@@ -46,25 +46,33 @@ class RaceSignupsById(Resource):
   parser = reqparse.RequestParser()
   parser.add_argument('waiver_accept', type=bool, required=True)
   parser.add_argument('tshirt_size', type=str, required=True)
-  # parser.add_argument('coupon_code', type=str)
-  # parser.add_argument('ship_packet', type=bool, default=False) 
+  parser.add_argument('coupon_code', type=str)
+  parser.add_argument('ship_packet', type=bool, default=False) 
 
   def post(self):
-    args = RaceSignupsById.parser.parse_args()
-    
+    # Parse JSON payload from request
+    form_data = request.get_json()
+
+    # Validate required fields
+    if 'user_id' not in form_data or 'race_event_id' not in form_data:
+      return jsonify({"message": "user_id and race_event_id are required fields."}), 400
+
+    # Create a new RaceSignup instance
     new_signup = RaceSignup(
-      user_id=args['user_id'],
-      race_event_id=args['race_event_id'],
-      waiver_accept=args['waiver_accept'],
-      tshirt_size=args['tshirt_size'],
+      user_id=form_data['user_id'],
+      race_event_id=form_data['race_event_id'],
+      waiver_accept=form_data.get('waiver_accept'),
+      tshirt_size=form_data.get('tshirt_size')
     )
 
+    # Add and commit the new signup to the database
     db.session.add(new_signup)
     db.session.commit()
 
+    # Serialize the new signup data
     resp = race_signup_schema.dump(new_signup)
-    return jsonify(resp), 201
-  
+    return resp, 200
+
   def patch(self, id):
     signup = RaceSignup.query.filter_by(id=id).first()
     if signup:
