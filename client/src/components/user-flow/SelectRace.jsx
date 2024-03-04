@@ -19,7 +19,6 @@ const SelectRace = ({ raceEvents }) => {
 
   const handleSelectButtonClick = () => {
     navigate(`/agreement/${selectedRaceId}`);
-    // give info about raceId I'm selecting
   };
 
   const filteredRaceEvents = raceEvents.filter((event) => {
@@ -57,7 +56,7 @@ const SelectRace = ({ raceEvents }) => {
               onClick={() => handleRaceClick(event.id, event)}
               isSelected={selectedRaceId === event.id}
             />
-             <Button variant="primary" onClick={handleSelectButtonClick}>Select</Button>
+             <Button variant="primary" onClick={handleSelectButtonClick(event.id)}>Select</Button>
           </div>
         ))}
       </div>

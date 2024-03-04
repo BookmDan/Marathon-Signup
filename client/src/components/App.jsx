@@ -17,6 +17,7 @@ import Payment from "./user-flow/Payment";
 import PurchaseSummary from "./user-flow/PurchaseSummary";
 import { CostProvider } from '../context/CostContext';
 import ThankYou from "./user-flow/ThankYou";
+import LoginForm from "./sessions/LoginForm";
 // import { UserProvider } from "../context/UserContext";
 
 export const UserContext = createContext(null)
@@ -27,6 +28,7 @@ const App = () => {
   const [user, setUser] = useState([]);
   const [raceEvents, setRaceEvents] = useState(null);
   const [raceEvent, setRaceEvent] = useState(null);
+  // const [onLogin, setOnLogin] = useState(null);
   const [loggedIn, setLoggedIn] = useState(null);
   const [isDarkMode, setIsDarkMode] = useState(false);
   // const [loading, setLoading] = useState(true);

@@ -38,11 +38,12 @@ function LoginForm({ setSignupMode, signupMode,onLogin}) {
         body: JSON.stringify(values),
     }).then(r => {
       if (r.ok) {
-        r.json().then(user =>onLogin(user))
-        navigate('/select-race')    
+        r.json().then(user => {
+          onLogin(user);
+          navigate('/select-race')    
+        })
       } else {
         r.json().then(err => {
-          // setIsLoading(false)
           console.log(err.errors)
           setError(err.errors)
         })

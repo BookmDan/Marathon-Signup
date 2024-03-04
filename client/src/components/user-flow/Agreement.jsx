@@ -1,17 +1,21 @@
 import { useState, useEffect } from "react";
 import { Container, Button, Form, Col, Row } from "react-bootstrap";
 import { useNavigate, useParams } from 'react-router-dom';
+// import { useAuth } from '../../context/UserContext';
+// import LoginForm from '../sessions/LoginForm'
 
 const Agreement = () => {
   const navigate = useNavigate()
-  const [understandEventDetails, setUnderstandEventDetails] = useState(false);
+  // const { user } = useAuth();
   const [packetPickup, setPacketPickup] = useState(false);
   const [hours, setHours] = useState("");
   const [minutes, setMinutes] = useState("");
   const [seconds, setSeconds] = useState("");
+  const { raceEventId } = useParams();
+  const { id } = useParams();
   const [shirtSize, setShirtSize] = useState("");
+  const [waiverAccept, setWaiverAccept] = useState(false);
   const [raceEventData, setRaceEventData] = useState(null);
-  const { id } = useParams(); 
 
   useEffect(() => {
     fetch(`/api/race-event/${id}`) 
@@ -27,18 +31,17 @@ const Agreement = () => {
       .catch(error => {
         console.error('Error fetching race event data:', error);
       });
-  }, []);
+  }, [id]);
 
   const handleContinue = () => {
     const totalSeconds =
       parseInt(hours) * 3600 + parseInt(minutes) * 60 + parseInt(seconds);
 
-      const raceSignupData = {
-        user_id: 123, // Replace with actual user ID
-        race_event_id: 456, // Replace with actual race event ID
-        waiver_accept: true, // Example value, replace accordingly
-        coupon_code: "SPECIALOFFER", // Example value, replace accordingly
-        tshirt_size: shirtSize, // Send selected T-shirt size to backend
+    const raceSignupData = {
+      user_id: userId, 
+      race_event_id: raceEventId, 
+      waiver_accept: waiverAccept,
+      tshirt_size: shirtSize,
     };
     // Prepare the data object to send to the backend API
     const finishTimeData = {
@@ -48,24 +51,24 @@ const Agreement = () => {
       estimated_finish_time: totalSeconds,
     };
 
-    fetch("/api/race-signups/<int:id>", {
+    fetch("/api/race-signups", {
       method: "POST",
       headers: {
           "Content-Type": "application/json",
       },
       body: JSON.stringify(raceSignupData),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log("Race signup data sent successfully:", data);
-        // After successful race signup, send estimated finish time data
-    fetch("/api/user/:id", {
-      method: "POST",
-      headers: {
-          "Content-Type": "application/json",
-      },
-      body: JSON.stringify(finishTimeData),
-    })
+  })
+  .then((response) => response.json())
+  .then((data) => {
+      console.log("Race signup data sent successfully:", data);
+      // After successful race signup, send estimated finish time data
+      fetch(`/api/user/${userId}`, {
+          method: "POST",
+          headers: {
+              "Content-Type": "application/json",
+          },
+          body: JSON.stringify(finishTimeData),
+      })
       .then((response) => response.json())
       .then((data) => {
           console.log("Estimated finish time data sent successfully:", data);
@@ -78,7 +81,6 @@ const Agreement = () => {
     .catch((error) => {
         console.error("Error sending race signup data:", error);
     });
-    navigate("/the-why");
   };
 
   const handleHoursChange = (e) => {
@@ -99,6 +101,10 @@ const Agreement = () => {
 
   const handleBackClick = () => {
     navigate('/select-race')
+  };
+
+  const handleWaiverAcceptance = () => {
+    setWaiverAccept(!waiverAccept);
   };
 
   return (
@@ -147,12 +153,14 @@ const Agreement = () => {
           <Col sm={10}>
             <Form.Check
               type="checkbox"
-              label={`I understand that this event occurs on ${raceEventData ? raceEventData.start_day : ''
+              label= {`I agree to the waiver. I understand that this event occurs on ${raceEventData ? raceEventData.start_day : ''
             } at ${
               raceEventData ? raceEventData.start_time : ''
             }`}
-              checked={understandEventDetails}
-              onChange={() => setUnderstandEventDetails(!understandEventDetails)}
+              checked={waiverAccept}
+              onChange = {handleWaiverAcceptance}
+              // checked={understandEventDetails}
+              // onChange={() => setUnderstandEventDetails(!understandEventDetails)}
             />
           </Col>
         </Form.Group>

@@ -57,8 +57,6 @@ class RaceSignupsById(Resource):
       race_event_id=args['race_event_id'],
       waiver_accept=args['waiver_accept'],
       tshirt_size=args['tshirt_size'],
-      coupon_code=args['coupon_code'],
-      ship_packet=args['ship_packet']  
     )
 
     db.session.add(new_signup)
