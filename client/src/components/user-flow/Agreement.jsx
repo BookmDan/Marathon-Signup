@@ -1,18 +1,17 @@
 import { useState, useEffect, useContext } from "react";
 import { Container, Button, Form, Col, Row } from "react-bootstrap";
-import { useNavigate, useParams } from 'react-router-dom';
-import { UserContext } from '../../context/UserContext';
+import { useParams, useNavigate } from 'react-router-dom';
+import { UserContext,  } from '../../context/UserContext';
 // import LoginForm from '../sessions/LoginForm'
 
 const Agreement = () => {
   const navigate = useNavigate()
   const { user } = useContext(UserContext);
+  const { race_event_id, id } = useParams();
   const [packetPickup, setPacketPickup] = useState(false);
   const [hours, setHours] = useState("");
   const [minutes, setMinutes] = useState("");
   const [seconds, setSeconds] = useState("");
-  const { race_event_id } = useParams();
-  const { id } = useParams();
   const [shirtSize, setShirtSize] = useState("");
   const [waiverAccept, setWaiverAccept] = useState(false);
   const [raceEventData, setRaceEventData] = useState(null);
@@ -33,15 +32,32 @@ const Agreement = () => {
       });
   }, [id]);
 
-  const handleContinue = () => {
+  useEffect(() => {
     if (!user) {
-      // Handle the case where user is undefined
-      console.error("User is undefined");
-      return;
+      navigate('/home'); 
     }
-    const totalSeconds =
-      parseInt(hours) * 3600 + parseInt(minutes) * 60 + parseInt(seconds);
+  }, [user, navigate]);
 
+  useEffect(() => {
+    fetch(`/api/race-event/${id}`)
+      .then(response => {
+        if (response.ok) {
+          return response.json();
+        }
+        throw new Error('Failed to fetch race event data');
+      })
+      .then(data => {
+        setRaceEventData(data);
+      })
+      .catch(error => {
+        console.error('Error fetching race event data:', error);
+      });
+  }, [id]);
+
+  const handleContinue = () => {
+    const totalSeconds =
+    parseInt(hours) * 3600 + parseInt(minutes) * 60 + parseInt(seconds);
+    
     const raceSignupData = {
       user_id: user.id, 
       race_event_id: race_event_id,
@@ -56,38 +72,39 @@ const Agreement = () => {
       estimated_finish_time_seconds: parseInt(seconds),
       estimated_finish_time: totalSeconds,
     };
-
+    
     fetch("/api/race-signups", {
       method: "POST",
       headers: {
-          "Content-Type": "application/json",
+        "Content-Type": "application/json",
       },
       body: JSON.stringify(raceSignupData),
-  })
-  .then((response) => response.json())
-  .then((data) => {
+    })
+    .then((response) => response.json())
+    .then((data) => {
       console.log("Race signup data sent successfully:", data);
       // After successful race signup, send estimated finish time data
       fetch(`/api/user/${user.id}`, {
-          method: "POST",
-          headers: {
-              "Content-Type": "application/json",
-          },
-          body: JSON.stringify(finishTimeData),
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(finishTimeData),
       })
       .then((response) => response.json())
       .then((data) => {
-          console.log("Estimated finish time data sent successfully:", data);
-          navigate("/the-why");
+        console.log("Estimated finish time data sent successfully:", data);
+        navigate("/the-why");
       })
       .catch((error) => {
-          console.error("Error sending estimated finish time data:", error);
+        console.error("Error sending estimated finish time data:", error);
       });
     })
     .catch((error) => {
-        console.error("Error sending race signup data:", error);
+      console.error("Error sending race signup data:", error);
     });
-  };
+  }
+  // };
 
   const handleHoursChange = (e) => {
     setHours(Math.max(Number(e.target.value), 0));
@@ -112,6 +129,9 @@ const Agreement = () => {
   const handleWaiverAcceptance = () => {
     setWaiverAccept(!waiverAccept);
   };
+
+  const raceEventLabel = raceEventData ? `I agree to the waiver. I understand that this event occurs on ${raceEventData.start_day} at ${raceEventData.start_time}` : '';
+  const packetPickupLabel = raceEventData ? `I will pick up my packet on ${raceEventData.packetpickup_day} at ${raceEventData.packetpickup_location}` : '';
 
   return (
     <Container>
@@ -159,14 +179,9 @@ const Agreement = () => {
           <Col sm={10}>
             <Form.Check
               type="checkbox"
-              label= {`I agree to the waiver. I understand that this event occurs on ${raceEventData ? raceEventData.start_day : ''
-            } at ${
-              raceEventData ? raceEventData.start_time : ''
-            }`}
+              label= {raceEventLabel}
               checked={waiverAccept}
               onChange = {handleWaiverAcceptance}
-              // checked={understandEventDetails}
-              // onChange={() => setUnderstandEventDetails(!understandEventDetails)}
             />
           </Col>
         </Form.Group>
@@ -178,10 +193,7 @@ const Agreement = () => {
           <Col sm={10}>
             <Form.Check
               type="checkbox"
-              label={`I will pick up my packet on ${raceEventData ? raceEventData.packetpickup_day : ''
-              } at ${
-                raceEventData ? raceEventData.packetpickup_location : ''
-              }`}
+              label={packetPickupLabel}
               checked={packetPickup}
               onChange={() => setPacketPickup(!packetPickup)}
             />
@@ -193,9 +205,6 @@ const Agreement = () => {
           </div>
             <Button variant="secondary" onClick={handleBackClick}>Back</Button>
         </div>
-        {/* <div id="button-container">
-          <Button id="" variant="primary" onClick={handleContinue}>Continue</Button>
-        </div> */}
       </Form>
     </Container>
   );

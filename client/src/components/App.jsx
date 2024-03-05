@@ -1,5 +1,5 @@
 import { useState, useEffect, createContext } from "react";
-import { BrowserRouter as Router, Routes, Route, useNavigate} from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route} from "react-router-dom";
 import Home from "./static/Home";
 import NavigationHeader from "./static/NavigationHeader";
 import Login from "./sessions/Login";
@@ -23,7 +23,6 @@ import { UserProvider } from "../context/UserContext";
 export const UserContext = createContext(null)
 
 const App = () => {
-  const navigate = useNavigate();
   const [loading, setLoading] = useState(true)
   const [user, setUser] = useState(null);
   const [raceEvents, setRaceEvents] = useState(null);
@@ -58,14 +57,7 @@ const App = () => {
     setIsDarkMode(newMode);
   };
 
-  if (!user) return (
-    <div>
-      <UserProvider value={[user, setUser]}>
-        <NavigationHeader />
-          <Login onLogin={setUser}/>
-      </UserProvider>
-    </div>
-  )
+  
   //***** */ move fetchRaceEvents to the event cards or places where they should be fetched 
   
   // const login = (user) => {
@@ -138,7 +130,15 @@ const App = () => {
         console.error("Error during logout:", error);
       });
   };
-
+// this was the error...
+  // if (!user) return (
+  //   <div>
+  //     <UserProvider value={[user, setUser]}>
+  //       <NavigationHeader />
+  //         <Login onLogin={setUser}/>
+  //     </UserProvider>
+  //   </div>
+  // )
   return (
     <div  className={isDarkMode ? 'dark' : ''}>
       <Router>

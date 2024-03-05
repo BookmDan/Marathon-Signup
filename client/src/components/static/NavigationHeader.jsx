@@ -2,9 +2,8 @@ import { Navbar, Nav } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
 import ThemeToggle from '../cards-boxes-search/ThemeToggle';
 
-const NavigationHeader = ({ onLogout, isDarkMode,handleToggleTheme }) => {
+const NavigationHeader = ({ onLogout, isDarkMode, handleToggleTheme }) => {
   const navigate = useNavigate()
-    
   const handleLogout = () => {
     onLogout(); // Call the provided logout function
     navigate('/'); 
