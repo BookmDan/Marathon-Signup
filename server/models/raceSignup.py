@@ -5,14 +5,14 @@ from marshmallow import Schema, fields
 class RaceSignup(db.Model, SerializerMixin):
   __tablename__ = "race_signups"
   id = db.Column(db.Integer, primary_key=True)
-  waiver_accept = db.Column(db.Boolean)
-  tshirt_size = db.Column(db.String)
-  coupon_code = db.Column(db.String)
-  ship_packet = db.Column(db.Boolean)
+  user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+  race_event_id = db.Column(db.Integer, db.ForeignKey('race_events.id'), nullable=False)
+  waiver_accept = db.Column(db.Boolean, nullable = False)
+  tshirt_size = db.Column(db.String, nullable = False)
+  coupon_code = db.Column(db.String, nullable = True)
+  ship_packet = db.Column(db.Boolean, nullable = True, default = False)
 
-  user_id = db.Column(db.Integer, db.ForeignKey('users.id'), unique=True)
   user = db.relationship('User', back_populates='race_signups')
-  race_event_id = db.Column(db.Integer, db.ForeignKey('race_events.id'))
   race_event = db.relationship('RaceEvent', back_populates='race_signups', overlaps="race_signups" )
 
 
