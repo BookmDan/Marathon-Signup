@@ -4,8 +4,8 @@ import { useFormik } from 'formik';
 import { Form, Button, Col } from "react-bootstrap";
 import * as yup from 'yup';
 
-function LoginForm({ setSignupMode, signupMode,onLogin}) {
-  const [error, setError] = useState(false);
+function LoginForm({ setSignupMode, signupMode, onLogin}) {
+  const [error, setError] = useState([]);
   const [success, setSuccess] = useState(false);
   const navigate = useNavigate();
 
@@ -22,10 +22,7 @@ function LoginForm({ setSignupMode, signupMode,onLogin}) {
 
   const formik = useFormik({
     initialValues: {
-      firstName: '',
-      lastName: '',
       email: '',
-      phoneNumber: '',
       password: '',
     },
     validationSchema: validationSchema,
@@ -48,15 +45,18 @@ function LoginForm({ setSignupMode, signupMode,onLogin}) {
           setError(err.errors)
         })
       }
+    }).catch(err => {
+      console.error('Error during login:', err);
+      setError(['An error occurred during login. Please try again later.'])
     })
-      console.log('Login submitted with:', values);
-      navigate('/');
+      // console.log('Login submitted with:', values);
+      // navigate('/');
     }
   });
 
-  const dislpayErrors =(error) =>{
-    return error ? <p style={{ color: "red" }}>{error}</p> : null
-  }
+  // const dislpayErrors =(error) =>{
+  //   return error ? <p style={{ color: "red" }}>{error}</p> : null
+  // }
   return (
     <div>
       <Col lg="5" className="mx-auto">
@@ -67,13 +67,16 @@ function LoginForm({ setSignupMode, signupMode,onLogin}) {
           <Form.Group className="m-3 form-floating" >
             <Form.Label >Email</Form.Label>
             <Form.Control
-                type="text"
-                name="email"
-                placeholder='Email'
-                value={formik.values.email}
-                onChange={formik.handleChange}
+              type="text"
+              name="email"
+              placeholder='Email'
+              value={formik.values.email}
+              onChange={formik.handleChange}
             />
-            {dislpayErrors(formik.errors.email)}
+            {error.map((errorMessage, index) => (
+              <p key={index} style={{ color: "red" }}>{errorMessage}</p>
+            ))}
+            {formik.errors.email && <p style={{ color: "red" }}>{formik.errors.email}</p>}
           </Form.Group>
           <Form.Group className="m-3 form-floating" >
             <Form.Label>Password</Form.Label>
@@ -84,7 +87,8 @@ function LoginForm({ setSignupMode, signupMode,onLogin}) {
               value={formik.values.password}
               onChange={formik.handleChange}
             />
-            {dislpayErrors(formik.errors.password)}
+            
+            {formik.errors.password && <p style={{ color: "red" }}>{formik.errors.password}</p>}
           </Form.Group>
           <div id="button-container">
             <button type="submit">Log In</button>

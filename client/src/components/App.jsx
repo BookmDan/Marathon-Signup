@@ -130,49 +130,41 @@ const App = () => {
         console.error("Error during logout:", error);
       });
   };
-// this was the error...
-  // if (!user) return (
-  //   <div>
-  //     <UserProvider value={[user, setUser]}>
-  //       <NavigationHeader />
-  //         <Login onLogin={setUser}/>
-  //     </UserProvider>
-  //   </div>
-  // )
+
   return (
     <div  className={isDarkMode ? 'dark' : ''}>
       <Router>
         <UserProvider value={[user, setUser]}>
           <NavigationHeader onLogout={logoutUser} isDarkMode={isDarkMode} handleToggleTheme={handleToggleTheme} />
           <CostProvider>
-            {/* {false ? <h1>Loading...</h1> : */}
-              <Routes>
-                <Route
-                  path="/"
-                  element={user ? <Home /> : <Login
-                    updateUser={updateUser} />}
-                />
-                {/* <Route path="/" element={Home} /> */}
-                <Route path="/signup" element={<Login />} />
-                <Route path="/select-race" element={<SelectRace raceEvents={raceEvents} />} />
-                <Route path="/agreement/:id" element={<Agreement raceEvent={raceEvent} />} />
-                <Route path="/the-why" element={<TheWhy />} />
-                <Route path="/ship-packet" element={<ShipPacket />} />
-                <Route path="/shop" element={<Shop />} />
-                <Route path="/payment" element={<Payment />} />
-                <Route path="/purchase-summary" element={<PurchaseSummary />} />
-                <Route path="/thank-you" element={<ThankYou />} />
-                <Route path="/race-details/:id" component={RaceDetailsPage} />
-                <Route path="/race-info" element={<RaceInfo />} />
-                <Route path="/results" element={<Results />} />
-                <Route path="/photos" element={<Photos />} />
-                <Route path="/volunteer" element={<Volunteer />} />
-              </Routes>
-            }
+            <Routes>
+              <Route
+                path="/"
+                element={user ? <Home /> :
+                <Login
+                  updateUser={updateUser} />
+                }
+              />
+              <Route path="/signup" element={<Login />} />
+              <Route path="/select-race" element={<SelectRace raceEvents={raceEvents} />} />
+              <Route path="/agreement/:id" element={<Agreement raceEvent={raceEvent} />} />
+              <Route path="/the-why" element={<TheWhy />} />
+              <Route path="/ship-packet" element={<ShipPacket />} />
+              <Route path="/shop" element={<Shop />} />
+              <Route path="/payment" element={<Payment />} />
+              <Route path="/purchase-summary" element={<PurchaseSummary />} />
+              <Route path="/thank-you" element={<ThankYou />} />
+              <Route path="/race-details/:id" component={RaceDetailsPage} />
+              <Route path="/race-info" element={<RaceInfo />} />
+              <Route path="/results" element={<Results />} />
+              <Route path="/photos" element={<Photos />} />
+              <Route path="/volunteer" element={<Volunteer />} />
+            </Routes>
           </CostProvider>
         </UserProvider>
       </Router>
     </div>
   );
 };
+
 export default App;
