@@ -1,12 +1,12 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { Container, Button, Form, Col, Row } from "react-bootstrap";
 import { useNavigate, useParams } from 'react-router-dom';
-import { UserProvider } from '../../context/UserContext';
+import { UserContext } from '../../context/UserContext';
 // import LoginForm from '../sessions/LoginForm'
 
 const Agreement = () => {
   const navigate = useNavigate()
-  const { user } = UserProvider();
+  const { user } = useContext(UserContext);
   const [packetPickup, setPacketPickup] = useState(false);
   const [hours, setHours] = useState("");
   const [minutes, setMinutes] = useState("");

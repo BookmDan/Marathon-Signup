@@ -36,7 +36,7 @@ class User(db.Model, SerializerMixin):
   
   race_signups = db.relationship('RaceSignup', back_populates='user')
   credit_card_infos = db.relationship('CreditCardInfo', back_populates='user') 
-  race_events = db.relationship("RaceEvent", secondary="race_signups", back_populates="users", overlaps="race_signups, user")
+  race_events = db.relationship("RaceEvent", secondary="race_signups", viewonly=True)
 
   serialize_rules = ('-_password_hash',  '-race_signups.user', '-race_signups.race_event','-credit_card_infos.user', '-race_events', )
 
