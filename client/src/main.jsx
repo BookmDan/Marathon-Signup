@@ -1,7 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './components/App.jsx'
-import { BrowserRouter as Router } from 'react-router-dom';
 import { CreditCardProvider } from './context/CreditCardContext.jsx'
 // import {UserProvider } from './context/UserContext.jsx'
 
