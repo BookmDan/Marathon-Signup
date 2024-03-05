@@ -19,8 +19,9 @@ const SelectRace = ({ raceEvents }) => {
   const handleSelectButtonClick = () => {
     if (!selectedRaceId) {
       return
+    } else {
+      navigate(`/agreement/${selectedRaceId}`);
     }
-    navigate(`/agreement/${selectedRaceId}`);
   };
 
   const filteredRaceEvents = raceEvents.filter((event) => {

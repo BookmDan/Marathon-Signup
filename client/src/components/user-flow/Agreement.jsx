@@ -33,10 +33,11 @@ const Agreement = () => {
   }, [id]);
 
   useEffect(() => {
-    if (!user) {
-      navigate('/home'); 
+    if (!currentUser) {
+      // this is where i am going immediately 
+      navigate('/select-race'); 
     }
-  }, [user, navigate]);
+  }, [currentUser, navigate]);
 
   useEffect(() => {
     fetch(`/api/race-event/${id}`)
@@ -84,7 +85,7 @@ const Agreement = () => {
     .then((data) => {
       console.log("Race signup data sent successfully:", data);
       // After successful race signup, send estimated finish time data
-      fetch(`/api/user/${currentUser.id}`, {
+      fetch(`/api/user/${currentUser?.id}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
