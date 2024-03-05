@@ -11,7 +11,7 @@ const Agreement = () => {
   const [hours, setHours] = useState("");
   const [minutes, setMinutes] = useState("");
   const [seconds, setSeconds] = useState("");
-  const { raceEventId } = useParams();
+  const { race_event_id } = useParams();
   const { id } = useParams();
   const [shirtSize, setShirtSize] = useState("");
   const [waiverAccept, setWaiverAccept] = useState(false);
@@ -34,12 +34,17 @@ const Agreement = () => {
   }, [id]);
 
   const handleContinue = () => {
+    if (!user) {
+      // Handle the case where user is undefined
+      console.error("User is undefined");
+      return;
+    }
     const totalSeconds =
       parseInt(hours) * 3600 + parseInt(minutes) * 60 + parseInt(seconds);
 
     const raceSignupData = {
-      user_id: 123, 
-      race_event_id: raceEventId,
+      user_id: user.id, 
+      race_event_id: race_event_id,
       waiver_accept: waiverAccept,
       tshirt_size: shirtSize,
       coupon_code: "SPECIALOFFER",
@@ -63,7 +68,7 @@ const Agreement = () => {
   .then((data) => {
       console.log("Race signup data sent successfully:", data);
       // After successful race signup, send estimated finish time data
-      fetch(`/api/user/${userId}`, {
+      fetch(`/api/user/${user.id}`, {
           method: "POST",
           headers: {
               "Content-Type": "application/json",

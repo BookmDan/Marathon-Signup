@@ -7,7 +7,6 @@ import { useCost } from '../../context/CostContext';
 const SelectRace = ({ raceEvents }) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [filterType, setFilterType] = useState('all');
-  // const [selectedRace, setSelectedRace] = useState(null);
   const navigate = useNavigate();
   const [selectedRaceId, setSelectedRaceId] = useState(null);
   const { setSelectedRaceCost } = useCost();
@@ -18,6 +17,9 @@ const SelectRace = ({ raceEvents }) => {
   };
 
   const handleSelectButtonClick = () => {
+    if (!selectedRaceId) {
+      return
+    }
     navigate(`/agreement/${selectedRaceId}`);
   };
 

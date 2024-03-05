@@ -1,6 +1,11 @@
 import { useState,createContext  } from "react";
 
-const UserContext = createContext({})
+const UserContext = createContext({
+  currentUser: null,
+  loggedIn: false,
+  login: () => {},
+  logout: () => {}
+})
 
 const UserProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState(null)
@@ -15,7 +20,11 @@ const UserProvider = ({ children }) => {
     setCurrentUser(null)
     setLoggedIn(false)
   }
-  return <UserContext.Provider value={{currentUser, loggedIn, login, logout}} >{children}</UserContext.Provider>
+  return (
+    <UserContext.Provider value={{ currentUser, loggedIn, login, logout }} >
+      {children}
+    </UserContext.Provider>
+  )
 }
 
 export {UserContext, UserProvider}
