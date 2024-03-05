@@ -4,7 +4,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 // import { UserContext  } from '../../context/UserContext';
 // import LoginForm from '../sessions/LoginForm'
 
-const Agreement = ({currentUser}) => {
+const Agreement = () => {
   const navigate = useNavigate()
   // const { currentUser, loggedIn, login, logout  } = useContext(UserContext);
   const { selectedRaceId, userId } = useParams();
@@ -17,7 +17,7 @@ const Agreement = ({currentUser}) => {
   const [raceEventData, setRaceEventData] = useState(null);
 
   useEffect(() => {
-    fetch(`/api/race-event/${id}`)
+    fetch(`/api/race-event/${selectedRaceId}`)
       .then(response => {
         if (response.ok) {
           return response.json();
@@ -30,10 +30,11 @@ const Agreement = ({currentUser}) => {
       .catch(error => {
         console.error('Error fetching race event data:', error);
       });
-  }, [userId]);
+  }, [selectedRaceId]);
 
   const handleContinue = () => {
-    if (userId) {
+    const currentUserId = userId;
+    if (currentUserId) {
       // const { user_id } = currentUser
       // console.log("User ID:", user_id); 
 
@@ -41,7 +42,7 @@ const Agreement = ({currentUser}) => {
       parseInt(hours) * 3600 + parseInt(minutes) * 60 + parseInt(seconds);
       
       const raceSignupData = {
-        user_id: userId, 
+        user_id: currentUserId, 
         race_event_id: selectedRaceId,
         waiver_accept: waiverAccept,
         tshirt_size: shirtSize,
@@ -66,7 +67,7 @@ const Agreement = ({currentUser}) => {
       .then((data) => {
         console.log("Race signup successful", data);
        
-        fetch(`/api/user/${currentUser?.userId}`, {
+        fetch(`/api/user/${currentUserId}`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -86,7 +87,7 @@ const Agreement = ({currentUser}) => {
         console.error("Error posting race signup:", error);
       });
     } else {
-      console.error("User not logged in")
+      console.error("User id not found in route parameters")
     }
   }
 

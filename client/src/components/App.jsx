@@ -49,24 +49,11 @@ const App = () => {
     fetchUser();
     fetchRaceEvents();
     fetchRaceEventData();
-    // fetch("/api/check-session")
-    //   .then(r => {
-    //     if (r.ok) {
-    //       r.json().then(user =>
-    //         // Login(user)
-    //         // setLoading(user)
-    //         setUser(user))
-    //     }
-    //   })
-    //   .catch(err => {
-    //     console.error('Error checking session:', err)
-    // })
   }, [])
   
   const handleToggleTheme = (newMode) => {
     setIsDarkMode(newMode);
   };
-
   
   //***** */ move fetchRaceEvents to the event cards or places where they should be fetched 
   
@@ -145,7 +132,8 @@ const App = () => {
                 path="/signup"
                 element={<Login onLogin={updateUser} />} />
               <Route
-                path="/select-race" element={<SelectRace raceEvents={raceEvents}  user={user} />} />
+                path="/select-race" element={<SelectRace raceEvents={raceEvents} user={user} />} />
+              {/* <Route path="/agreement/:id" element={<Agreement raceEvent={raceEvent} currentUser={user} />} /> */}
               <Route path="/agreement/:selectedRaceId/:userId" element={<Agreement raceEvent={raceEvent} currentUser={user} />} />
               <Route path="/the-why" element={<TheWhy />} />
               <Route path="/ship-packet" element={<ShipPacket />} />
