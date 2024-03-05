@@ -100,9 +100,16 @@ const App = () => {
       })
   };
 
-  const updateUser = (userData) => {
-    setUser(userData);
-  };
+  const updateUser = (user) => setUser(user)
+
+  // if (!user) return (
+  //   <>
+  //     <NavigationHeader />
+  //     <Home />
+  //     <Login updateUser={updateUser} />
+  //   </>
+  // )
+
 
   const logoutUser = () => {
     fetch("/api/logout", {

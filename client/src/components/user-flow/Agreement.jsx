@@ -17,27 +17,6 @@ const Agreement = () => {
   const [raceEventData, setRaceEventData] = useState(null);
 
   useEffect(() => {
-    if (!currentUser) {
-      navigate('/select-race'); 
-    } else {
-      fetch(`/api/race-event/${id}`) 
-        .then(response => {
-          if (response.ok) {
-            return response.json();
-          }
-          throw new Error('Failed to fetch race event data');
-        })
-        .then(data => {
-          setRaceEventData(data);
-        })
-        .catch(error => {
-          console.error('Error fetching race event data:', error);
-        });
-    }
-}, [id, currentUser, navigate]);
-
-
-  useEffect(() => {
     fetch(`/api/race-event/${id}`)
       .then(response => {
         if (response.ok) {
@@ -108,7 +87,6 @@ const Agreement = () => {
       console.error("User not logged in")
     }
   }
-  // };
 
   const handleHoursChange = (e) => {
     setHours(Math.max(Number(e.target.value), 0));
