@@ -32,12 +32,12 @@ const Agreement = () => {
       });
   }, [id]);
 
-  useEffect(() => {
-    if (!currentUser) {
-      // this is where i am going immediately 
-      navigate('/select-race'); 
-    }
-  }, [currentUser, navigate]);
+  // useEffect(() => {
+  //   if (!currentUser) {
+  //     // this is where i am going immediately 
+  //     navigate('/select-race'); 
+  //   }
+  // }, [currentUser, navigate]);
 
   useEffect(() => {
     fetch(`/api/race-event/${id}`)
