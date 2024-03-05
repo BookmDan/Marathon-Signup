@@ -53,9 +53,7 @@ function LoginForm({ setSignupMode, signupMode, onLogin}) {
     }
   });
 
-  // const dislpayErrors =(error) =>{
-  //   return error ? <p style={{ color: "red" }}>{error}</p> : null
-  // }
+
   return (
     <div>
       <Col lg="5" className="mx-auto">
