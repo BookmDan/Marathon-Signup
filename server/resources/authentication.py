@@ -21,10 +21,12 @@ class Login(Resource):
       return {"errors": ["Invalid username and/or password"]}, 401
 
 class Logout(Resource):
-  def delete(self): # just add this line!
-    session['user_id'] = None
-    return {'message': '204: No Content'}, 204
-
+  def delete(self): 
+    session.clear()
+    # session['user_id'] = None
+    resp = make_response('successfully logged out', 204)
+    return resp
+  
 class Signup(Resource):
   def post(self):
     json = request.get_json()

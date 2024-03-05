@@ -109,6 +109,7 @@ const App = () => {
       .then((response) => {
         if (response.ok) {
           setUser(null);
+          console.error("Logout success:", response.status);
         } else {
           console.error("Logout failed:", response.status);
         }
@@ -120,7 +121,7 @@ const App = () => {
 
   // if (!user) return (
   //   <>
-  //     <NavigationHeader />
+  //     <NavigationHeader /> 
   //     <Home />
   //     <Login updateUser={updateUser} />
   //   </>
