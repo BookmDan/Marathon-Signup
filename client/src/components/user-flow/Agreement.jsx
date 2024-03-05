@@ -1,13 +1,13 @@
 import { useState, useEffect, useContext } from "react";
 import { Container, Button, Form, Col, Row } from "react-bootstrap";
 import { useParams, useNavigate } from 'react-router-dom';
-import { UserContext  } from '../../context/UserContext';
+// import { UserContext  } from '../../context/UserContext';
 // import LoginForm from '../sessions/LoginForm'
 
-const Agreement = () => {
+const Agreement = ({currentUser}) => {
   const navigate = useNavigate()
-  const { currentUser, loggedIn, login, logout  } = useContext(UserContext);
-  const { selectedRaceId, id } = useParams();
+  // const { currentUser, loggedIn, login, logout  } = useContext(UserContext);
+  const { selectedRaceId, userId } = useParams();
   const [packetPickup, setPacketPickup] = useState(false);
   const [hours, setHours] = useState("");
   const [minutes, setMinutes] = useState("");
@@ -30,16 +30,18 @@ const Agreement = () => {
       .catch(error => {
         console.error('Error fetching race event data:', error);
       });
-  }, [id]);
+  }, [userId]);
 
   const handleContinue = () => {
-    if (currentUser) {
-      const {user_id} = currentUser
+    if (userId) {
+      // const { user_id } = currentUser
+      // console.log("User ID:", user_id); 
+
       const totalSeconds =
       parseInt(hours) * 3600 + parseInt(minutes) * 60 + parseInt(seconds);
       
       const raceSignupData = {
-        user_id: user_id, 
+        user_id: userId, 
         race_event_id: selectedRaceId,
         waiver_accept: waiverAccept,
         tshirt_size: shirtSize,
@@ -64,7 +66,7 @@ const Agreement = () => {
       .then((data) => {
         console.log("Race signup successful", data);
        
-        fetch(`/api/user/${currentUser?.id}`, {
+        fetch(`/api/user/${currentUser?.userId}`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

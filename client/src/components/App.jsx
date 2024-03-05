@@ -145,8 +145,8 @@ const App = () => {
                 path="/signup"
                 element={<Login onLogin={updateUser} />} />
               <Route
-                path="/select-race" element={<SelectRace raceEvents={raceEvents} />} />
-              <Route path="/agreement/:id" element={<Agreement raceEvent={raceEvent} />} />
+                path="/select-race" element={<SelectRace raceEvents={raceEvents}  user={user} />} />
+              <Route path="/agreement/:selectedRaceId/:userId" element={<Agreement raceEvent={raceEvent} currentUser={user} />} />
               <Route path="/the-why" element={<TheWhy />} />
               <Route path="/ship-packet" element={<ShipPacket />} />
               <Route path="/shop" element={<Shop />} />

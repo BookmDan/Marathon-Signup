@@ -4,15 +4,16 @@ import { Button } from "react-bootstrap";
 import { useNavigate } from 'react-router-dom';
 import { useCost } from '../../context/CostContext';
 
-const SelectRace = ({ raceEvents }) => {
+const SelectRace = ({ raceEvents, user }) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [filterType, setFilterType] = useState('all');
   const navigate = useNavigate();
   const [selectedRaceId, setSelectedRaceId] = useState(null);
+  // const [userId, setUserId] = useState(null);
   const { setSelectedRaceCost } = useCost();
 
-  const handleRaceClick = (id, raceEvent) => {
-    setSelectedRaceId(id);
+  const handleRaceClick = (selectedRaceId, raceEvent) => {
+    setSelectedRaceId(selectedRaceId);
     setSelectedRaceCost(raceEvent.race_cost);
   };
 
@@ -20,7 +21,8 @@ const SelectRace = ({ raceEvents }) => {
     if (!selectedRaceId) {
       return
     } else {
-      navigate(`/agreement/${selectedRaceId}`);
+      console.log("User ID:", user.id)
+      navigate(`/agreement/${selectedRaceId}/${user.id}`);
     }
   };
 
