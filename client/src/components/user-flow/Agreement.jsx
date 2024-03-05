@@ -7,7 +7,7 @@ import { UserContext  } from '../../context/UserContext';
 const Agreement = () => {
   const navigate = useNavigate()
   const { currentUser, loggedIn, login, logout  } = useContext(UserContext);
-  const { race_event_id, id } = useParams();
+  const { selectedRaceId, id } = useParams();
   const [packetPickup, setPacketPickup] = useState(false);
   const [hours, setHours] = useState("");
   const [minutes, setMinutes] = useState("");
@@ -17,27 +17,25 @@ const Agreement = () => {
   const [raceEventData, setRaceEventData] = useState(null);
 
   useEffect(() => {
-    fetch(`/api/race-event/${id}`) 
-      .then(response => {
-        if (response.ok) {
+    if (!currentUser) {
+      navigate('/select-race'); 
+    } else {
+      fetch(`/api/race-event/${id}`) 
+        .then(response => {
+          if (response.ok) {
             return response.json();
-        }
-        throw new Error('Failed to fetch race event data');
-      })
-      .then(data => {
-        setRaceEventData(data);
-      })
-      .catch(error => {
-        console.error('Error fetching race event data:', error);
-      });
-  }, [id]);
+          }
+          throw new Error('Failed to fetch race event data');
+        })
+        .then(data => {
+          setRaceEventData(data);
+        })
+        .catch(error => {
+          console.error('Error fetching race event data:', error);
+        });
+    }
+}, [id, currentUser, navigate]);
 
-  // useEffect(() => {
-  //   if (!currentUser) {
-  //     // this is where i am going immediately 
-  //     navigate('/select-race'); 
-  //   }
-  // }, [currentUser, navigate]);
 
   useEffect(() => {
     fetch(`/api/race-event/${id}`)
@@ -56,54 +54,59 @@ const Agreement = () => {
   }, [id]);
 
   const handleContinue = () => {
-    const totalSeconds =
-    parseInt(hours) * 3600 + parseInt(minutes) * 60 + parseInt(seconds);
-    
-    const raceSignupData = {
-      user_id: currentUser.id, 
-      race_event_id: race_event_id,
-      waiver_accept: waiverAccept,
-      tshirt_size: shirtSize,
-      coupon_code: "SPECIALOFFER",
-    };
-    // Prepare the data object to send to the backend API
-    const finishTimeData = {
-      estimated_finish_time_hours: parseInt(hours),
-      estimated_finish_time_minutes: parseInt(minutes),
-      estimated_finish_time_seconds: parseInt(seconds),
-      estimated_finish_time: totalSeconds,
-    };
-    
-    fetch("/api/race-signups", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(raceSignupData),
-    })
-    .then((response) => response.json())
-    .then((data) => {
-      console.log("Race signup data sent successfully:", data);
-      // After successful race signup, send estimated finish time data
-      fetch(`/api/user/${currentUser?.id}`, {
+    if (currentUser) {
+      const {user_id} = currentUser
+      const totalSeconds =
+      parseInt(hours) * 3600 + parseInt(minutes) * 60 + parseInt(seconds);
+      
+      const raceSignupData = {
+        user_id: user_id, 
+        race_event_id: selectedRaceId,
+        waiver_accept: waiverAccept,
+        tshirt_size: shirtSize,
+        coupon_code: "SPECIALOFFER",
+      };
+      // Prepare the data object to send to the backend API
+      const finishTimeData = {
+        estimated_finish_time_hours: parseInt(hours),
+        estimated_finish_time_minutes: parseInt(minutes),
+        estimated_finish_time_seconds: parseInt(seconds),
+        estimated_finish_time: totalSeconds,
+      };
+      
+      fetch("/api/race-signups", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(finishTimeData),
+        body: JSON.stringify(raceSignupData),
       })
       .then((response) => response.json())
       .then((data) => {
-        console.log("Estimated finish time data sent successfully:", data);
-        navigate("/the-why");
+        console.log("Race signup successful", data);
+       
+        fetch(`/api/user/${currentUser?.id}`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(finishTimeData),
+        })
+        .then((response) => response.json())
+        .then((data) => {
+          console.log("Estimated finish time data sent successfully:", data);
+          navigate("/the-why");
+        })
+        .catch((error) => {
+          console.error("Error sending estimated finish time data:", error);
+        });
       })
       .catch((error) => {
-        console.error("Error sending estimated finish time data:", error);
+        console.error("Error posting race signup:", error);
       });
-    })
-    .catch((error) => {
-      console.error("Error sending race signup data:", error);
-    });
+    } else {
+      console.error("User not logged in")
+    }
   }
   // };
 

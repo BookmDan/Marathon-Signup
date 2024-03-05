@@ -43,6 +43,9 @@ const App = () => {
             setUser(user))
         }
       })
+      .catch(err => {
+        console.error('Error checking session:', err)
+    })
       fetchUser();
       fetchRaceEvents();
       fetchRaceEventData();
@@ -107,10 +110,8 @@ const App = () => {
     })
       .then((response) => {
         if (response.ok) {
-          // If the server returns a success response, set the user to null
           setUser(null);
         } else {
-          // Handle error cases
           console.error("Logout failed:", response.status);
         }
       })
