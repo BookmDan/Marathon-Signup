@@ -23,7 +23,6 @@ import { UserProvider } from "../context/UserContext";
 export const UserContext = createContext(null)
 
 const App = () => {
-  // const {loading} = useContext(LoadingContext)
   const [loading, setLoading] = useState(true)
   const [user, setUser] = useState(null);
   const [raceEvents, setRaceEvents] = useState(null);
@@ -60,11 +59,11 @@ const App = () => {
 
   if (!user) return (
     <div>
-    <UserContext.Provider value={[user, setUser]}>
-      <NavigationHeader />
-        <Login onLogin={setUser}/>
-    </UserContext.Provider>
-  </div>
+      <UserProvider value={[user, setUser]}>
+        <NavigationHeader />
+          <Login onLogin={setUser}/>
+      </UserProvider>
+    </div>
   )
   //***** */ move fetchRaceEvents to the event cards or places where they should be fetched 
   
@@ -142,7 +141,7 @@ const App = () => {
   return (
     <div  className={isDarkMode ? 'dark' : ''}>
       <Router>
-        <UserContext.Provider value={[user, setUser]}>
+        <UserProvider value={[user, setUser]}>
           <NavigationHeader onLogout={logoutUser} isDarkMode={isDarkMode} handleToggleTheme={handleToggleTheme} />
           <CostProvider>
             {/* {false ? <h1>Loading...</h1> : */}
@@ -170,7 +169,7 @@ const App = () => {
               </Routes>
             }
           </CostProvider>
-        </UserContext.Provider>
+        </UserProvider>
       </Router>
     </div>
   );
