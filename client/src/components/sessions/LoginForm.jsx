@@ -33,24 +33,23 @@ function LoginForm({ setSignupMode, signupMode, onLogin}) {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(values),
-    }).then(r => {
-      if (r.ok) {
-        r.json().then(user => {
-          onLogin(user);
-          navigate('/select-race')    
-        })
-      } else {
-        r.json().then(err => {
-          console.log(err.errors)
-          setError(err.errors)
-        })
-      }
-    }).catch(err => {
-      console.error('Error during login:', err);
-      setError(['An error occurred during login. Please try again later.'])
-    })
-      // console.log('Login submitted with:', values);
-      // navigate('/');
+      })
+        .then(r => {
+        if (r.ok) {
+          r.json().then(user => {
+            onLogin(user);
+            navigate('/select-race')    
+          })
+        } else {
+          r.json().then(err => {
+            console.log(err.errors)
+            setError(Array.isArray(err.errors) ? err.errors : [err.errors])
+          })
+        }
+      }).catch(err => {
+        console.error('Error during login:', err);
+        setError(['An error occurred during login. Please try again later.'])
+      })
     }
   });
 

@@ -1,12 +1,12 @@
 import { useState, useEffect, useContext } from "react";
 import { Container, Button, Form, Col, Row } from "react-bootstrap";
 import { useParams, useNavigate } from 'react-router-dom';
-import { UserContext,  } from '../../context/UserContext';
+import { UserContext  } from '../../context/UserContext';
 // import LoginForm from '../sessions/LoginForm'
 
 const Agreement = () => {
   const navigate = useNavigate()
-  const { user } = useContext(UserContext);
+  const { currentUser, loggedIn, login, logout  } = useContext(UserContext);
   const { race_event_id, id } = useParams();
   const [packetPickup, setPacketPickup] = useState(false);
   const [hours, setHours] = useState("");
@@ -59,7 +59,7 @@ const Agreement = () => {
     parseInt(hours) * 3600 + parseInt(minutes) * 60 + parseInt(seconds);
     
     const raceSignupData = {
-      user_id: user.id, 
+      user_id: currentUser.id, 
       race_event_id: race_event_id,
       waiver_accept: waiverAccept,
       tshirt_size: shirtSize,
@@ -84,7 +84,7 @@ const Agreement = () => {
     .then((data) => {
       console.log("Race signup data sent successfully:", data);
       // After successful race signup, send estimated finish time data
-      fetch(`/api/user/${user.id}`, {
+      fetch(`/api/user/${currentUser.id}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

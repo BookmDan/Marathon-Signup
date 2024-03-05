@@ -17,7 +17,6 @@ import Payment from "./user-flow/Payment";
 import PurchaseSummary from "./user-flow/PurchaseSummary";
 import { CostProvider } from '../context/CostContext';
 import ThankYou from "./user-flow/ThankYou";
-import LoginForm from "./sessions/LoginForm";
 import { UserProvider } from "../context/UserContext";
 
 export const UserContext = createContext(null)
@@ -27,8 +26,7 @@ const App = () => {
   const [user, setUser] = useState(null);
   const [raceEvents, setRaceEvents] = useState(null);
   const [raceEvent, setRaceEvent] = useState(null);
-  // const [onLogin, setOnLogin] = useState(null);
-  const [loggedIn, setLoggedIn] = useState(null);
+
   const [isDarkMode, setIsDarkMode] = useState(false);
   // const [loading, setLoading] = useState(true);
 
@@ -44,9 +42,6 @@ const App = () => {
             // setLoading(user)
             setUser(user))
         }
-        // else {
-        //   setLoading(false)
-        // }
       })
       fetchUser();
       fetchRaceEvents();
@@ -60,16 +55,11 @@ const App = () => {
   
   //***** */ move fetchRaceEvents to the event cards or places where they should be fetched 
   
-  // const login = (user) => {
-  //   setUser(user);
-  //   setLoggedIn(true)
-  // }
-
   const fetchRaceEventData = () => {
     fetch("/api/race-event")
       .then((response) => response.json())
       .then((data) => {
-        setRaceEvent(data); // Set the fetched data to state
+        setRaceEvent(data); 
       })
       .catch((error) => {
         console.error("Error fetching race event data:", error);
@@ -86,7 +76,6 @@ const App = () => {
       }
     })
     .then(data => {
-      // Update the raceEvents state with the fetched data
       setRaceEvents(data);
     })
     .catch(error => {
@@ -120,7 +109,6 @@ const App = () => {
         if (response.ok) {
           // If the server returns a success response, set the user to null
           setUser(null);
-          setLoggedIn(false)
         } else {
           // Handle error cases
           console.error("Logout failed:", response.status);
@@ -141,12 +129,16 @@ const App = () => {
               <Route
                 path="/"
                 element={user ? <Home /> :
-                <Login
-                  updateUser={updateUser} />
+                  <Login
+                    onLogin={updateUser}
+                  />
                 }
               />
-              <Route path="/signup" element={<Login />} />
-              <Route path="/select-race" element={<SelectRace raceEvents={raceEvents} />} />
+              <Route
+                path="/signup"
+                element={<Login onLogin={updateUser} />} />
+              <Route
+                path="/select-race" element={<SelectRace raceEvents={raceEvents} />} />
               <Route path="/agreement/:id" element={<Agreement raceEvent={raceEvent} />} />
               <Route path="/the-why" element={<TheWhy />} />
               <Route path="/ship-packet" element={<ShipPacket />} />
