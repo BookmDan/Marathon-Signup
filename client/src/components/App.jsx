@@ -22,7 +22,7 @@ import { UserProvider } from "../context/UserContext";
 export const UserContext = createContext(null)
 
 const App = () => {
-  const [loading, setLoading] = useState(true)
+  // const [loading, setLoading] = useState(true)
   const [user, setUser] = useState(null);
   const [raceEvents, setRaceEvents] = useState(null);
   const [raceEvent, setRaceEvent] = useState(null);
@@ -31,38 +31,36 @@ const App = () => {
   // const [loading, setLoading] = useState(true);
 
   const fetchUser = () => {
-    fetch('/api/users')
-      .then(res => {
-        if (res.ok) {
-          return res.json();
-        } else {
-          throw new Error('User not authenticated');
-        }
-      })
-      .then(data => {
-        setUser(data);
-      })
+    fetch('/api/check-session')
+    .then(res => {
+      if (res.ok) {
+        res.json().then(user=>setUser(user));
+      } else {
+        setUser(null)
+        throw new Error('User not authenticated');
+      }
+    })
   };
-  
+
   useEffect(() => {
     const savedTheme = localStorage.getItem('theme');
     setIsDarkMode(savedTheme === 'dark');
-
-    fetch("/api/check-session")
-      .then(r => {
-        if (r.ok) {
-          r.json().then(user =>
-            // Login(user)
-            // setLoading(user)
-            setUser(user))
-        }
-      })
-      .catch(err => {
-        console.error('Error checking session:', err)
-    })
-      fetchUser();
-      fetchRaceEvents();
-      fetchRaceEventData();
+    
+    fetchUser();
+    fetchRaceEvents();
+    fetchRaceEventData();
+    // fetch("/api/check-session")
+    //   .then(r => {
+    //     if (r.ok) {
+    //       r.json().then(user =>
+    //         // Login(user)
+    //         // setLoading(user)
+    //         setUser(user))
+    //     }
+    //   })
+    //   .catch(err => {
+    //     console.error('Error checking session:', err)
+    // })
   }, [])
   
   const handleToggleTheme = (newMode) => {
