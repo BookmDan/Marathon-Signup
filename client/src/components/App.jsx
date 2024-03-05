@@ -30,6 +30,20 @@ const App = () => {
   const [isDarkMode, setIsDarkMode] = useState(false);
   // const [loading, setLoading] = useState(true);
 
+  const fetchUser = () => {
+    fetch('/api/users')
+      .then(res => {
+        if (res.ok) {
+          return res.json();
+        } else {
+          throw new Error('User not authenticated');
+        }
+      })
+      .then(data => {
+        setUser(data);
+      })
+  };
+  
   useEffect(() => {
     const savedTheme = localStorage.getItem('theme');
     setIsDarkMode(savedTheme === 'dark');
@@ -86,30 +100,9 @@ const App = () => {
     });
 };
 
-  const fetchUser = () => {
-    fetch('/api/users')
-      .then(res => {
-        if (res.ok) {
-          return res.json();
-        } else {
-          throw new Error('User not authenticated');
-        }
-      })
-      .then(data => {
-        setUser(data);
-      })
-  };
+
 
   const updateUser = (user) => setUser(user)
-
-  // if (!user) return (
-  //   <>
-  //     <NavigationHeader />
-  //     <Home />
-  //     <Login updateUser={updateUser} />
-  //   </>
-  // )
-
 
   const logoutUser = () => {
     fetch("/api/logout", {
@@ -127,6 +120,13 @@ const App = () => {
       });
   };
 
+  // if (!user) return (
+  //   <>
+  //     <NavigationHeader />
+  //     <Home />
+  //     <Login updateUser={updateUser} />
+  //   </>
+  // )
   return (
     <div  className={isDarkMode ? 'dark' : ''}>
       <Router>

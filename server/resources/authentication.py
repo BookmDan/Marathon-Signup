@@ -11,6 +11,8 @@ class Login(Resource):
     password = data.get("password")
 
     user = User.query.filter_by(email=email).first()
+    # import ipdb; ipdb.set_trace()
+
     if user and user.check_password(password):
       session['user_id'] = user.id
       response_body = user.to_dict(rules=('-_password_hash',))
