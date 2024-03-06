@@ -32,7 +32,7 @@ class User(db.Model, SerializerMixin):
     self._password_hash = bcrypt.generate_password_hash(password.encode('utf-8'))
 
   def check_password(self, password):
-        return bcrypt.check_password_hash(self._password_hash, password)
+    return bcrypt.check_password_hash(self._password_hash, password)
   
   race_signups = db.relationship('RaceSignup', back_populates='user')
   credit_card_infos = db.relationship('CreditCardInfo', back_populates='user') 
