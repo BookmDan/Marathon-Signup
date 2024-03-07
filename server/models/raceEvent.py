@@ -15,7 +15,7 @@ class RaceEvent(db.Model, SerializerMixin):
   packetpickup_location = db.Column(db.String)  
   location = db.Column(db.String)  
   race_cost = db.Column(db.Float, nullable=False) 
-  reviews = db.Column(db.String)  
+  ratings = db.Column(db.String)  
 
   race_signups = db.relationship('RaceSignup', back_populates='race_event',    overlaps="race_event" )
   users = db.relationship("User", secondary="race_signups", viewonly=True)
@@ -35,4 +35,4 @@ class RaceEventSchema(Schema):
   packetpickup_location = fields.Str()
   location = fields.Str()  
   race_cost = fields.Float(required=True)
-  reviews = db.Column(db.String)  
+  ratings = db.Column(db.String)  

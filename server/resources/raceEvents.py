@@ -77,9 +77,13 @@ api.add_resource(RaceEventsById, '/api/race-event','/api/race-event/<int:id>')
 
 class BestReview(Resource):
   def get(self):
-    # Retrieve user data from session
-    
-    user_id = session.get('user_id')
-    if user_id:
-      user = User.query.filter_by(id=user_id).first()
+    data= request.get_json()
+    ratings = data.get("ratings")
+    if ratings ==5 :
+      most_popular_events = RaceEvent.query.filter_by(ratings='5').all()
+      serialzed = [event.to_dict() for event in most_popular_events]
+      return serialzed, 200
+    else:
+      return {"message": "No race events found with the specified rating."}, 404 
+
 api.add_resource(BestReview, '/api/best-review')

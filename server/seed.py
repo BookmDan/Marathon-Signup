@@ -1,5 +1,6 @@
 from config import app, db
 from models.models import User, RaceSignup, RaceEvent, CreditCardInfo,ShoppingCart
+import random
 
 if __name__ == "__main__":
     with app.app_context():
@@ -41,24 +42,6 @@ if __name__ == "__main__":
 
             # Calculate age place (assuming 10 athletes)
             age_place = idx
-
-            # Create Results object
-        #     result = Results(
-        #         full_name=data["full_name"],
-        #         gender=data["gender"],
-        #         age=data["age"],
-        #         city=data["city"],
-        #         state=data["state"],
-        #         run_time=data["run_time"],
-        #         race_place=data["race_place"],
-        #         gender_place=data["gender_place"],
-        #         age_group=age_group,
-        #         age_place=age_place,
-        #         overall_pace=overall_pace
-        #     )
-
-        #     # Add Results object to session
-        #     db.session.add(result)
 
         # # Commit changes to the database
         # db.session.commit()
@@ -136,9 +119,12 @@ if __name__ == "__main__":
             "location": "123 Maple St, City, State", "race_cost": 80.00},
         ]
 
+        race_event_objects = []
+        for race_event_data in race_events_data:
+            race_event = RaceEvent(**race_event_data)
+            race_event.ratings = str(random.randint(1, 5))
+            race_event_objects.append(race_event)
 
-        # Loop through the race events data and create RaceEvent objects
-        race_event_objects = [RaceEvent(**race_event_data) for race_event_data in race_events_data]
         db.session.add_all(race_event_objects)
         db.session.commit()
 

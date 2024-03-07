@@ -5,14 +5,14 @@ from models.models import User, UserSchema
 
 user_schema = UserSchema()
 
-class UsersResource(Resource):
+class UserResource(Resource):
   def get(self):
     users = User.query.all()
     schema = UserSchema(many=True)
     resp = schema.dump(users)
     return jsonify(resp, 200)
   
-api.add_resource(UsersResource, '/api/users')
+api.add_resource(UserResource, '/api/users')
 
 class UserById(Resource):
   def get(self, id):
