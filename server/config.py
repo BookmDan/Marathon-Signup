@@ -42,7 +42,3 @@ bcrypt = Bcrypt(app=app)
 api = Api(app=app)
 
 CORS(app, resources={r"/api/*": {"origins": "http://http://127.0.0.1:5555/"}})
-# @app.route('/')
-# @app.route('/<int:id>')
-# def index(id=0):
-#     return render_template("index.html")

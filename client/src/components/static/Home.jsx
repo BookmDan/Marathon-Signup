@@ -13,6 +13,13 @@ function Home() {
     fetchRaceEvents();
   }, []);
 
+  const handlesMostPopular = () => {
+    fetch('/api/best-review')
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data); 
+      })
+    }
   const fetchRaceEvents = () => {
     fetch("/api/race-events")
       .then((res) => res.json())
@@ -42,7 +49,7 @@ function Home() {
     <Container>
       <h1>Sign up for your next Marathon!</h1>
       <img src={kristianImage} alt="Splash Banner" style={{ width: "100%", height: "auto" }} />
-
+      <button onClick={handlesMostPopular}>Most popular events</button>
       <div>
         <h2>Race Events</h2>
         <div className="input-container">
