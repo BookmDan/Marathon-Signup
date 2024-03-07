@@ -40,7 +40,6 @@ class User(db.Model, SerializerMixin):
 
   serialize_rules = ('-_password_hash',  '-race_signups.user', '-race_signups.race_event','-credit_card_infos.user', '-race_events', )
 
-
   @validates("email")
   def check_email(self, key, email):
     if '@' not in email:

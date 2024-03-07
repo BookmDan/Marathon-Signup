@@ -74,3 +74,12 @@ class RaceEventsById(Resource):
       return ({"message": f"Event {id} not found"})
 
 api.add_resource(RaceEventsById, '/api/race-event','/api/race-event/<int:id>')
+
+class BestReview(Resource):
+  def get(self):
+    # Retrieve user data from session
+    
+    user_id = session.get('user_id')
+    if user_id:
+      user = User.query.filter_by(id=user_id).first()
+api.add_resource(BestReview, '/api/best-review')

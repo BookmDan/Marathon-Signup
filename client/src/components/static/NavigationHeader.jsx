@@ -8,6 +8,13 @@ const NavigationHeader = ({ onLogout, isDarkMode, handleToggleTheme }) => {
     onLogout(); // Call the provided logout function
     navigate('/'); 
   };
+  const handlesMostPopular = () => {
+    fetch('/api/best-review')
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data); 
+      })
+    }
 
   return (
     <div>
@@ -32,6 +39,8 @@ const NavigationHeader = ({ onLogout, isDarkMode, handleToggleTheme }) => {
         </Navbar.Collapse>
       </Navbar>
       <button onClick={handleLogout}>Logout</button>
+      <button onClick={handlesMostPopular}>Logout</button>
+
     </div>
   )
 };

@@ -20,10 +20,10 @@ class RaceSignup(db.Model, SerializerMixin):
     return f'<RaceSignup id={self.id} user_id={self.user_id} raceEvent_id={self.raceEvent_id}>'
 
 class RaceSignupSchema(Schema):
-    id = fields.Int(dump_only=True)
-    waiver_accept = fields.Boolean()
-    tshirt_size = fields.Str()
-    coupon_code = fields.Str()
-    ship_packet = fields.Boolean() 
+  id = fields.Int(dump_only=True)
+  waiver_accept = fields.Boolean()
+  tshirt_size = fields.Str()
+  coupon_code = fields.Str()
+  ship_packet = fields.Boolean() 
 
 race_signup_schema = RaceSignupSchema()

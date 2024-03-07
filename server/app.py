@@ -14,6 +14,9 @@ api.add_resource(Signup, '/api/signup')
 api.add_resource(Login, '/api/login')
 api.add_resource(Logout, '/api/logout')
 
+
+
+
 @app.route('/')
 @app.route('/<int:id>')
 def index(id=0):
