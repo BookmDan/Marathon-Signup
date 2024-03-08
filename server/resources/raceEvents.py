@@ -77,12 +77,14 @@ api.add_resource(RaceEventsById, '/api/race-event','/api/race-event/<int:id>')
 
 class BestRating(Resource):
   def get(self):
-    data= request.get_json()
-    ratings = data.get("ratings")
-    if ratings =='5' :
+    ratings= request.args.get('ratings')
+    if ratings is None:
+      return {"message": "Missing 'ratings' param."}, 400
+    # ratings = data.get("ratings")
+    elif ratings =='5' :
       most_popular_events = RaceEvent.query.filter_by(ratings='5').all()
-      serialzed = [event.to_dict() for event in most_popular_events]
-      return serialzed, 200
+      serialized = [event.to_dict() for event in most_popular_events]
+      return serialized, 200
     else:
       return {"message": "No race events found with the specified rating."}, 404 
 

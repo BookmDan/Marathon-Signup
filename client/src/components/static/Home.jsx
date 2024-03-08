@@ -12,44 +12,42 @@ function Home() {
   useEffect(() => {
     fetchRaceEvents();
   }, []);
+
   const handlesMostPopular = () => {
-    fetch('/api/most-popular', {
+    fetch('/api/most-popular?ratings=5', {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-      },
-      body: JSON.stringify(values),
+      }
     }).then(r => {
       if (r.ok) {
-        r.json().then(user => onLogin(user))
-        navigate('/')
+        r.json().then(data => console.log(data))
       } else {
-        r.json().then(err => setErrors(err.errors))
-      }
-    
-  }
-  })
-}
-  const handlesMostPopular = () => {
-    fetch('/api/most-popular', {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json'
+        r.json().then(err => console.error('Error fetching five-star race events: ',err))
       }
     })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error('Network response not ok');
-        }
-        return response.json();
-      })
-      .then((data) => {
-        console.log(data); 
-      })
-      .catch(err => {
-      console.error('Error fetching five-star race events: ',err)
-    })
   }
+
+  // const handlesMostPopular = () => {
+  //   fetch('/api/most-popular', {
+  //     method: 'GET',
+  //     headers: {
+  //       'Content-Type': 'application/json'
+  //     }
+  //   })
+  //     .then((response) => {
+  //       if (!response.ok) {
+  //         throw new Error('Network response not ok');
+  //       }
+  //       return response.json();
+  //     })
+  //     .then((data) => {
+  //       console.log(data); 
+  //     })
+  //     .catch(err => {
+  //     console.error('Error fetching five-star race events: ',err)
+  //   })
+  // }
 
   const fetchRaceEvents = () => {
     fetch("/api/race-events")
