@@ -28,27 +28,6 @@ function Home() {
     })
   }
 
-  // const handlesMostPopular = () => {
-  //   fetch('/api/most-popular', {
-  //     method: 'GET',
-  //     headers: {
-  //       'Content-Type': 'application/json'
-  //     }
-  //   })
-  //     .then((response) => {
-  //       if (!response.ok) {
-  //         throw new Error('Network response not ok');
-  //       }
-  //       return response.json();
-  //     })
-  //     .then((data) => {
-  //       console.log(data); 
-  //     })
-  //     .catch(err => {
-  //     console.error('Error fetching five-star race events: ',err)
-  //   })
-  // }
-
   const fetchRaceEvents = () => {
     fetch("/api/race-events")
       .then((res) => res.json())
