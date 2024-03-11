@@ -29,4 +29,5 @@ Things I'd like to implement in the future include:
 - depending on authorization, a user can create new race events. For example a race admin can do this.
 - Stripe payment processing to simulate real transaction
 - Firebase login and authentication
-- Firestore for database 
+- Firestore for database
+- add 'Restuls' page
