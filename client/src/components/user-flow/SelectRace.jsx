@@ -17,11 +17,6 @@ const SelectRace = ({ raceEvents, user }) => {
   const [raceType, setRaceType] = useState('');
   const [raceCost, setRaceCost] = useState('');
 
-  setRaceName('');
-  setOrganization('');
-  setRaceType('');
-  setRaceCost('');
-  
   const handleRaceClick = (selectedRaceId, raceEvent) => {
     setSelectedRaceId(selectedRaceId);
     setSelectedRaceCost(raceEvent.race_cost);
@@ -36,30 +31,30 @@ const SelectRace = ({ raceEvents, user }) => {
     }
   };
 
-  const handleAddRaceEvent = () => {
-    const requestBody = {
-      race_name: raceName,
-      organization: organization,
-      race_type: raceType,
-      race_cost: raceCost
-    }
+  // const handleAddRaceEvent = () => {
+  //   const requestBody = {
+  //     race_name: raceName,
+  //     organization: organization,
+  //     race_type: raceType,
+  //     race_cost: raceCost
+  //   }
 
-    fetch('/api/race-events', {
-      method: "POST",
-      headers: {
-        "Content-Type": "applications/json",
-      },
-      body:JSON.stringify(requestBody),
-    }).then(res => {
-      if (res.ok) {
-        console.log("Race event added successfully.");
-      } else {
-        throw new Error("Failed to add new race event.");
-      }
-    }).catch(err => {
-      console.error("Error adding new race event:", err)
-    })
-  }
+  //   fetch('/api/race-events', {
+  //     method: "POST",
+  //     headers: {
+  //       "Content-Type": "applications/json",
+  //     },
+  //     body:JSON.stringify(requestBody),
+  //   }).then(res => {
+  //     if (res.ok) {
+  //       console.log("Race event added successfully.");
+  //     } else {
+  //       throw new Error("Failed to add new race event.");
+  //     }
+  //   }).catch(err => {
+  //     console.error("Error adding new race event:", err)
+  //   })
+  // }
 
   const filteredRaceEvents = raceEvents.filter((event) => {
     const typeMatch = filterType === 'all' || event.race_type === filterType;
@@ -84,9 +79,9 @@ const SelectRace = ({ raceEvents, user }) => {
         <option value="Full Marathon">Full Marathon</option>
       </select>
       <div>
-        <h2>Add New Race Event</h2>
+        {/* <h2>Add New Race Event</h2> */}
         <form>
-          <div>
+          {/* <div>
             <label>Race Name:</label>
             <input type="text" value={raceName} onChange={(e) => setRaceName(e.target.value)} />
           </div>
@@ -101,8 +96,8 @@ const SelectRace = ({ raceEvents, user }) => {
           <div>
             <label>Race Cost:</label>
             <input type="text" value={raceCost} onChange={(e) => setRaceCost(e.target.value)} />
-          </div>
-          <button type="button" onClick={handleAddRaceEvent}>+ Add Race Event</button>
+          </div> */}
+          {/* <button type="button" onClick={handleAddRaceEvent}>+ Add Race Event</button> */}
         </form>
       </div>
       <div className="race-event-cards">

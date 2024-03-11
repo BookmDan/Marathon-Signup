@@ -89,3 +89,13 @@ class BestRating(Resource):
       return {"message": "No race events found with the specified rating."}, 404 
 
 api.add_resource(BestRating, '/api/most-popular')
+
+class RaceEventsByOrganization(Resource):
+  def get(self, organization):
+    events = RaceEvent.query.filter_by(organization = organization).all()
+    if events:
+      ser = [event.to_dict() for event in events]
+      return ser, 200 
+    else:
+      return{'message': "No race evnets found for this organization."}, 404
+api.add_resource(RaceEventsByOrganization, '/api/by-org')
