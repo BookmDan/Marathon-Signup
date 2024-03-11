@@ -1,5 +1,6 @@
 from config import app, db
 from models.models import User, RaceSignup, RaceEvent, CreditCardInfo,ShoppingCart
+# , Results
 import random
 
 if __name__ == "__main__":
@@ -156,3 +157,23 @@ if __name__ == "__main__":
 
         # Commit the changes to the database
         db.session.commit()
+
+        # result = Results(
+        #     full_name=data["full_name"],
+        #     gender=data["gender"],
+        #     age=data["age"],
+        #     city=data["city"],
+        #     state=data["state"],
+        #     run_time=data["run_time"],
+        #     race_place=data["race_place"],
+        #     gender_place=data["gender_place"],
+        #     age_group=age_group,
+        #     age_place=age_place,
+        #     overall_pace=overall_pace
+        # )
+
+        #     # Add Results object to session
+        # db.session.add(result)
+
+        # # Commit changes to the database
+        # db.session.commit()

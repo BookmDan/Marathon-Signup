@@ -18,6 +18,7 @@ const Results = () => {
         return response.json();
       })
       .then(data => {
+        console.log('Fetched data:', data); 
         setResults(data);
       })
       .catch(error => {
@@ -61,7 +62,7 @@ const Results = () => {
           </tr>
         </thead>
         <tbody>
-          {sortedResults.map((result, index) => (
+          {results && results.length > 0 &&  (sortedResults.map((result, index) => (
             <tr key={result.id} className={index % 2 === 0 ? 'even-row' : 'odd-row'}>
               <td className="narrow-column">{result.race_place}</td>
               <td className="narrow-column">{result.bib_number}</td>
@@ -76,7 +77,8 @@ const Results = () => {
               <td className="narrow-column">{result.age_place}</td>
               <td className="narrow-column">{result.overall_pace}</td>
             </tr>
-          ))}
+          ))
+        )}
         </tbody>
       </table>
       <a href="/api/download-results">Download Results</a>
