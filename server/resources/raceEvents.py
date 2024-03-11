@@ -90,6 +90,7 @@ class BestRating(Resource):
 
 api.add_resource(BestRating, '/api/most-popular')
 
+
 class RaceEventsByOrganization(Resource):
   def get(self, organization):
     events = RaceEvent.query.filter_by(organization = organization).all()

@@ -8,11 +8,11 @@ function Home() {
   const [raceEvents, setRaceEvents] = useState([]);
   const [filteredEvents, setFilteredEvents] = useState([]);
   const [filter, setFilter] = useState("");
-  const [byOrg, setByOrg] = useState("");
+  // const [byOrg, setByOrg] = useState("");
 
   useEffect(() => {
     fetchRaceEvents();
-    fetchRaceEventsByOrg()
+    // fetchRaceEventsByOrg()
   }, []);
 
   const handlesMostPopular = () => {
@@ -57,30 +57,38 @@ function Home() {
   };
 
 
-  const fetchRaceEventsByOrg = () => {
-    fetch('/api/by-org')
-      .then(res => res.json())
-      .then(data => {
-        setRaceEvents(data)
-        setFilteredEvents(data)
-      }).catch(err => {
-      console.error('Error fetching race events by org,',err)
-    })
-  }
+  // const fetchRaceEventsByOrg = () => {
+  //   fetch('/api/by-org')
+  //     .then(res => res.json())
+  //     .then(data => {
+  //       setRaceEvents(data)
+  //       setFilteredEvents(data)
+  //     }).catch(err => {
+  //     console.error('Error fetching race events by org,',err)
+  //   })
+  // }
 
-  const filteredEventsByOrg = (filterValue) => {
-    const filtered = raceEvents.filter((e) =>
-      e.organization.toLowerCase().includes(filterValue.toLowerCase())
-    )
-    setFilteredEvents(filtered)
-  }
+  // const filteredEventsByOrg = (filterValue) => {
+  //   const filtered = raceEvents.filter((e) =>
+  //     e.organization.toLowerCase().includes(filterValue.toLowerCase())
+  //   )
+  //   setFilteredEvents(filtered)
+  // }
 
-  const handleFilterChangeByOrg = (e) => {
-    const value = e.target.value()
-    setByOrg(value)
-    filteredEventsByOrg(value)
-  }
+  // const handleFilterChangeByOrg = (e) => {
+  //   const value = e.target.value()
+  //   setByOrg(value)
+  //   filteredEventsByOrg(value)
+  // }
 
+        // <div>
+        //   <input
+        //     type="text"
+        //     placeholder="Filter by Organization Name"
+        //     value={byOrg}
+        //     onChange={handleFilterChangeByOrg}
+        //   />
+        // </div>
   return (
     <Container>
       <h1>Sign up for your next Marathon!</h1>
@@ -94,14 +102,6 @@ function Home() {
             placeholder="Filter by Event Name"
             value={filter}
             onChange={handleFilterChange}
-          />
-        </div>
-        <div>
-          <input
-            type="text"
-            placeholder="Filter by Organization Name"
-            value={byOrg}
-            onChange={handleFilterChangeByOrg}
           />
         </div>
         <div className="race-event-cards">
