@@ -57,10 +57,10 @@ if __name__ == "__main__":
         race_events_data = [
             {"race_name": "Better Half", "organization": "BigHearts", "race_type": "5k", "start_time": "8:00 AM",
             "start_day": "2024-07-15", "packetpickup_day": "2024-07-13", "packetpickup_location": "123 Main St, City, State",
-            "location": "456 Elm St, City, State", "race_cost": 50.00},
+            "location": "Seattle", "race_cost": 50.00},
             {"race_name": "Better Half", "organization": "BigHearts", "race_type": "10k", "start_time": "9:00 AM",
             "start_day": "2024-07-15", "packetpickup_day": "2024-07-13", "packetpickup_location": "123 Main St, City, State",
-            "location": "456 Elm St, City, State", "race_cost": 60.00},
+            "location": "Bellevue", "race_cost": 60.00},
             {"race_name": "Better Half", "organization": "BigHearts", "race_type": "Half Marathon", "start_time": "10:00 AM",
             "start_day": "2024-07-15", "packetpickup_day": "2024-07-13", "packetpickup_location": "123 Main St, City, State",
             "location": "456 Elm St, City, State", "race_cost": 70.00},
