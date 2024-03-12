@@ -75,79 +75,17 @@ class RaceEventsById(Resource):
 
 api.add_resource(RaceEventsById, '/api/race-event','/api/race-event/<int:id>')
 
-# class BestRating(Resource):
-#   def get(self):
-#     ratings= request.args.get('ratings')
-#     if ratings is None:
-#       return {"message": "Missing 'ratings' param."}, 400
-#     # ratings = data.get("ratings")
-#     elif ratings =='5' :
-#       most_popular_events = RaceEvent.query.filter_by(ratings='5').all()
-#       serialized = [event.to_dict() for event in most_popular_events]
-#       return serialized, 200
-#     else:
-#       return {"message": "No race events found with the specified rating."}, 404 
+class BestRating(Resource):
+  def get(self):
+    ratings= request.args.get('ratings')
+    if ratings is None:
+      return {"message": "Missing 'ratings' param."}, 400
+    # ratings = data.get("ratings")
+    elif ratings =='5' :
+      most_popular_events = RaceEvent.query.filter_by(ratings='5').all()
+      serialized = [event.to_dict() for event in most_popular_events]
+      return serialized, 200
+    else:
+      return {"message": "No race events found with the specified rating."}, 404 
 
-# api.add_resource(BestRating, '/api/most-popular')
-
-
-# class RaceEventsByOrganization(Resource):
-#   def get(self, organization):
-#     events = RaceEvent.query.filter_by(organization = organization).all()
-#     if events:
-#       ser = [event.to_dict() for event in events]
-#       return ser, 200 
-#     else:
-#       return{'message': "No race events found for this organization."}, 404
-# api.add_resource(RaceEventsByOrganization, '/api/by-org/<string:organization>')
-
-# class RaceEventsAfterDate(Resource):
-#   def get(self, start_date):
-#     events = RaceEvent.query(RaceEvent.start_day > start_date).all()
-#     if events: 
-#       ser = [event.to_dict() for event in events]
-#       return ser, 200
-#     else:
-#       return{'message': 'No race events after this start day '}, 404
-# api.add_resource(RaceEventsAfterDate, '/api/start-day/<string:start_date>')
-
-# class HighestRatedEvents(Resource):
-#   def get(self):
-#     highest_rated = RaceEvent.query.order_by(RaceEvent.ratings.desc()).all()
-#     if highest_rated:
-#       ser = [rated.to_dict() for rated in highest_rated]
-#       return ser, 200 
-#     else:
-#       return {'message': 'no race events found.'}, 404
-# api.add_resource(HighestRatedEvents, '/api/highest-rated')
-
-# class RaceEventsByLocation(Resource):
-#   def get(self, location):
-#     events = RaceEvent.query.filter_by(location = location).all()
-#     if events:
-#       ser = [event.to_dict() for event in events]
-#       return ser, 200
-#     else:
-#       return {'message':'No race events found in location.'}, 404
-    
-# api.add_resource(RaceEventsByLocation,'/api/race-events/location/<string:location>')
-
-# class RaceEventsByType(Resource):
-#   def get(self, event_type):
-#     events = RaceEvent.query.filter_by(race_type=event_type).all()
-#     if events:
-#       ser = [event.to_dict() for event in events]
-#       return ser, 200
-#     else:
-#       return {'message':'No race event type found.'}, 404
-# api.add_resource(RaceEventsByType, '/api/race-events/type/<string:event_type>')
-
-# class RaceEventsSortedByStartDate(Resource):
-#   def get(self):
-#     sorted = RaceEvent.query.order_by(RaceEvent.start_day).all()
-#     if sorted:
-#       ser = [event.to_dict() for event in sorted]
-#       return ser, 200
-#     else:
-#       return {'message':'no race evnets founds.'}, 404 
-# api.add_resource(RaceEventsSortedByStartDate,'/api/race-events.sorted-by-start-day')
+api.add_resource(BestRating, '/api/most-popular')
