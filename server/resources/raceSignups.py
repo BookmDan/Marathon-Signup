@@ -24,15 +24,15 @@ class RaceSignupsResource(Resource):
   #   new_signup = RaceSignup(
   #     user_id = data['user_id'],
   #     race_event_id = data['race_event_id'],
-  #     waiver_accept = data['waiver_accept'],
+  #     waiver_accept= data['waiver_accept'],
   #     tshirt_size = data['tshirt_size'],
   #     coupon_code = data['coupon_code'],
-  #     ship_packet = data['ship_packet']
+  #     ship_packe = data['ship_packe'],
   #   )
   #   db.session.add(new_signup)
   #   db.session.commit()
-  #   resp = new_signup.to_dict()
-  #   return resp, 201
+  #   res = new_signup.to_dict()
+  #   return res, 201 
 
   def create_signup(self,form_data):
     return RaceSignup(
@@ -44,35 +44,3 @@ class RaceSignupsResource(Resource):
       ship_packet=form_data.get('ship_packet', False) 
     )
 api.add_resource(RaceSignupsResource, '/api/race-signups')
-
-# class RaceSignupById(Resource):
-#   def get(self, signup_id):
-#     signup = RaceSignup.query.filter_by(id=signup_id).first()
-#     if not signup:
-#       return {'message': 'Race signup not found'}, 404 
-#     else:
-#       signup_dict = signup.to_dict()
-    
-#       return signup_dict, 200
-    
-#   def put(self, signup_id):
-#     signup = RaceSignup.query.get(signup_id)
-#     if not signup: 
-#       return {'message':'Race signup not found'},404
-#     data = request.get_json()
-#     if 'tshirt_size' in data:
-#       signup.tshirt_size = data['tshirt_size']
-#     if 'coupon_code' in data:
-#       signup.coupon_code = data['coupon_code']
-#     db.session.commit()
-
-#     resp = signup.to_dict()
-#     return resp, 200
-# api.add_resource(RaceSignupById,'/api/race-signups/<signup_id>')  
-
-# class RaceSignupByUser(Resource):
-#   def get(self, user_id):
-#     signups = RaceSignup.query.filter_by(id=user_id).all()
-#     ser  = [signup.to_dict() for signup in signups]
-#     return ser, 200
-# api.add_resource(RaceSignupByUser,'/api/race-signups?user_id=<user_id>')  
