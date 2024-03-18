@@ -81,19 +81,19 @@ class UserById(Resource):
 # Adding the resource to your API
 api.add_resource(UserById, '/api/user/<int:id>')
 
-class UserRaceEvents(Resource):
-  def get(self, n):
-    listOfUsers=[]
-    # loop through each user
-    users = User.query.all()
-    for eachUser in users:
-      if(len(eachUser.race_events)>= n):
-        listOfUsers.append(eachUser)
-    ser = [listUser.to_dict() for listUser in listOfUsers]
-    #printout list of Users
-    return ser, 201
+# class UserRaceEvents(Resource):
+#   def get(self, n):
+#     listOfUsers=[]
+#     # loop through each user
+#     users = User.query.all()
+#     for eachUser in users:
+#       if(len(eachUser.race_events)>= n):
+#         listOfUsers.append(eachUser)
+#     ser = [listUser.to_dict() for listUser in listOfUsers]
+#     #printout list of Users
+#     return ser, 201
 
-api.add_resource(UserRaceEvents,'/user_race_events/<int:n>')
+# api.add_resource(UserRaceEvents,'/user_race_events/<int:n>')
 
 # all users that have 3 or more raceEvents
 # all users with 4 or more raceEvents 

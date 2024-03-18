@@ -3,9 +3,11 @@ import { useCost } from '../../context/CostContext';
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useCreditCard } from '../../context/CreditCardContext';
+import { loadStripe } from '@stripe/stripe-js'
 
 const PurchaseSummary = () => {
   const navigate = useNavigate();
+  // const cart = useSelector((state)=> state.AddToCart)
   const { creditCardInfo } = useCreditCard();
   const { selectedRaceCost, shipPacketCost, cartItemsCost } = useCost(); // Access the cost-related state from the CostContext
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState(null);
@@ -19,6 +21,35 @@ const PurchaseSummary = () => {
   const handleConfirmClick = () => {
     navigate('/thank-you');
   };
+
+  const makePayment = async () => {
+    const stripe = await loadStripe('pk_live_7jQQpcNJkz1J0az04iZTLZSD')
+
+    const body = {
+      products:cart
+    }
+  
+    const headers = {
+      "Content-Type": "application/json"
+    }
+
+    const response = await fetch(`${apiURL}/create-checkout-session`, {
+      method: "POST",
+      headers: headers,
+      body:JSON.stringify(body)
+    })
+    const session = await response.json()
+    const result = stripe.redirectToCheckout({
+      sessionId:session.id
+    })
+    if (result.error) {
+      console.log(result.error)
+    }
+  }
+
+  
+
+
 
   const handleBackClick = () => {
     navigate('/payment');
