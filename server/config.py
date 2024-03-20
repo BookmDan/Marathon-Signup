@@ -33,6 +33,11 @@ app.config["SQLALCHEMY_DATABASE_URI"] = 'sqlite:///app.db'
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 app.config['PROPAGATE_EXCEPTIONS'] = True
 
+stripe_secret_key = os.getenv("STRIPE_SECRET_KEY")
+if stripe_secret_key:
+    import stripe
+    stripe.api_key = stripe_secret_key
+    
 db = SQLAlchemy(app=app, metadata=metadata)
 
 migrate = Migrate(app=app, db=db)
