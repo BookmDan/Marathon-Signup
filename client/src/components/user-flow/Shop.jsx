@@ -36,7 +36,8 @@ const Shop = () => {
 
   const handleContinueClick = () => {
     // navigate('/payment')
-    navigate('/checkout-form')
+    // navigate('/checkout-form')
+    navigate('/purchase-summary')
   };
 
   const handleBackClick = () => {

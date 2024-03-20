@@ -1,7 +1,9 @@
 import stripe
 from flask import jsonify, session, request
 from flask_restful import Resource, reqparse
-from config import api
+from config import api,app
+
+stripe.api_key = app.config.get("STRIPE_SECRET_KEY")
 
 class CreateIntent(Resource):
   def post(self):
