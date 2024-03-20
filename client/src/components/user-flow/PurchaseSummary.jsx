@@ -3,7 +3,8 @@ import { useCost } from '../../context/CostContext';
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useCreditCard } from '../../context/CreditCardContext';
-import { loadStripe } from '@stripe/stripe-js'
+// import { loadStripe } from '@stripe/stripe-js'
+// import StripePayButton from "./StripePayButton";
 
 const PurchaseSummary = () => {
   const navigate = useNavigate();
@@ -114,6 +115,7 @@ const PurchaseSummary = () => {
       </div>
       <div style={{ display: 'flex', alignItems: 'center' }}>
         <div id="button-container">
+          {/* <StripePayButton/> */}
           <Button variant="secondary" onClick={handleConfirmClick}>Confirm Payment ${totalCost.toFixed(2)} </Button>
         </div>
         <Button variant="secondary" onClick={handleBackClick}>Back</Button>
