@@ -1,8 +1,9 @@
 import { Card, Button, Form } from 'react-bootstrap';
 import { useCost } from '../../context/CostContext'; 
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { useState } from "react";
 import { useCreditCard } from '../../context/CreditCardContext';
+// import StripePayButton from './StripePayButton'
 // import { loadStripe } from '@stripe/stripe-js'
 // import StripePayButton from "./StripePayButton";
 
@@ -47,10 +48,6 @@ const PurchaseSummary = () => {
   //     console.log(result.error)
   //   }
   // }
-
-  
-
-
 
   const handleBackClick = () => {
     navigate('/payment');
@@ -101,6 +98,12 @@ const PurchaseSummary = () => {
           {creditCardInfo.name_on_card && `${creditCardInfo.name_on_card}'s Credit Card`}
         </Button>
         )}
+        <div className="mt-4">
+          <Button variant="primary" as={Link} to="/stripe-payment">Proceed to Payment</Button>
+        </div>
+        <div className="mt-4">
+          <StripePayButton />
+        </div>
         <Button
           variant="secondary"
           onClick={() => handlePaymentMethodClick('Visa')}
