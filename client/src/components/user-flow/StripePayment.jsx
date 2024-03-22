@@ -5,27 +5,36 @@ import { loadStripe } from '@stripe/stripe-js';
 
 const StripePayment = () => {
   const [stripePromise, setStripePromise] = useState(null);
+  const [clientSecret, setClientSecret] = useState("");
 
-  useEffect(() => {
-    const fetchPublishableKey = async () => {
-      const response = await fetch('/config');
-      const { publishableKey } = await response.json();
-      setStripePromise(loadStripe(publishableKey));
-    };
+useEffect(() => {
+  fetch("/config").then(async (r) => {
+    const { publishableKey } = await r.json();
+    // console.log(publishableKey)
+    setStripePromise(loadStripe(publishableKey));
+  });
+}, []);
 
-    fetchPublishableKey();
-  }, []);
+useEffect(() => {
+  fetch("/create-payment-intent", {
+    method: "POST",
+    body: JSON.stringify({}),
+  }).then(async (result) => {
+    var { clientSecret } = await result.json();
+    setClientSecret(clientSecret);
+  });
+}, []);
 
-  return (
-    <div>
-      <h1>Payment Page</h1>
-      {stripePromise && (
-        <Elements stripe={stripePromise}>
-          <CheckoutForm />
-        </Elements>
-      )}
-    </div>
-  );
-};
+return (
+  <>
+    <h1>React Stripe and the Payment Element</h1>
+    {clientSecret && stripePromise && (
+      <Elements stripe={stripePromise} options={{ clientSecret }}>
+        <CheckoutForm />
+      </Elements>
+    )}
+  </>
+);
+}
 
 export default StripePayment;

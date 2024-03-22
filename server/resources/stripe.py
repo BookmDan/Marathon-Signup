@@ -5,22 +5,34 @@ from config import api,app, stripe_api_key, publishable_key
 
 stripe.api_key = app.config.get("STRIPE_SECRET_KEY")
 
-class CreateIntent(Resource):
-  def post(self):
-    parser = reqparse.RequestParser()
-    parser.add_argument('amount', type=int, required=True)
-    parser.add_argument('currency', type=str, required=True)
-    args = parser.parse_args()
+# class CreateIntent(Resource):
+#   def post(self):
+#     parser = reqparse.RequestParser()
+#     parser.add_argument('amount', type=int, required=True)
+#     parser.add_argument('currency', type=str, required=True)
+#     args = parser.parse_args()
 
-    intent = stripe.PaymentIntent.create(
-      amount=args['amount'],
-      currency=args['currency'],
-      automatic_payment_methods={'enabled': True},
-    )
+#     intent = stripe.PaymentIntent.create(
+#       amount=args['amount'],
+#       currency=args['currency'],
+#       automatic_payment_methods={'enabled': True},
+#     )
 
-    session['client_secret'] = intent.client_secret
+#     session['client_secret'] = intent.client_secret
 
-    return jsonify(client_secret=intent.client_secret)
+#     return jsonify(client_secret=intent.client_secret)
+
+@app.route('/create-intent', methods=['POST'])
+def createIntent():
+  intent = stripe.PaymentIntent.create(
+    amount=1099,
+    currency='usd',
+    # In the latest version of the API, specifying the `automatic_payment_methods` parameter is optional because Stripe enables its functionality by default.
+    automatic_payment_methods={
+      'enabled': True,
+    },
+  )
+  return jsonify(client_secret=intent.client_secret)
 
 class GetClientSecret(Resource):
   def get(self):
