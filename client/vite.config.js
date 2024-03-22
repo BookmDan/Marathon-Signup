@@ -11,5 +11,10 @@ export default defineConfig({
       changeOrigin: true,
     },
    },
-  }
+  },
+  resolve: {
+    alias: {
+      '@stripe/react-stripe-js': '@stripe/react-stripe-js/dist/index.esm.js',
+    },
+  },
 })

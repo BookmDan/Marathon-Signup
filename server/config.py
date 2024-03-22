@@ -33,7 +33,8 @@ app.config["SQLALCHEMY_DATABASE_URI"] = 'sqlite:///app.db'
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 app.config['PROPAGATE_EXCEPTIONS'] = True
 
-stripe_api_key = os.getenv("STRIPE_API_KEY")
+publishable_key  = os.getenv("STRIPE_API_KEY")
+stripe_api_key = os.getenv("STRIPE_SECRET_KEY")
 if stripe_api_key:
     import stripe
     stripe.api_key = stripe_api_key

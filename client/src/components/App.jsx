@@ -1,5 +1,8 @@
 import { useState, useEffect, createContext } from "react";
-import { BrowserRouter as Router, Routes, Route} from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+// import {Elements} from '@stripe/react-stripe-js';
+// import {loadStripe} from '@stripe/react-stripe-js';
+// import CheckoutForm from './user-flow/CheckoutForm';
 import Home from "./static/Home";
 import NavigationHeader from "./static/NavigationHeader";
 import Login from "./sessions/Login";
@@ -14,7 +17,6 @@ import Agreement from "./user-flow/Agreement";
 import ShipPacket from "./user-flow/ShipPacket";
 import Shop from "./user-flow/Shop";
 import Payment from "./user-flow/Payment";
-// import CheckoutForm from "./user-flow/CheckoutForm"
 // import StripePayment from "./user-flow/StripePayment";
 import PurchaseSummary from "./user-flow/PurchaseSummary";
 import { CostProvider } from '../context/CostContext';
@@ -22,6 +24,7 @@ import ThankYou from "./user-flow/ThankYou";
 import { UserProvider } from "../context/UserContext";
 
 export const UserContext = createContext(null)
+// const stripePromise = loadStripe('pk_test_XQOHklr0hhCIPGhdCBJiOlPg');
 
 const App = () => {
   // const [loading, setLoading] = useState(true)
@@ -31,6 +34,14 @@ const App = () => {
 
   const [isDarkMode, setIsDarkMode] = useState(false);
   // const [loading, setLoading] = useState(true);
+
+  const options = {
+    mode: 'payment',
+    amount: 1099,
+    currency: 'usd',
+    // Customizable with appearance API.
+    appearance: {/*...*/},
+  };
 
   const fetchUser = () => {
     fetch('/api/check-session')
@@ -85,9 +96,7 @@ const App = () => {
     .catch(error => {
       console.error('Error fetching race events:', error);
     });
-};
-
-
+  };
 
   const updateUser = (user) => setUser(user)
 
@@ -133,6 +142,9 @@ const App = () => {
               <Route path="/the-why" element={<TheWhy />} />
               <Route path="/ship-packet" element={<ShipPacket />} />
               <Route path="/shop" element={<Shop />} />
+              {/* <Elements stripe={stripePromise} options={options}>
+                <CheckoutForm />
+              </Elements> */}
               <Route path="/payment" element={<Payment />} />
               {/* <Route path="/stripe-payment" element={<Payment />} /> */}
               {/* <Route path="/checkout-form" element = {<CheckoutForm/>}/> */}

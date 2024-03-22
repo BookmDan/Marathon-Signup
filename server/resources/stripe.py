@@ -1,7 +1,7 @@
 import stripe
 from flask import jsonify, session, request
 from flask_restful import Resource, reqparse
-from config import api,app
+from config import api,app, stripe_api_key, publishable_key
 
 stripe.api_key = app.config.get("STRIPE_SECRET_KEY")
 
@@ -27,6 +27,13 @@ class GetClientSecret(Resource):
     client_secret = session.get('client_secret')
     return jsonify(client_secret=client_secret)
 
+
+class Config(Resource):
+  def get(self):
+    return jsonify({
+      'publishableKey': publishable_key
+    })
+  
 class CreateCheckoutSession(Resource):
   def post(self):
     data = request.get_json()
@@ -46,6 +53,7 @@ class CreateCheckoutSession(Resource):
       'quantity': product.get('quantity', 1),
     })
         
+        
     session = stripe.checkout.Session.create(
       payment_method_types=['card'],
       line_items=line_items,
@@ -59,3 +67,4 @@ class CreateCheckoutSession(Resource):
 api.add_resource(CreateCheckoutSession, '/create-checkout-session')
 api.add_resource(CreateIntent, '/create-intent')
 api.add_resource(GetClientSecret, '/get-client-secret')
+api.add_resource(Config, '/config')
