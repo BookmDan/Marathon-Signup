@@ -3,9 +3,8 @@ import { useCost } from '../../context/CostContext';
 import { useNavigate, Link } from "react-router-dom";
 import { useState } from "react";
 import { useCreditCard } from '../../context/CreditCardContext';
-// import StripePayButton from './StripePayButton'
+import StripePayButton from './StripePayButton'
 // import { loadStripe } from '@stripe/stripe-js'
-// import StripePayButton from "./StripePayButton";
 
 const PurchaseSummary = () => {
   const navigate = useNavigate();

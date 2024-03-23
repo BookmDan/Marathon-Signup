@@ -22,17 +22,21 @@ stripe.api_key = app.config.get("STRIPE_SECRET_KEY")
 
 #     return jsonify(client_secret=intent.client_secret)
 
-@app.route('/create-intent', methods=['POST'])
-def createIntent():
-  intent = stripe.PaymentIntent.create(
-    amount=1099,
-    currency='usd',
-    # In the latest version of the API, specifying the `automatic_payment_methods` parameter is optional because Stripe enables its functionality by default.
-    automatic_payment_methods={
-      'enabled': True,
-    },
-  )
-  return jsonify(client_secret=intent.client_secret)
+# @app.route('/create-intent', methods=['POST'])
+# def createIntent():
+class CreateIntent(Resource):
+  def post(self):
+    data = request.get_json() 
+    amount = data.get('amount')  
+    currency = data.get('currency') 
+    intent = stripe.PaymentIntent.create(
+      amount=amount,
+      currency=currency,
+      automatic_payment_methods={
+        'enabled': True,
+      },
+    )
+    return jsonify(client_secret=intent.client_secret),200
 
 class GetClientSecret(Resource):
   def get(self):
@@ -77,6 +81,6 @@ class CreateCheckoutSession(Resource):
 
 # Add resource route
 api.add_resource(CreateCheckoutSession, '/create-checkout-session')
-api.add_resource(CreateIntent, '/create-intent')
+api.add_resource(CreateIntent, '/create-payment-intent')
 api.add_resource(GetClientSecret, '/get-client-secret')
 api.add_resource(Config, '/config')
