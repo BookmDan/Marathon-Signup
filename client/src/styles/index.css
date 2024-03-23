@@ -382,3 +382,14 @@ textarea.form-input {
 .narrow-column {
   width: 100px; 
 }
+
+.follow-button {
+  background-color: black; /* Change the background color */
+  color: white; /* Change the text color */
+}
+
+/* CSS for Following button when followed */
+.following-button {
+  background-color: purple; /* Change the background color */
+  color: white; /* Change the text color */
+}

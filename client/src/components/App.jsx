@@ -17,7 +17,7 @@ import Agreement from "./user-flow/Agreement";
 import ShipPacket from "./user-flow/ShipPacket";
 import Shop from "./user-flow/Shop";
 import Payment from "./user-flow/Payment";
-import StripePayment from "./user-flow/StripePayment";
+// import StripePayment from "./user-flow/StripePayment";
 import PurchaseSummary from "./user-flow/PurchaseSummary";
 import { CostProvider } from '../context/CostContext';
 import ThankYou from "./user-flow/ThankYou";
@@ -146,7 +146,7 @@ const App = () => {
                 <CheckoutForm />
               </Elements> */}
               <Route path="/payment" element={<Payment />} />
-              <Route path="/stripe-payment" element={<StripePayment />} />
+              {/* <Route path="/stripe-payment" element={<StripePayment />} /> */}
               {/* <Route path="/checkout-form" element = {<CheckoutForm/>}/> */}
               <Route path="/purchase-summary" element={<PurchaseSummary />} />
               <Route path="/thank-you" element={<ThankYou />} />
