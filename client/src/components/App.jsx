@@ -22,6 +22,7 @@ import PurchaseSummary from "./user-flow/PurchaseSummary";
 import { CostProvider } from '../context/CostContext';
 import ThankYou from "./user-flow/ThankYou";
 import { UserProvider } from "../context/UserContext";
+import MyAccount from "./static/MyAccount";
 
 export const UserContext = createContext(null)
 // const stripePromise = loadStripe('pk_test_XQOHklr0hhCIPGhdCBJiOlPg');
@@ -136,8 +137,8 @@ const App = () => {
                 path="/signup"
                 element={<Login onLogin={updateUser} />} />
               <Route
-                path="/select-race" element={<SelectRace raceEvents={raceEvents} user={user} />} />
-              {/* <Route path="/agreement/:id" element={<Agreement raceEvent={raceEvent} currentUser={user} />} /> */}
+                path="/select-race/:userId" element={<SelectRace raceEvents={raceEvents} user={user} />} />
+              <Route path="/my-account" element={<MyAccount/>} />
               <Route path="/agreement/:selectedRaceId/:userId" element={<Agreement raceEvent={raceEvent} currentUser={user} />} />
               <Route path="/the-why" element={<TheWhy />} />
               <Route path="/ship-packet" element={<ShipPacket />} />

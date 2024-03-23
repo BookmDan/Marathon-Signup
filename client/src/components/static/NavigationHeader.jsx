@@ -28,6 +28,7 @@ const NavigationHeader = ({ onLogout, isDarkMode, handleToggleTheme }) => {
             <Nav.Link as={Link} to="/volunteer">Volunteer</Nav.Link>
             <Nav.Link as={Link} to="/shop">Shop</Nav.Link>
             <Nav.Link as={Link} to="/purchase-summary">View Cart</Nav.Link>
+            <Nav.Link as={Link} to="/my-account">My Account</Nav.Link>
             <Nav.Link as={Link} to="/home"></Nav.Link>
           </Nav>
         </Navbar.Collapse>

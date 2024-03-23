@@ -39,8 +39,8 @@ function LoginForm({ setSignupMode, signupMode, onLogin}) {
           r.json().then(user => {
             onLogin(user);
             console.error("Login success:", r.status);
-            console.log("User ID:", user.id)
-            navigate('/select-race')    
+            // console.log("User ID:", user.id)
+            navigate(`/select-race/${user.id}`)    
           })
         } else {
           r.json().then(err => {
