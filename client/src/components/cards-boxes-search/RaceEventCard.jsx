@@ -44,9 +44,6 @@ function RaceEventCard({ raceEvent }) {
         >
           {isFollowing ? "Following" : "Follow"}
         </Button>
-        {/* <Button variant={isFollowing ? "danger" : "success"} className="ml-2" onClick={isFollowing ? handleUnfollowClick : handleFollowClick}>
-          {isFollowing ? "Unfollow" : "Follow"}
-        </Button> */}
         <Button variant="success" className="ml-2" onClick={handleSignUpClick}>
           Sign Up
         </Button>

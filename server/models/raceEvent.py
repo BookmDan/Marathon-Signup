@@ -19,7 +19,9 @@ class RaceEvent(db.Model, SerializerMixin):
 
   race_signups = db.relationship('RaceSignup', back_populates='race_event',    overlaps="race_event" )
   users = db.relationship("User", secondary="race_signups", viewonly=True)
-  serialize_rules = ('-users','-race_signups',)
+  follows = db.relationship('Follow', back_populates='race_event', cascade="all, delete-orphan")
+
+  serialize_rules = ('-users','-race_signups','-follows',)
   
   def __repr__(self):
     return f'<RaceEvent id={self.id}  organization={self.organization} race_type={self.race_type}race_cost={self.race_cost}>'

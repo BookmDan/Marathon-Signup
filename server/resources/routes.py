@@ -7,3 +7,4 @@ from .authentication import *
 from .checkSession import *
 from .shoppingCart import *
 from .stripe import *
+from .follow import *
