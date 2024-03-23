@@ -2,11 +2,16 @@ import "../../styles/index.css";
 import { Card, Button } from "react-bootstrap";
 import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
+// import { useDispatch } from 'react-redux';
+// import { followEvent, unfollowEvent } from '../../redux/actions';
 
 function RaceEventCard({ raceEvent, userId }) {
   const {race_name, organization, race_type, race_cost } = raceEvent;
   const navigate = useNavigate();
+  // const dispatch = useDispatch();
   const [isFollowing, setIsFollowing] = useState(false);
+
+  // const isFollowing = userId && userId.followedEvents.includes(id);
 
   const handleSignUpClick = () => {
     navigate('/signup');
@@ -15,6 +20,11 @@ function RaceEventCard({ raceEvent, userId }) {
   const handleFollowClick = () => {
     // Toggle the follow state
     setIsFollowing(prevState => !prevState);
+    // if (isFollowing) {
+    //   dispatch(unfollowEvent(id));
+    // } else {
+    //   dispatch(followEvent(id));
+    // }
     console.log('User ID:', userId);
     console.log('Race Event ID:', raceEvent.id);
     

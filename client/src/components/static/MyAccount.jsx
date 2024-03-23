@@ -1,10 +1,10 @@
-import { useEffect, useState, useContext, useParams} from 'react';
+import { useEffect, useState, useContext} from 'react';
 import RaceEventCard from '../cards-boxes-search/RaceEventCard';
 import { Container } from 'react-bootstrap';
 import { UserContext } from '../../context/UserContext';
 
 const MyAccount = () => {
-  // const {userId} = useParams
+  // const {userId} = useUser()
   const [followedEvents, setFollowedEvents] = useState([]);
   const { user } = useContext(UserContext);
   console.log("user id: ", user)
