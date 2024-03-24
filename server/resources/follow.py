@@ -3,6 +3,7 @@ from flask import request
 from config import db,api
 
 from models.follow import Follow
+from models.raceEvent import RaceEvent
 
 class FollowResource(Resource):
   def post(self):
@@ -24,3 +25,15 @@ class FollowResource(Resource):
     
 api.add_resource(FollowResource, '/api/follows')
 
+class FollowedEventsResource(Resource):
+  def get(self, user_id):
+    followed_events = Follow.query.filter_by(user_id=user_id).all()
+    if not followed_events:
+      return {'message': 'No followed events found for the user'}, 404
+    
+    followed_event_ids = [follow.race_event_id for follow in followed_events]
+    events = RaceEvent.query.filter(RaceEvent.id.in_(followed_event_ids)).all()
+
+    return {'followedEvents': [event.to_dict() for event in events]}, 200
+
+api.add_resource(FollowedEventsResource, '/api/user/<int:user_id>/followed-events')

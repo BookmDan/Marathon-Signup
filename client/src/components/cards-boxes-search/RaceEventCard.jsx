@@ -4,27 +4,18 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 // import { useDispatch } from 'react-redux';
 // import { followEvent, unfollowEvent } from '../../redux/actions';
-
-function RaceEventCard({ raceEvent, userId }) {
+// isFollowing, onFollowToggle
+function RaceEventCard({ raceEvent, userId, }) {
   const {race_name, organization, race_type, race_cost } = raceEvent;
   const navigate = useNavigate();
   // const dispatch = useDispatch();
   const [isFollowing, setIsFollowing] = useState(false);
 
-  // const isFollowing = userId && userId.followedEvents.includes(id);
-
-  const handleSignUpClick = () => {
-    navigate('/signup');
-  };
 
   const handleFollowClick = () => {
     // Toggle the follow state
     setIsFollowing(prevState => !prevState);
-    // if (isFollowing) {
-    //   dispatch(unfollowEvent(id));
-    // } else {
-    //   dispatch(followEvent(id));
-    // }
+  
     console.log('User ID:', userId);
     console.log('Race Event ID:', raceEvent.id);
     
@@ -44,11 +35,9 @@ function RaceEventCard({ raceEvent, userId }) {
       if (!response.ok) {
         throw new Error('Failed to add/remove race event from follow list');
       }
-      // Race event added/removed successfully
     })
     .catch(error => {
       console.error('Error:', error);
-      // Handle error
     });
   };
 
@@ -74,9 +63,6 @@ function RaceEventCard({ raceEvent, userId }) {
           onClick={handleFollowClick}
         >
           {isFollowing ? "Following" : "Follow"}
-        </Button>
-        <Button variant="success" className="ml-2" onClick={handleSignUpClick}>
-          Sign Up
         </Button>
       </Card.Body>
     </Card>

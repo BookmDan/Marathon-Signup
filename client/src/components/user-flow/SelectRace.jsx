@@ -13,7 +13,6 @@ const SelectRace = ({ raceEvents, user }) => {
   const [selectedRaceId, setSelectedRaceId] = useState(null);
   const { setSelectedRaceCost } = useCost();
 
-
   const handleRaceClick = (selectedRaceId, raceEvent) => {
     setSelectedRaceId(selectedRaceId);
     setSelectedRaceCost(raceEvent.race_cost);
