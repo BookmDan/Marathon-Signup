@@ -1,4 +1,4 @@
-import { useState, useEffect, createContext } from "react";
+import { useState, useEffect, createContext, useContext } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 // import {Elements} from '@stripe/react-stripe-js';
 // import {loadStripe} from '@stripe/react-stripe-js';
@@ -23,8 +23,8 @@ import { CostProvider } from '../context/CostContext';
 import ThankYou from "./user-flow/ThankYou";
 import { UserProvider } from "../context/UserContext";
 import MyAccount from "./static/MyAccount";
+import {UserContext} from '../context/UserContext'
 
-export const UserContext = createContext(null)
 // const stripePromise = loadStripe('pk_test_XQOHklr0hhCIPGhdCBJiOlPg');
 
 const App = () => {
@@ -35,7 +35,7 @@ const App = () => {
 
   const [isDarkMode, setIsDarkMode] = useState(false);
   // const [loading, setLoading] = useState(true);
-
+  const { logout } = useContext(UserContext)
   const options = {
     mode: 'payment',
     amount: 1099,
@@ -108,6 +108,7 @@ const App = () => {
       .then((response) => {
         if (response.ok) {
           setUser(null);
+          logout(user)
           console.error("Logout success:", response.status);
         } else {
           console.error("Logout failed:", response.status);
@@ -121,44 +122,42 @@ const App = () => {
   return (
     <div  className={isDarkMode ? 'dark' : ''}>
       <Router>
-        <UserProvider value={[user, setUser]}>
-          <NavigationHeader onLogout={logoutUser} isDarkMode={isDarkMode} handleToggleTheme={handleToggleTheme} />
-          <CostProvider>
-            <Routes>
-              <Route
-                path="/"
-                element={user ? <Home /> :
-                  <Login
-                    onLogin={updateUser}
-                  />
-                }
-              />
-              <Route
-                path="/signup"
-                element={<Login onLogin={updateUser} />} />
-              <Route
-                path="/select-race/:userId" element={<SelectRace raceEvents={raceEvents} user={user} />} />
-              <Route path="/my-account" element={<MyAccount/>} />
-              <Route path="/agreement/:selectedRaceId/:userId" element={<Agreement raceEvent={raceEvent} currentUser={user} />} />
-              <Route path="/the-why" element={<TheWhy />} />
-              <Route path="/ship-packet" element={<ShipPacket />} />
-              <Route path="/shop" element={<Shop />} />
-              {/* <Elements stripe={stripePromise} options={options}>
-                <CheckoutForm />
-              </Elements> */}
-              <Route path="/payment" element={<Payment />} />
-              {/* <Route path="/stripe-payment" element={<StripePayment />} /> */}
-              {/* <Route path="/checkout-form" element = {<CheckoutForm/>}/> */}
-              <Route path="/purchase-summary" element={<PurchaseSummary />} />
-              <Route path="/thank-you" element={<ThankYou />} />
-              <Route path="/race-details/:id" component={RaceDetailsPage} />
-              <Route path="/race-info" element={<RaceInfo />} />
-              <Route path="/results" element={<Results />} />
-              <Route path="/photos" element={<Photos />} />
-              <Route path="/volunteer" element={<Volunteer />} />
-            </Routes>
-          </CostProvider>
-        </UserProvider>
+        <NavigationHeader onLogout={logoutUser} isDarkMode={isDarkMode} handleToggleTheme={handleToggleTheme} />
+        <CostProvider>
+          <Routes>
+            <Route
+              path="/"
+              element={user ? <Home /> :
+                <Login
+                  onLogin={updateUser}
+                />
+              }
+            />
+            <Route
+              path="/signup"
+              element={<Login onLogin={updateUser} />} />
+            <Route
+              path="/select-race/:userId" element={<SelectRace raceEvents={raceEvents} user={user} />} />
+            <Route path="/my-account" element={<MyAccount/>} />
+            <Route path="/agreement/:selectedRaceId/:userId" element={<Agreement raceEvent={raceEvent} currentUser={user} />} />
+            <Route path="/the-why" element={<TheWhy />} />
+            <Route path="/ship-packet" element={<ShipPacket />} />
+            <Route path="/shop" element={<Shop />} />
+            {/* <Elements stripe={stripePromise} options={options}>
+              <CheckoutForm />
+            </Elements> */}
+            <Route path="/payment" element={<Payment />} />
+            {/* <Route path="/stripe-payment" element={<StripePayment />} /> */}
+            {/* <Route path="/checkout-form" element = {<CheckoutForm/>}/> */}
+            <Route path="/purchase-summary" element={<PurchaseSummary />} />
+            <Route path="/thank-you" element={<ThankYou />} />
+            <Route path="/race-details/:id" component={RaceDetailsPage} />
+            <Route path="/race-info" element={<RaceInfo />} />
+            <Route path="/results" element={<Results />} />
+            <Route path="/photos" element={<Photos />} />
+            <Route path="/volunteer" element={<Volunteer />} />
+          </Routes>
+        </CostProvider>
       </Router>
     </div>
   );

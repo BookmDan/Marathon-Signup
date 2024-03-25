@@ -8,6 +8,8 @@ import {UserContext} from '../../context/UserContext'
 function LoginForm({ setSignupMode, signupMode, onLogin}) {
   const [error, setError] = useState([]);
   const [success, setSuccess] = useState(false);
+  const { login } = useContext(UserContext)
+  
   const navigate = useNavigate();
   // const {setUserId} = useUser()
 
@@ -40,6 +42,7 @@ function LoginForm({ setSignupMode, signupMode, onLogin}) {
         if (r.ok) {
           r.json().then(user => {
             onLogin(user);
+            login(user)
             console.error("Login success:", r.status);
             // setUserId(user.id)
             // console.log("User ID:", user.id)
