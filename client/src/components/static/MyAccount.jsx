@@ -1,12 +1,12 @@
-import { useEffect, useState, useContext} from 'react';
+import { useEffect, useState, } from 'react';
+import { Card, Container } from 'react-bootstrap';
 import RaceEventCard from '../cards-boxes-search/RaceEventCard';
-import { Container } from 'react-bootstrap';
-import { UserContext } from '../../context/UserContext';
+// import { UserContext } from '../../context/UserContext';
 
-const MyAccount = () => {
+const MyAccount = ({user}) => {
   const [followedEventIds, setFollowedEventIds] = useState([]);
   const [followedEvents, setFollowedEvents] = useState([]);
-  const { user } = useContext(UserContext);
+  // const { user } = useContext(UserContext);
   console.log("user id: ", user);
 
   useEffect(() => {
@@ -56,11 +56,16 @@ const MyAccount = () => {
       <h3>Followed Events</h3>
       <div className="race-event-cards">
         {followedEvents.map(event => (
-          <RaceEventCard
-            key={event.id}
-            raceEvent={event}
-            userId={user.id}
-          />
+          <Card key={event.id} className="mb-3">
+            <Card.Body>
+              <RaceEventCard 
+                key={event.id}
+                raceEvent={event} 
+                userId = {user.id}
+                />
+              {/* Add any additional information about the event here */}
+            </Card.Body>
+          </Card>
         ))}
       </div>
     </Container>
@@ -68,3 +73,8 @@ const MyAccount = () => {
 };
 
 export default MyAccount;
+          // <RaceEventCard
+          //   key={event.id}
+          //   raceEvent={event}
+          //   userId={user.id}
+          // />

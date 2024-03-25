@@ -43,9 +43,6 @@ function LoginForm({ setSignupMode, signupMode, onLogin}) {
           r.json().then(user => {
             onLogin(user);
             login(user)
-            console.error("Login success:", r.status);
-            // setUserId(user.id)
-            // console.log("User ID:", user.id)
             navigate(`/select-race/${user.id}`)    
           })
         } else {

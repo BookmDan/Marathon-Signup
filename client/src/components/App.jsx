@@ -109,7 +109,6 @@ const App = () => {
         if (response.ok) {
           setUser(null);
           logout(user)
-          console.error("Logout success:", response.status);
         } else {
           console.error("Logout failed:", response.status);
         }
@@ -138,7 +137,9 @@ const App = () => {
               element={<Login onLogin={updateUser} />} />
             <Route
               path="/select-race/:userId" element={<SelectRace raceEvents={raceEvents} user={user} />} />
-            <Route path="/my-account" element={<MyAccount/>} />
+            <Route
+              path="/select-race" element={<SelectRace raceEvents={raceEvents} user={user} />} />
+            <Route path="/my-account" element={<MyAccount user={user}/>} />
             <Route path="/agreement/:selectedRaceId/:userId" element={<Agreement raceEvent={raceEvent} currentUser={user} />} />
             <Route path="/the-why" element={<TheWhy />} />
             <Route path="/ship-packet" element={<ShipPacket />} />
