@@ -4,9 +4,31 @@ import { Container } from 'react-bootstrap';
 import { UserContext } from '../../context/UserContext';
 
 const MyAccount = () => {
+  const [followedEventIds, setFollowedEventIds] = useState([]);
   const [followedEvents, setFollowedEvents] = useState([]);
   const { user } = useContext(UserContext);
-  console.log("user id: ", user)
+  console.log("user id: ", user);
+
+  useEffect(() => {
+    if (user) {
+      console.log('User ID:', user.id); // Log the user ID
+      const fetchFollowedEventIds = async () => {
+        try {
+          const response = await fetch(`/api/user/${user.id}/followed-events`);
+          if (!response.ok) {
+            throw new Error('Failed to fetch followed event IDs');
+          }
+          const data = await response.json();
+          setFollowedEventIds(data.followedEventIds);
+        } catch (error) {
+          console.error('Error:', error);
+        }
+      };
+  
+      fetchFollowedEventIds();
+    }
+  }, [user]);
+
 
   useEffect(() => {
     // Fetch the followed events for the logged-in user based on their user ID
@@ -28,7 +50,6 @@ const MyAccount = () => {
     }
   }, [user]);
 
-
   return (
     <Container>
       <h2>My Account</h2>
@@ -39,9 +60,7 @@ const MyAccount = () => {
             key={event.id}
             raceEvent={event}
             userId={user.id}
-            isFollowing={event.isFollowing}
-            onFollowToggle={toggleFollow}
-            />
+          />
         ))}
       </div>
     </Container>
