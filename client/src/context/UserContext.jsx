@@ -24,11 +24,10 @@ const UserProvider = ({ children }) => {
     console.log("Logged out:", user);
   }
   return (
-    <UserContext.Provider value={{ currentUser, loggedIn, login, logout, userId,setUserId }} >
+    <UserContext.Provider value={{ currentUser, loggedIn, login, logout, userId, setUserId }} >
       {children}
     </UserContext.Provider>
   )
 }
 
 export { UserContext, UserProvider }
-// export const useUser = () => useContext(UserContext);
