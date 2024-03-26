@@ -1,5 +1,4 @@
 import { useEffect, useState, } from 'react';
-import { Card, Container } from 'react-bootstrap';
 import RaceEventCard from '../cards-boxes-search/RaceEventCard';
 
 const MyAccount = ({user}) => {
@@ -49,24 +48,21 @@ const MyAccount = ({user}) => {
   }, [user]);
 
   return (
-    <Container>
+    <div>
       <h2>My Account</h2>
       <h3>Followed Events</h3>
       <div className="race-event-cards">
         {followedEvents.map(event => (
-          <Card key={event.id} className="mb-3">
-            <Card.Body>
-              <RaceEventCard 
-                key={event.id}
-                raceEvent={event} 
-                userId = {user.id}
-                />
-              {/* Add any additional information about the event here */}
-            </Card.Body>
-          </Card>
+          <div key={event.id} className="mb-3">
+            <RaceEventCard 
+              key={event.id}
+              raceEvent={event} 
+              userId = {user.id}
+            />
+          </div>
         ))}
       </div>
-    </Container>
+    </div>
   );
 };
 
