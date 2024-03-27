@@ -1,22 +1,33 @@
-// src/store/eventSlice.js
 import { createSlice } from '@reduxjs/toolkit';
 
 export const eventSlice = createSlice({
   name: 'event',
   initialState: {
-    followedEventIds: [],
+    // followedEventIds: [],
     followedEvents: [],
   },
   reducers: {
     setFollowedEvents: (state, action) => {
       state.followedEvents = action.payload;
     },
-    setFollowedEventIds: (state, action) => {
-      state.followedEventIds = action.payload;
-    },
+    // setFollowedEventIds: (state, action) => {
+    //   state.followedEventIds = action.payload;
+    // },
   },
 });
 
-export const { setFollowedEvents, setFollowedEventIds } = eventSlice.actions;
+export const { setFollowedEvents } = eventSlice.actions;
 
+export const fetchFollowedEvents = (userId) => async (dispatch) => {
+    try {
+      const response = await fetch(`/api/user/${userId}/followed-events`);
+      if (!response.ok) {
+        throw new Error('Failed to fetch followed events');
+      }
+      const data = await response.json();
+      dispatch(setFollowedEvents(data.followedEvents));
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  };
 export default eventSlice.reducer;

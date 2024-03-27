@@ -2,7 +2,7 @@ import { useEffect, useState, } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import RaceEventCard from '../cards-boxes-search/RaceEventCard';
 import {login} from '../../redux/userSlice'
-import { setFollowedEvents} from '../../redux/eventSlice';
+import { fetchFollowedEvents, setFollowedEvents} from '../../redux/eventSlice';
 
 const MyAccount = ({user}) => {
 //   const [followedEventIds, setFollowedEventIds] = useState([]);
@@ -34,30 +34,30 @@ const MyAccount = ({user}) => {
 
 
   useEffect(() => {
-    if (user && !loggedIn) {
-      dispatch(login(user));
-    }
-  }, [user, loggedIn, dispatch])
-
-  useEffect(() => {
-    // Fetch the followed events for the logged-in user based on their user ID
     if (user) {
-      const fetchFollowedEvents = async () => {
-        try {
-          const response = await fetch(`/api/user/${user.id}/followed-events`);
-          if (!response.ok) {
-            throw new Error('Failed to fetch followed events');
-          }
-          const data = await response.json();
-          setFollowedEvents(data.followedEvents);
-        } catch (error) {
-          console.error('Error:', error);
-        }
-      }
-
-      fetchFollowedEvents();
+      dispatch(fetchFollowedEvents(user.id));
     }
-  }, [user,dispatch]);
+  }, [user, dispatch])
+
+  // useEffect(() => {
+  //   // Fetch the followed events for the logged-in user based on their user ID
+  //   if (user) {
+  //     const fetchFollowedEvents = async () => {
+  //       try {
+  //         const response = await fetch(`/api/user/${user.id}/followed-events`);
+  //         if (!response.ok) {
+  //           throw new Error('Failed to fetch followed events');
+  //         }
+  //         const data = await response.json();
+  //         setFollowedEvents(data.followedEvents);
+  //       } catch (error) {
+  //         console.error('Error:', error);
+  //       }
+  //     }
+
+  //     fetchFollowedEvents();
+  //   }
+  // }, [user,dispatch]);
 
   return (
     <div>
