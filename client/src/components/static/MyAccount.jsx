@@ -1,36 +1,14 @@
 import { useEffect, useState, } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import RaceEventCard from '../cards-boxes-search/RaceEventCard';
-import {login} from '../../redux/userSlice'
 import { fetchFollowedEvents, setFollowedEvents} from '../../redux/eventSlice';
 
 const MyAccount = ({user}) => {
-//   const [followedEventIds, setFollowedEventIds] = useState([]);
-//   const [followedEvents, setFollowedEvents] = useState([]);
+
   console.log("user id: ", user);
   const dispatch = useDispatch();
   const loggedIn = useSelector((state) => state.user.loggedIn);
   const followedEvents = useSelector((state) => state.event.followedEvents);
-
-  // useEffect(() => {
-  //   if (user) {
-  //     console.log('User ID:', user.id); // Log the user ID
-  //     const fetchFollowedEventIds = async () => {
-  //       try {
-  //         const response = await fetch(`/api/user/${user.id}/followed-events`);
-  //         if (!response.ok) {
-  //           throw new Error('Failed to fetch followed event IDs');
-  //         }
-  //         const data = await response.json();
-  //         setFollowedEventIds(data.followedEventIds);
-  //       } catch (error) {
-  //         console.error('Error:', error);
-  //       }
-  //     };
-  
-  //     fetchFollowedEventIds();
-  //   }
-  // }, [user]);
 
 
   useEffect(() => {
@@ -38,26 +16,6 @@ const MyAccount = ({user}) => {
       dispatch(fetchFollowedEvents(user.id));
     }
   }, [user, dispatch])
-
-  // useEffect(() => {
-  //   // Fetch the followed events for the logged-in user based on their user ID
-  //   if (user) {
-  //     const fetchFollowedEvents = async () => {
-  //       try {
-  //         const response = await fetch(`/api/user/${user.id}/followed-events`);
-  //         if (!response.ok) {
-  //           throw new Error('Failed to fetch followed events');
-  //         }
-  //         const data = await response.json();
-  //         setFollowedEvents(data.followedEvents);
-  //       } catch (error) {
-  //         console.error('Error:', error);
-  //       }
-  //     }
-
-  //     fetchFollowedEvents();
-  //   }
-  // }, [user,dispatch]);
 
   return (
     <div>
@@ -79,8 +37,3 @@ const MyAccount = ({user}) => {
 };
 
 export default MyAccount;
-          // <RaceEventCard
-          //   key={event.id}
-          //   raceEvent={event}
-          //   userId={user.id}
-          // />
