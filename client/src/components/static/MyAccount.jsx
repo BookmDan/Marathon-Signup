@@ -1,31 +1,43 @@
 import { useEffect, useState, } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import RaceEventCard from '../cards-boxes-search/RaceEventCard';
+import {login} from '../../redux/userSlice'
+import { setFollowedEvents} from '../../redux/eventSlice';
 
 const MyAccount = ({user}) => {
-  const [followedEventIds, setFollowedEventIds] = useState([]);
-  const [followedEvents, setFollowedEvents] = useState([]);
+//   const [followedEventIds, setFollowedEventIds] = useState([]);
+//   const [followedEvents, setFollowedEvents] = useState([]);
   console.log("user id: ", user);
+  const dispatch = useDispatch();
+  const loggedIn = useSelector((state) => state.user.loggedIn);
+  const followedEvents = useSelector((state) => state.event.followedEvents);
+
+  // useEffect(() => {
+  //   if (user) {
+  //     console.log('User ID:', user.id); // Log the user ID
+  //     const fetchFollowedEventIds = async () => {
+  //       try {
+  //         const response = await fetch(`/api/user/${user.id}/followed-events`);
+  //         if (!response.ok) {
+  //           throw new Error('Failed to fetch followed event IDs');
+  //         }
+  //         const data = await response.json();
+  //         setFollowedEventIds(data.followedEventIds);
+  //       } catch (error) {
+  //         console.error('Error:', error);
+  //       }
+  //     };
+  
+  //     fetchFollowedEventIds();
+  //   }
+  // }, [user]);
+
 
   useEffect(() => {
-    if (user) {
-      console.log('User ID:', user.id); // Log the user ID
-      const fetchFollowedEventIds = async () => {
-        try {
-          const response = await fetch(`/api/user/${user.id}/followed-events`);
-          if (!response.ok) {
-            throw new Error('Failed to fetch followed event IDs');
-          }
-          const data = await response.json();
-          setFollowedEventIds(data.followedEventIds);
-        } catch (error) {
-          console.error('Error:', error);
-        }
-      };
-  
-      fetchFollowedEventIds();
+    if (user && !loggedIn) {
+      dispatch(login(user));
     }
-  }, [user]);
-
+  }, [user, loggedIn, dispatch])
 
   useEffect(() => {
     // Fetch the followed events for the logged-in user based on their user ID
@@ -45,7 +57,7 @@ const MyAccount = ({user}) => {
 
       fetchFollowedEvents();
     }
-  }, [user]);
+  }, [user,dispatch]);
 
   return (
     <div>
