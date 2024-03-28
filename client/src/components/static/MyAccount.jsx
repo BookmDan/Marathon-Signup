@@ -1,16 +1,18 @@
-import { useEffect, useState, } from 'react';
+import { useEffect, useContext } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import RaceEventCard from '../cards-boxes-search/RaceEventCard';
-import { fetchFollowedEvents, setFollowedEvents} from '../../redux/eventSlice';
+import { fetchFollowedEvents} from '../../redux/eventSlice';
+import {UserContext} from '../../context/UserContext'
 
-const MyAccount = ({user}) => {
+const MyAccount = () => {
 
-  console.log("user id: ", user);
+  // console.log("user id: ", user);
   const dispatch = useDispatch();
-  const loggedIn = useSelector((state) => state.user.loggedIn);
+  // const loggedIn = useSelector((state) => state.user.loggedIn);
   const followedEvents = useSelector((state) => state.event.followedEvents);
+  const { user } = useContext(UserContext)
 
-
+  console.log("user id", user.id)
   useEffect(() => {
     if (user) {
       dispatch(fetchFollowedEvents(user.id));

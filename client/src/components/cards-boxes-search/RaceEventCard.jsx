@@ -1,27 +1,32 @@
 import "../../styles/index.css";
 import { Card, Button } from "react-bootstrap";
 import { Link, useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useContext } from 'react';
+import {UserContext} from '../../context/UserContext'
+
+
 // import { useDispatch } from 'react-redux';
 // import { followEvent, unfollowEvent } from '../../redux/actions';
 // isFollowing, onFollowToggle
-function RaceEventCard({ raceEvent, userId, }) {
+function RaceEventCard({ raceEvent}) {
   const {race_name, organization, race_type, race_cost } = raceEvent;
   const navigate = useNavigate();
   // const dispatch = useDispatch();
   const [isFollowing, setIsFollowing] = useState(false);
+  const { user } = useContext(UserContext)
+
 
 
   const handleFollowClick = () => {
     // Toggle the follow state
     setIsFollowing(prevState => !prevState);
   
-    console.log('User ID:', userId);
+    console.log('User ID:', user.id);
     console.log('Race Event ID:', raceEvent.id);
     
     const postData = {
-      user_id: userId, // Replace userId with the actual user ID
-      race_event_id: raceEvent.id // Assuming raceEvent object has an 'id' property
+      user_id: user.id, 
+      race_event_id: raceEvent.id 
     };
 
     fetch('/api/follows', {

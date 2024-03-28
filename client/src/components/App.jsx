@@ -117,6 +117,7 @@ const App = () => {
         console.error("Error during logout:", error);
       });
   };
+  // userId={user?.id}
   
   return (
     <div  className={isDarkMode ? 'dark' : ''}>
@@ -136,7 +137,7 @@ const App = () => {
               path="/signup"
               element={<Login onLogin={updateUser} />} />
             <Route
-              path="/select-race/:userId" element={<SelectRace raceEvents={raceEvents} user={user} />} />
+              path="/select-race/:userId" element={<SelectRace raceEvents={raceEvents}  />} />
             <Route
               path="/select-race" element={<SelectRace raceEvents={raceEvents} user={user} />} />
             <Route path="/my-account" element={<MyAccount user={user}/>} />

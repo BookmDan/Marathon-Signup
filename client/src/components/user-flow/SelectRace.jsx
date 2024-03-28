@@ -1,10 +1,11 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import RaceEventCard from '../cards-boxes-search/RaceEventCard';
 import { Button } from "react-bootstrap";
 import { useNavigate, useParams } from 'react-router-dom';
-import { useCost } from '../../context/CostContext';
+import { useCost} from '../../context/CostContext';
+import {UserContext} from '../../context/UserContext'
 
-const SelectRace = ({ raceEvents, user }) => {
+const SelectRace = ({ raceEvents }) => {
   const { userId } = useParams();
   // console.log('User Id:', user)
   const [searchQuery, setSearchQuery] = useState('');
@@ -12,6 +13,7 @@ const SelectRace = ({ raceEvents, user }) => {
   const navigate = useNavigate();
   const [selectedRaceId, setSelectedRaceId] = useState(null);
   const { setSelectedRaceCost } = useCost();
+  const { user } = useContext(UserContext)
 
   const handleRaceClick = (selectedRaceId, raceEvent) => {
     setSelectedRaceId(selectedRaceId);

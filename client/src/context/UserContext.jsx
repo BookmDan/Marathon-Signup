@@ -10,7 +10,7 @@ const UserContext = createContext({
 const UserProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState(null)
   const [loggedIn, setLoggedIn] = useState(false)
-  const[userId, setUserId] = useState(null)
+  // const[userId, setUserId] = useState(null)
 
   const login = (user) => {
     setCurrentUser(user)
@@ -24,10 +24,11 @@ const UserProvider = ({ children }) => {
     console.log("Logged out:", user);
   }
   return (
-    <UserContext.Provider value={{ currentUser, loggedIn, login, logout, userId, setUserId }} >
+    <UserContext.Provider value={{ currentUser, loggedIn, login, logout,}} >
       {children}
     </UserContext.Provider>
   )
 }
 
 export { UserContext, UserProvider }
+// userId, setUserId 
