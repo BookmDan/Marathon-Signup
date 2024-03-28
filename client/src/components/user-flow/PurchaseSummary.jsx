@@ -58,34 +58,32 @@ const PurchaseSummary = () => {
 
   return (
     <>
-      <div>
-        <Card>
-          <Card.Body>
-            <Card.Title className="customTitle">Purchase Summary</Card.Title>
-            <Card.Text>
-              <strong>Selected Race Cost:</strong> ${selectedRaceCost.toFixed(2)}
-              <br />
-              <strong>Ship Packet Cost:</strong> ${shipPacketCost.toFixed(2)}
-              <br />
-              <strong>Cart Items Cost:</strong> ${cartItemsCost.toFixed(2)}
-              <br />
-              <strong>Base Cost:</strong> ${baseCost.toFixed(2)}
-              <br />
-              <strong>T-shirt:</strong> ${tShirtPrice.toFixed(2)}
-              <br />
-              <Form.Group controlId="couponCode" className="mt-3">
-                <Form.Label>Coupon Code:</Form.Label>
-                <Form.Control type="text" placeholder="Enter coupon code" />
-              </Form.Group>
-              <Button variant="primary">Apply</Button>
-              <br />
-              <strong>Processing Fee:</strong> ${processingFee.toFixed(2)}
-              <br />
-              <strong>Total:</strong> ${totalCost.toFixed(2)}
-            </Card.Text>
-          </Card.Body>
-        </Card>
-      </div>
+      <Card>
+        <Card.Body>
+          <Card.Title className="customTitle">Purchase Summary</Card.Title>
+          <Card.Text>
+            <strong>Selected Race Cost:</strong> ${selectedRaceCost.toFixed(2)}
+            <br />
+            <strong>Ship Packet Cost:</strong> ${shipPacketCost.toFixed(2)}
+            <br />
+            <strong>Cart Items Cost:</strong> ${cartItemsCost.toFixed(2)}
+            <br />
+            <strong>Base Cost:</strong> ${baseCost.toFixed(2)}
+            <br />
+            <strong>T-shirt:</strong> ${tShirtPrice.toFixed(2)}
+            <br />
+            <Form.Group controlId="couponCode" className="mt-3">
+              <Form.Label>Coupon Code:</Form.Label>
+              <Form.Control type="text" placeholder="Enter coupon code" />
+            </Form.Group>
+            <Button variant="primary">Apply</Button>
+            <br />
+            <strong>Processing Fee:</strong> ${processingFee.toFixed(2)}
+            <br />
+            <strong>Total:</strong> ${totalCost.toFixed(2)}
+          </Card.Text>
+        </Card.Body>
+      </Card>
       <div className="mt-4">
         <h5>Payment Method:</h5>
         {creditCardInfo && (

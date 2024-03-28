@@ -6,7 +6,7 @@ import { useCost } from '../../context/CostContext';
 
 const SelectRace = ({ raceEvents, user }) => {
   const { userId } = useParams();
-  console.log('User Id:', user)
+  // console.log('User Id:', user)
   const [searchQuery, setSearchQuery] = useState('');
   const [filterType, setFilterType] = useState('all');
   const navigate = useNavigate();
