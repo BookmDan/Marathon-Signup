@@ -43,7 +43,7 @@ function LoginForm({ setSignupMode, signupMode, onLogin}) {
           r.json().then(user => {
             onLogin(user);
             login(user)
-            navigate(`/select-race/${user.id}`)    
+            navigate('/select-race')    
           })
         } else {
           r.json().then(err => {

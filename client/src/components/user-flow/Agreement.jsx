@@ -1,13 +1,14 @@
 import { useState, useEffect, useContext } from "react";
 import { Container, Button, Form, Col, Row } from "react-bootstrap";
 import { useParams, useNavigate } from 'react-router-dom';
-// import { UserContext  } from '../../context/UserContext';
+import { UserContext  } from '../../context/UserContext';
 // import LoginForm from '../sessions/LoginForm'
 
 const Agreement = () => {
   const navigate = useNavigate()
-  // const { currentUser, loggedIn, login, logout  } = useContext(UserContext);
-  const { selectedRaceId, userId } = useParams();
+  const { currentUser, loggedIn, login, logout  } = useContext(UserContext);
+  const { selectedRaceId} = useParams();
+  // , userId 
   const [packetPickup, setPacketPickup] = useState(false);
   const [hours, setHours] = useState("");
   const [minutes, setMinutes] = useState("");
@@ -33,11 +34,8 @@ const Agreement = () => {
   }, [selectedRaceId]);
 
   const handleContinue = () => {
-    const currentUserId = userId;
+    const currentUserId = currentUser;
     if (currentUserId) {
-      // const { user_id } = currentUser
-      // console.log("User ID:", user_id); 
-
       const totalSeconds =
       parseInt(hours) * 3600 + parseInt(minutes) * 60 + parseInt(seconds);
       

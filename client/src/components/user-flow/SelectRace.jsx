@@ -6,14 +6,14 @@ import { useCost} from '../../context/CostContext';
 import {UserContext} from '../../context/UserContext'
 
 const SelectRace = ({ raceEvents }) => {
-  const { userId } = useParams();
+  // const { userId } = useParams();
   // console.log('User Id:', user)
   const [searchQuery, setSearchQuery] = useState('');
   const [filterType, setFilterType] = useState('all');
   const navigate = useNavigate();
   const [selectedRaceId, setSelectedRaceId] = useState(null);
   const { setSelectedRaceCost } = useCost();
-  const { user } = useContext(UserContext)
+  const { currentUser } = useContext(UserContext)
 
   const handleRaceClick = (selectedRaceId, raceEvent) => {
     setSelectedRaceId(selectedRaceId);
@@ -24,8 +24,8 @@ const SelectRace = ({ raceEvents }) => {
     if (!selectedRaceId) {
       return
     } else {
-      console.log("User ID:", user.id)
-      navigate(`/agreement/${selectedRaceId}/${user.id}`);
+      console.log("User ID:", currentUser.id)
+      navigate(`/agreement/${selectedRaceId}`);
     }
   };
 
@@ -63,7 +63,6 @@ const SelectRace = ({ raceEvents }) => {
             <RaceEventCard
               key={event.id}
               raceEvent={event}
-              userId = {userId}
               onClick={() => handleRaceClick(event.id, event)}
               isSelected={selectedRaceId === event.id}
             />

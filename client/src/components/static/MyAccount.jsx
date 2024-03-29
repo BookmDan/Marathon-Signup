@@ -10,14 +10,14 @@ const MyAccount = () => {
   const dispatch = useDispatch();
   // const loggedIn = useSelector((state) => state.user.loggedIn);
   const followedEvents = useSelector((state) => state.event.followedEvents);
-  const { user } = useContext(UserContext)
+  const { currentUser } = useContext(UserContext)
 
-  console.log("user id", user.id)
+  console.log("user id", currentUser.id)
   useEffect(() => {
-    if (user) {
-      dispatch(fetchFollowedEvents(user.id));
+    if (currentUser) {
+      dispatch(fetchFollowedEvents(currentUser.id));
     }
-  }, [user, dispatch])
+  }, [currentUser, dispatch])
 
   return (
     <div>
@@ -29,7 +29,6 @@ const MyAccount = () => {
             <RaceEventCard 
               key={event.id}
               raceEvent={event} 
-              userId = {user.id}
             />
           </div>
         ))}

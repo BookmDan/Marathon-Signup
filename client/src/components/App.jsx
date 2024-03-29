@@ -35,7 +35,7 @@ const App = () => {
 
   const [isDarkMode, setIsDarkMode] = useState(false);
   // const [loading, setLoading] = useState(true);
-  const { logout } = useContext(UserContext)
+  const { logout,currentUser } = useContext(UserContext)
   const options = {
     mode: 'payment',
     amount: 1099,
@@ -118,7 +118,7 @@ const App = () => {
       });
   };
   // userId={user?.id}
-  
+  // currentUser={user}
   return (
     <div  className={isDarkMode ? 'dark' : ''}>
       <Router>
@@ -141,7 +141,7 @@ const App = () => {
             <Route
               path="/select-race" element={<SelectRace raceEvents={raceEvents} user={user} />} />
             <Route path="/my-account" element={<MyAccount user={user}/>} />
-            <Route path="/agreement/:selectedRaceId/:userId" element={<Agreement raceEvent={raceEvent} currentUser={user} />} />
+            <Route path="/agreement/:selectedRaceId/" element={<Agreement raceEvent={raceEvent}  />} />
             <Route path="/the-why" element={<TheWhy />} />
             <Route path="/ship-packet" element={<ShipPacket />} />
             <Route path="/shop" element={<Shop />} />

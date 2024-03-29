@@ -13,7 +13,7 @@ function RaceEventCard({ raceEvent}) {
   const navigate = useNavigate();
   // const dispatch = useDispatch();
   const [isFollowing, setIsFollowing] = useState(false);
-  const { user } = useContext(UserContext)
+  const { currentUser } = useContext(UserContext)
 
 
 
@@ -21,11 +21,11 @@ function RaceEventCard({ raceEvent}) {
     // Toggle the follow state
     setIsFollowing(prevState => !prevState);
   
-    console.log('User ID:', user.id);
+    console.log('User ID:', currentUser.id);
     console.log('Race Event ID:', raceEvent.id);
     
     const postData = {
-      user_id: user.id, 
+      user_id: currentUser.id, 
       race_event_id: raceEvent.id 
     };
 
