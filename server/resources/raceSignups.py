@@ -8,31 +8,23 @@ class RaceSignupsResource(Resource):
     signups = RaceSignup.query.all()
     schema = RaceSignupSchema(many=True)
     resp = schema.dump(signups)
-    return jsonify(resp, 200)
+    return resp, 200
 
   def post(self):
-    form_data = request.get_json()
-    new_signup = self.create_signup(form_data)
-    db.session.add(new_signup)
-    db.session.commit()
+    try: 
+      form_data = request.get_json()
+      if form_data is None:
+        return jsonify({"error": "No JSON data provided in the request"}), 400
+      new_signup = self.create_signup(form_data)
+      db.session.add(new_signup)
+      db.session.commit()
 
-    resp = RaceSignupSchema().dump(new_signup)
-    return jsonify(resp, 201)
-  
-  # def post(self):
-  #   data = request.get_json()
-  #   new_signup = RaceSignup(
-  #     user_id = data['user_id'],
-  #     race_event_id = data['race_event_id'],
-  #     waiver_accept= data['waiver_accept'],
-  #     tshirt_size = data['tshirt_size'],
-  #     coupon_code = data['coupon_code'],
-  #     ship_packe = data['ship_packe'],
-  #   )
-  #   db.session.add(new_signup)
-  #   db.session.commit()
-  #   res = new_signup.to_dict()
-  #   return res, 201 
+      resp = RaceSignupSchema().dump(new_signup)
+      return resp, 201
+    except Exception as e:
+      db.session.rollback()
+      print("Error:", e)
+      return jsonify({"err": str(e)}), 500
 
   def create_signup(self,form_data):
     return RaceSignup(

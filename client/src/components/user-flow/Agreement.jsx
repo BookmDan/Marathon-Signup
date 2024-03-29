@@ -2,13 +2,11 @@ import { useState, useEffect, useContext } from "react";
 import { Container, Button, Form, Col, Row } from "react-bootstrap";
 import { useParams, useNavigate } from 'react-router-dom';
 import { UserContext  } from '../../context/UserContext';
-// import LoginForm from '../sessions/LoginForm'
 
 const Agreement = () => {
   const navigate = useNavigate()
   const { currentUser, loggedIn, login, logout  } = useContext(UserContext);
   const { selectedRaceId} = useParams();
-  // , userId 
   const [packetPickup, setPacketPickup] = useState(false);
   const [hours, setHours] = useState("");
   const [minutes, setMinutes] = useState("");
@@ -17,6 +15,7 @@ const Agreement = () => {
   const [waiverAccept, setWaiverAccept] = useState(false);
   const [raceEventData, setRaceEventData] = useState(null);
 
+  // console.log(selectedRaceId)
   useEffect(() => {
     fetch(`/api/race-event/${selectedRaceId}`)
       .then(response => {
@@ -35,59 +34,66 @@ const Agreement = () => {
 
   const handleContinue = () => {
     const currentUserId = currentUser;
-    if (currentUserId) {
-      const totalSeconds =
+  if (currentUserId) {
+    const totalSeconds =
       parseInt(hours) * 3600 + parseInt(minutes) * 60 + parseInt(seconds);
-      
-      const raceSignupData = {
-        user_id: currentUserId, 
-        race_event_id: selectedRaceId,
-        waiver_accept: waiverAccept,
-        tshirt_size: shirtSize,
-        coupon_code: "SPECIALOFFER",
-      };
-      // Prepare the data object to send to the backend API
-      const finishTimeData = {
-        estimated_finish_time_hours: parseInt(hours),
-        estimated_finish_time_minutes: parseInt(minutes),
-        estimated_finish_time_seconds: parseInt(seconds),
-        estimated_finish_time: totalSeconds,
-      };
-      
-      fetch("/api/race-signups", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(raceSignupData),
+
+    const raceSignupData = {
+      user_id: currentUserId,
+      race_event_id: selectedRaceId,
+      waiver_accept: waiverAccept,
+      tshirt_size: shirtSize,
+      coupon_code: "SPECIALOFFER",
+    };
+
+    const finishTimeData = {
+      estimated_finish_time_hours: parseInt(hours),
+      estimated_finish_time_minutes: parseInt(minutes),
+      estimated_finish_time_seconds: parseInt(seconds),
+      estimated_finish_time: totalSeconds,
+    };
+
+    fetch("/api/race-signups", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(raceSignupData),
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Failed to post race signup");
+        }
+        return response.json();
       })
-      .then((response) => response.json())
       .then((data) => {
         console.log("Race signup successful", data);
-       
-        fetch(`/api/user/${currentUserId}`, {
+        // Make the POST request to update user with estimated finish time
+        return fetch(`/api/user/${currentUserId}`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
           body: JSON.stringify(finishTimeData),
-        })
-        .then((response) => response.json())
-        .then((data) => {
-          console.log("Estimated finish time data sent successfully:", data);
-          navigate("/the-why");
-        })
-        .catch((error) => {
-          console.error("Error sending estimated finish time data:", error);
         });
       })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Failed to update user with estimated finish time");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        console.log("Estimated finish time data sent successfully:", data);
+        navigate("/the-why");
+      })
       .catch((error) => {
-        console.error("Error posting race signup:", error);
+        console.error("Error during POST requests:", error);
       });
-    } else {
-      console.error("User id not found in route parameters")
-    }
+  } else {
+    console.error("User id not found in route parameters");
   }
+};
 
   const handleHoursChange = (e) => {
     setHours(Math.max(Number(e.target.value), 0));
