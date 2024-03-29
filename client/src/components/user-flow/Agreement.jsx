@@ -5,7 +5,7 @@ import { UserContext  } from '../../context/UserContext';
 
 const Agreement = () => {
   const navigate = useNavigate()
-  const { currentUser, loggedIn, login, logout  } = useContext(UserContext);
+  const { currentUser  } = useContext(UserContext);
   const { selectedRaceId} = useParams();
   const [packetPickup, setPacketPickup] = useState(false);
   const [hours, setHours] = useState("");
@@ -15,7 +15,6 @@ const Agreement = () => {
   const [waiverAccept, setWaiverAccept] = useState(false);
   const [raceEventData, setRaceEventData] = useState(null);
 
-  // console.log(selectedRaceId)
   useEffect(() => {
     fetch(`/api/race-event/${selectedRaceId}`)
       .then(response => {
@@ -33,67 +32,59 @@ const Agreement = () => {
   }, [selectedRaceId]);
 
   const handleContinue = () => {
-    const currentUserId = currentUser;
-  if (currentUserId) {
-    const totalSeconds =
+    if (currentUser) {
+      const totalSeconds =
       parseInt(hours) * 3600 + parseInt(minutes) * 60 + parseInt(seconds);
-
-    const raceSignupData = {
-      user_id: currentUserId,
-      race_event_id: selectedRaceId,
-      waiver_accept: waiverAccept,
-      tshirt_size: shirtSize,
-      coupon_code: "SPECIALOFFER",
-    };
-
-    const finishTimeData = {
-      estimated_finish_time_hours: parseInt(hours),
-      estimated_finish_time_minutes: parseInt(minutes),
-      estimated_finish_time_seconds: parseInt(seconds),
-      estimated_finish_time: totalSeconds,
-    };
-
-    fetch("/api/race-signups", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(raceSignupData),
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Failed to post race signup");
-        }
-        return response.json();
+      
+      const raceSignupData = {
+        user_id: currentUser, 
+        race_event_id: selectedRaceId,
+        waiver_accept: waiverAccept,
+        tshirt_size: shirtSize,
+        coupon_code: "SPECIALOFFER",
+      };
+      // Prepare the data object to send to the backend API
+      const finishTimeData = {
+        estimated_finish_time_hours: parseInt(hours),
+        estimated_finish_time_minutes: parseInt(minutes),
+        estimated_finish_time_seconds: parseInt(seconds),
+        estimated_finish_time: totalSeconds,
+      };
+      
+      fetch("/api/race-signups", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(raceSignupData),
       })
+      .then((response) => response.json())
       .then((data) => {
         console.log("Race signup successful", data);
-        // Make the POST request to update user with estimated finish time
-        return fetch(`/api/user/${currentUserId}`, {
+       
+        fetch(`/api/user/${currentUser}`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
           body: JSON.stringify(finishTimeData),
+        })
+        .then((response) => response.json())
+        .then((data) => {
+          console.log("Estimated finish time data sent successfully:", data);
+          navigate("/the-why");
+        })
+        .catch((error) => {
+          console.error("Error sending estimated finish time data:", error);
         });
       })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Failed to update user with estimated finish time");
-        }
-        return response.json();
-      })
-      .then((data) => {
-        console.log("Estimated finish time data sent successfully:", data);
-        navigate("/the-why");
-      })
       .catch((error) => {
-        console.error("Error during POST requests:", error);
+        console.error("Error posting race signup:", error);
       });
-  } else {
-    console.error("User id not found in route parameters");
+    } else {
+      console.error("User id not found in route parameters")
+    }
   }
-};
 
   const handleHoursChange = (e) => {
     setHours(Math.max(Number(e.target.value), 0));
