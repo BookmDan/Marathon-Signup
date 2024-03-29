@@ -25,8 +25,6 @@ class RaceSignupsResource(Resource):
     db.session.commit()
 
     resp = RaceSignupSchema().dump(new_signup)
-    # Include the URL of the newly created resource in the response
-    new_signup_url = f"/api/race-signups/{new_signup.id}"
-    return jsonify({"signup": resp, "url": new_signup_url}), 201
+    return jsonify({"signup": resp}), 201
 
 api.add_resource(RaceSignupsResource, '/api/race-signups')
