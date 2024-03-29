@@ -12,6 +12,9 @@ class RaceSignup(db.Model, SerializerMixin):
   coupon_code = db.Column(db.String, nullable = True)
   ship_packet = db.Column(db.Boolean, nullable = True, default = False)
 
+  # __table_args__ = (
+  #   db.UniqueConstraint('user_id', 'race_event_id', name='uq_user_race_event'),
+  # )   
   user = db.relationship('User', back_populates='race_signups')
   race_event = db.relationship('RaceEvent', back_populates='race_signups', overlaps="race_signups" )
 
@@ -21,6 +24,8 @@ class RaceSignup(db.Model, SerializerMixin):
 
 class RaceSignupSchema(Schema):
   id = fields.Int(dump_only=True)
+  user_id = fields.Int()
+  race_event_id = fields.Int()
   waiver_accept = fields.Boolean()
   tshirt_size = fields.Str()
   coupon_code = fields.Str()

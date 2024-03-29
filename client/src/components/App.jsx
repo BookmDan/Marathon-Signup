@@ -21,7 +21,6 @@ import Payment from "./user-flow/Payment";
 import PurchaseSummary from "./user-flow/PurchaseSummary";
 import { CostProvider } from '../context/CostContext';
 import ThankYou from "./user-flow/ThankYou";
-import { UserProvider } from "../context/UserContext";
 import MyAccount from "./static/MyAccount";
 import {UserContext} from '../context/UserContext'
 
@@ -137,10 +136,8 @@ const App = () => {
               path="/signup"
               element={<Login onLogin={updateUser} />} />
             <Route
-              path="/select-race/:userId" element={<SelectRace raceEvents={raceEvents}  />} />
-            <Route
-              path="/select-race" element={<SelectRace raceEvents={raceEvents} user={user} />} />
-            <Route path="/my-account" element={<MyAccount user={user}/>} />
+              path="/select-race/" element={<SelectRace raceEvents={raceEvents}  />} />
+            <Route path="/my-account" element={<MyAccount />} />
             <Route path="/agreement/:selectedRaceId/" element={<Agreement raceEvent={raceEvent}  />} />
             <Route path="/the-why" element={<TheWhy />} />
             <Route path="/ship-packet" element={<ShipPacket />} />

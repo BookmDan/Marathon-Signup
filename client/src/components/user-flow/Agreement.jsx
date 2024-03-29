@@ -34,15 +34,16 @@ const Agreement = () => {
   const handleContinue = () => {
     if (currentUser) {
       const totalSeconds =
-      parseInt(hours) * 3600 + parseInt(minutes) * 60 + parseInt(seconds);
-      
+        parseInt(hours) * 3600 + parseInt(minutes) * 60 + parseInt(seconds);
+  
       const raceSignupData = {
-        user_id: currentUser, 
+        user_id: currentUser,
         race_event_id: selectedRaceId,
         waiver_accept: waiverAccept,
         tshirt_size: shirtSize,
         coupon_code: "SPECIALOFFER",
       };
+  
       // Prepare the data object to send to the backend API
       const finishTimeData = {
         estimated_finish_time_hours: parseInt(hours),
@@ -50,7 +51,7 @@ const Agreement = () => {
         estimated_finish_time_seconds: parseInt(seconds),
         estimated_finish_time: totalSeconds,
       };
-      
+  
       fetch("/api/race-signups", {
         method: "POST",
         headers: {
@@ -58,33 +59,44 @@ const Agreement = () => {
         },
         body: JSON.stringify(raceSignupData),
       })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log("Race signup successful", data);
-       
-        fetch(`/api/user/${currentUser}`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(finishTimeData),
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("Network response was not ok");
+          }
+          return response.json();
         })
-        .then((response) => response.json())
         .then((data) => {
-          console.log("Estimated finish time data sent successfully:", data);
-          navigate("/the-why");
+          console.log("Race signup successful", data);
+  
+          fetch(`/api/user/${currentUser}`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(finishTimeData),
+          })
+            .then((response) => {
+              if (!response.ok) {
+                throw new Error("Network response was not ok");
+              }
+              return response.json();
+            })
+            .then((data) => {
+              console.log("Estimated finish time data sent successfully:", data);
+              navigate("/the-why");
+            })
+            .catch((error) => {
+              console.error("Error sending estimated finish time data:", error);
+            });
         })
         .catch((error) => {
-          console.error("Error sending estimated finish time data:", error);
+          console.error("Error posting race signup:", error);
         });
-      })
-      .catch((error) => {
-        console.error("Error posting race signup:", error);
-      });
     } else {
-      console.error("User id not found in route parameters")
+      console.error("User id not found in route parameters");
     }
-  }
+  };
+  
 
   const handleHoursChange = (e) => {
     setHours(Math.max(Number(e.target.value), 0));
