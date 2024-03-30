@@ -8,11 +8,19 @@ class RaceSignupsResource(Resource):
     signups = RaceSignup.query.all()
     schema = RaceSignupSchema(many=True)
     resp = schema.dump(signups)
-    return resp, 200
+    return jsonify(resp, 200)
 
   def post(self):
     form_data = request.get_json()
-    new_signup = RaceSignup(
+    new_signup = self.create_signup(form_data)
+    db.session.add(new_signup)
+    db.session.commit()
+
+    resp = RaceSignupSchema().dump(new_signup)
+    return jsonify(resp, 201)
+  
+  def create_signup(self,form_data):
+    return RaceSignup(
       user_id=form_data.get('user_id'),
       race_event_id=form_data.get('race_event_id'),
       waiver_accept=form_data.get('waiver_accept'),
@@ -20,11 +28,4 @@ class RaceSignupsResource(Resource):
       coupon_code=form_data.get('coupon_code'),
       ship_packet=form_data.get('ship_packet', False) 
     )
-
-    db.session.add(new_signup)
-    db.session.commit()
-
-    resp = RaceSignupSchema().dump(new_signup)
-    return jsonify({"signup": resp}), 201
-
 api.add_resource(RaceSignupsResource, '/api/race-signups')

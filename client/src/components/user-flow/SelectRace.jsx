@@ -25,7 +25,7 @@ const SelectRace = ({ raceEvents }) => {
       return
     } else {
       console.log("User ID:", currentUser.id)
-      navigate(`/agreement/${selectedRaceId}`);
+      navigate(`/agreement/${selectedRaceId}/${currentUser.id}`);
     }
   };
 

@@ -1,12 +1,12 @@
 import { useState, useEffect, useContext } from "react";
 import { Container, Button, Form, Col, Row } from "react-bootstrap";
 import { useParams, useNavigate } from 'react-router-dom';
-import { UserContext  } from '../../context/UserContext';
-import { current } from "@reduxjs/toolkit";
+// import { UserContext  } from '../../context/UserContext';
+// import LoginForm from '../sessions/LoginForm'
 
 const Agreement = () => {
   const navigate = useNavigate()
-  const { currentUser, loggedIn, login, logout  } = useContext(UserContext);
+  // const { currentUser, loggedIn, login, logout  } = useContext(UserContext);
   const { selectedRaceId, userId } = useParams();
   const [packetPickup, setPacketPickup] = useState(false);
   const [hours, setHours] = useState("");
@@ -33,8 +33,10 @@ const Agreement = () => {
   }, [selectedRaceId]);
 
   const handleContinue = () => {
-    const currentUserId = currentUser;
+    const currentUserId = userId;
     if (currentUserId) {
+      // const { user_id } = currentUser
+      // console.log("User ID:", user_id); 
 
       const totalSeconds =
       parseInt(hours) * 3600 + parseInt(minutes) * 60 + parseInt(seconds);
@@ -46,7 +48,6 @@ const Agreement = () => {
         tshirt_size: shirtSize,
         coupon_code: "SPECIALOFFER",
       };
-      console.log("issue here after raceSigup")
       // Prepare the data object to send to the backend API
       const finishTimeData = {
         estimated_finish_time_hours: parseInt(hours),
@@ -54,8 +55,6 @@ const Agreement = () => {
         estimated_finish_time_seconds: parseInt(seconds),
         estimated_finish_time: totalSeconds,
       };
-      console.log("issue here after timeData")
-
       
       fetch("/api/race-signups", {
         method: "POST",

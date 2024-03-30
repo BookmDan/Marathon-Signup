@@ -138,7 +138,7 @@ const App = () => {
             <Route
               path="/select-race/" element={<SelectRace raceEvents={raceEvents}  />} />
             <Route path="/my-account" element={<MyAccount />} />
-            <Route path="/agreement/:selectedRaceId/" element={<Agreement raceEvent={raceEvent}  />} />
+            <Route path="/agreement/:selectedRaceId/:userId" element={<Agreement raceEvent={raceEvent} currentUser={user}  />} />
             <Route path="/the-why" element={<TheWhy />} />
             <Route path="/ship-packet" element={<ShipPacket />} />
             <Route path="/shop" element={<Shop />} />
