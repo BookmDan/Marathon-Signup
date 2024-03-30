@@ -2,7 +2,6 @@ import { useState, useEffect, useContext } from "react";
 import { Container, Button, Form, Col, Row } from "react-bootstrap";
 import { useParams, useNavigate } from 'react-router-dom';
 // import { UserContext  } from '../../context/UserContext';
-// import LoginForm from '../sessions/LoginForm'
 
 const Agreement = () => {
   const navigate = useNavigate()

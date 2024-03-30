@@ -64,23 +64,3 @@ const Shop = () => {
   );
 };
 export default Shop;
-//   return (
-//     <Container>
-//       <h2>Shop</h2>
-//         <Row className="image-container row-cols-1 row-cols-md-2 row-cols-lg-3">
-//           {shopItems.map((item, index) => (
-//             <Col key={index} xs={12} sm={6} lg={4} className="mb-4">
-//               <MerchCard item={item} />
-//             </Col>
-//           ))}
-//         </Row>
-//         <div style={{ display: 'flex', alignItems: 'center' }}>
-//           <div id="button-container">
-//             <Button variant="secondary" onClick={handleContinueClick}>Continue</Button>
-//           </div>
-//             <Button variant="secondary" onClick={handleBackClick}>Back</Button>
-//         </div>
-//     </Container>
-//   );
-// };
-

@@ -36,18 +36,6 @@ class CreditCardsResource(Resource):
     resp = credit_card_info_schema.dump(new_credit_card)
     return jsonify(resp), 201
 
-  # def get_by_ccid(self, ccid):
-  #   credit_card = CreditCardInfo.query.get(ccid)
-
-  #   if credit_card:
-  #       resp = credit_card_info_schema.dump(credit_card)
-  #       status_code = 200
-  #   else:
-  #       resp = {"message": f"Credit card with number {ccid} was not found."}
-  #       status_code = 404
-
-  #   return make_response(resp, status_code)
-
 api.add_resource(CreditCardsResource, '/api/creditcards')
 
 class CreditCardsById(Resource):

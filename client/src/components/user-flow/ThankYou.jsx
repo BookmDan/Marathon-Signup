@@ -7,7 +7,6 @@ const ThankYou = ({ selectedRace }) => {
       <p>Race Date: {selectedRace?.start_day}</p>
       <p>Registered: {new Date().toLocaleString()}</p>
       <h2>Registrant:</h2>
-      {/* Add registrant information here */}
     </div>
   );
 };

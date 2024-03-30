@@ -1,13 +1,9 @@
 import { useState, useEffect, createContext, useContext } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-// import {Elements} from '@stripe/react-stripe-js';
-// import {loadStripe} from '@stripe/react-stripe-js';
-// import CheckoutForm from './user-flow/CheckoutForm';
 import Home from "./static/Home";
 import NavigationHeader from "./static/NavigationHeader";
 import Login from "./sessions/Login";
 import RaceInfo from './static/RaceInfo';
-import RaceDetailsPage from "./static/RaceDetailsPage";
 import Results from './static/Results';
 import Photos from './static/Photos';
 import Volunteer from './static/Volunteer';
@@ -17,23 +13,19 @@ import Agreement from "./user-flow/Agreement";
 import ShipPacket from "./user-flow/ShipPacket";
 import Shop from "./user-flow/Shop";
 import Payment from "./user-flow/Payment";
-// import StripePayment from "./user-flow/StripePayment";
 import PurchaseSummary from "./user-flow/PurchaseSummary";
 import { CostProvider } from '../context/CostContext';
 import ThankYou from "./user-flow/ThankYou";
 import MyAccount from "./static/MyAccount";
 import {UserContext} from '../context/UserContext'
 
-// const stripePromise = loadStripe('pk_test_XQOHklr0hhCIPGhdCBJiOlPg');
 
 const App = () => {
-  // const [loading, setLoading] = useState(true)
   const [user, setUser] = useState(null);
   const [raceEvents, setRaceEvents] = useState(null);
   const [raceEvent, setRaceEvent] = useState(null);
 
   const [isDarkMode, setIsDarkMode] = useState(false);
-  // const [loading, setLoading] = useState(true);
   const { logout,currentUser } = useContext(UserContext)
   const options = {
     mode: 'payment',
@@ -116,8 +108,7 @@ const App = () => {
         console.error("Error during logout:", error);
       });
   };
-  // userId={user?.id}
-  // currentUser={user}
+
   return (
     <div  className={isDarkMode ? 'dark' : ''}>
       <Router>
@@ -142,15 +133,9 @@ const App = () => {
             <Route path="/the-why" element={<TheWhy />} />
             <Route path="/ship-packet" element={<ShipPacket />} />
             <Route path="/shop" element={<Shop />} />
-            {/* <Elements stripe={stripePromise} options={options}>
-              <CheckoutForm />
-            </Elements> */}
             <Route path="/payment" element={<Payment />} />
-            {/* <Route path="/stripe-payment" element={<StripePayment />} /> */}
-            {/* <Route path="/checkout-form" element = {<CheckoutForm/>}/> */}
             <Route path="/purchase-summary" element={<PurchaseSummary />} />
             <Route path="/thank-you" element={<ThankYou />} />
-            <Route path="/race-details/:id" component={RaceDetailsPage} />
             <Route path="/race-info" element={<RaceInfo />} />
             <Route path="/results" element={<Results />} />
             <Route path="/photos" element={<Photos />} />

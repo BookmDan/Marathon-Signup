@@ -2,8 +2,6 @@ from flask import session
 from flask_restful import Resource
 from config import api, db
 
-
-# Add your model imports
 from models.user import User
 
 class AuthorizedSession(Resource):

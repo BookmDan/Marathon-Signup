@@ -5,10 +5,8 @@ import { fetchFollowedEvents} from '../../redux/eventSlice';
 import {UserContext} from '../../context/UserContext'
 
 const MyAccount = () => {
-
   // console.log("user id: ", user);
   const dispatch = useDispatch();
-  // const loggedIn = useSelector((state) => state.user.loggedIn);
   const followedEvents = useSelector((state) => state.event.followedEvents);
   const { currentUser } = useContext(UserContext)
 
