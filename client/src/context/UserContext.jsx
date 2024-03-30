@@ -1,4 +1,4 @@
-import { useState,createContext} from "react";
+import { useState,createContext, useEffect} from "react";
 
 const UserContext = createContext({
   currentUser: null,
@@ -8,9 +8,14 @@ const UserContext = createContext({
 })
 
 const UserProvider = ({ children }) => {
-  const [currentUser, setCurrentUser] = useState(null)
-  const [loggedIn, setLoggedIn] = useState(false)
+  const [currentUser, setCurrentUser] = useState(
+    JSON.parse(localStorage.getItem("currentUser")) || null)
+  const [loggedIn, setLoggedIn] = useState(currentUser !== null)
   // const[userId, setUserId] = useState(null)
+
+  useEffect(() => {
+    localStorage.setItem("currentUser", JSON.stringify(currentUser));
+  }, [currentUser]);
 
   const login = (user) => {
     setCurrentUser(user)
