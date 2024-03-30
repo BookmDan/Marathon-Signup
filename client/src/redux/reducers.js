@@ -25,7 +25,6 @@ const followReducer = (state = initialState, action) => {
 
 const rootReducer = combineReducers({
   follow: followReducer,
-  // other reducers...
 });
 
 export default rootReducer;
