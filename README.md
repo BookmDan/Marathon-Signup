@@ -23,11 +23,13 @@ to get it started:
       <img style="max-width:300px;" src="https://cdn.loom.com/sessions/thumbnails/b059241f27c44ee6acd4fdf31554ee2e-with-play.gif">
     </a>
   </div>
-## Future Coding:
+<div style="position: relative; padding-bottom: 56.25%; height: 0;"><iframe src="https://www.loom.com/embed/7b96999ba5f54d54a60c153c2b34cf61?sid=45b6e8c7-bb32-49bb-a47e-e90bf6ebb229" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
+
+# Future Coding:
 
 Things I'd like to implement in the future include:
 - depending on authorization, a user can create new race events. For example a race admin can do this.
 - Stripe payment processing to simulate real transaction
 - Firebase login and authentication
 - Firestore for database
-- add 'Restuls' page
+- add 'Results' page
