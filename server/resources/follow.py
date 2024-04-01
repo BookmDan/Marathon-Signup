@@ -8,7 +8,12 @@ from models.raceEvent import RaceEvent
 class FollowResource(Resource):
   def post(self):
     json = request.get_json()
+    user_id = json.get('user_id')
+    race_event_id = json.get('race_event_id')
 
+    if not user_id or not race_event_id:
+      return {'message': 'User ID or Race Event ID not provided'}, 400
+    
     follow = Follow.query.filter_by(user_id=json['user_id'], race_event_id=json['race_event_id']).first()
 
     if follow:
@@ -20,9 +25,26 @@ class FollowResource(Resource):
       new_follow = Follow(user_id=json['user_id'], race_event_id=json['race_event_id'])
       db.session.add(new_follow)
       db.session.commit()
-
       return new_follow.to_dict(), 201
     
+
+  def delete(self):
+    json = request.get_json()
+    user_id = json.get('user_id')
+    race_event_id = json.get('race_event_id')
+    
+    if not user_id or not race_event_id:
+      return {'message': 'User ID or Race Event ID not provided'}, 400
+    
+    follow = Follow.query.filter_by(user_id=user_id, race_event_id=race_event_id).first()
+
+    if follow:
+      db.session.delete(follow)
+      db.session.commit()
+      return {}, 204
+    else:
+      return {'message': 'Follow not found'}, 404
+
 api.add_resource(FollowResource, '/api/follows')
 
 class FollowedEventsResource(Resource):

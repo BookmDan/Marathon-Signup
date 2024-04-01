@@ -1,28 +1,25 @@
 import "../../styles/index.css";
 import { Card, Button } from "react-bootstrap";
 import { Link, useNavigate } from 'react-router-dom';
-import { useState, useContext } from 'react';
+import { useState, useContext,useEffect } from 'react';
 import {UserContext} from '../../context/UserContext'
 
-
-// import { useDispatch } from 'react-redux';
-// import { followEvent, unfollowEvent } from '../../redux/actions';
-// isFollowing, onFollowToggle
-function RaceEventCard({ raceEvent}) {
+function RaceEventCard({ raceEvent, isFollowing, onUnfollow}) {
   const {race_name, organization, race_type, race_cost } = raceEvent;
   const navigate = useNavigate();
-  // const dispatch = useDispatch();
-  const [isFollowing, setIsFollowing] = useState(false);
+  const [following, setFollowing] = useState(isFollowing)
   const { currentUser } = useContext(UserContext)
 
-
+  useEffect(() => {
+    setFollowing(isFollowing);
+  }, [isFollowing]);
 
   const handleFollowClick = () => {
     // Toggle the follow state
-    setIsFollowing(prevState => !prevState);
-  
-    console.log('User ID:', currentUser.id);
-    console.log('Race Event ID:', raceEvent.id);
+    setFollowing(prevState => !prevState);
+
+    // console.log('User ID:', currentUser.id);
+    // console.log('Race Event ID:', raceEvent.id);
     
     const postData = {
       user_id: currentUser.id, 
@@ -30,7 +27,7 @@ function RaceEventCard({ raceEvent}) {
     };
 
     fetch('/api/follows', {
-      method: 'POST',
+      method: following ? 'DELETE': 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
@@ -40,6 +37,7 @@ function RaceEventCard({ raceEvent}) {
       if (!response.ok) {
         throw new Error('Failed to add/remove race event from follow list');
       }
+      onUnfollow();
     })
     .catch(error => {
       console.error('Error:', error);
@@ -63,8 +61,8 @@ function RaceEventCard({ raceEvent}) {
           Learn More
         </Button>
         <Button 
-          variant={isFollowing ? "danger" : "success"}
-          className={`ml-2 ${isFollowing ? 'following-button' : 'follow-button'}`}
+          variant={following ? "danger" : "success"}
+          className={`ml-2 ${following ? 'following-button' : 'follow-button'}`}
           onClick={handleFollowClick}
         >
           {isFollowing ? "Following" : "Follow"}

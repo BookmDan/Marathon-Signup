@@ -17,6 +17,18 @@ const MyAccount = () => {
     }
   }, [currentUser, dispatch])
 
+  // const handleToggleFollow = (eventId, isFollowed) => {
+  //   // Dispatch your follow/unfollow action here or any other logic you want to execute
+  //   console.log('Toggling follow for event ID:', eventId);
+  //   console.log('Is Followed:', isFollowed);
+  // };
+  const handleUnfollow = () => {
+    // Fetch followed events again to update the list after unfollowing
+    dispatch(fetchFollowedEvents(currentUser.id));
+  };
+
+
+  
   return (
     <div>
       <h2>My Account</h2>
@@ -27,6 +39,8 @@ const MyAccount = () => {
             <RaceEventCard 
               key={event.id}
               raceEvent={event} 
+              isFollowing={true}
+              onUnfollow={handleUnfollow}
             />
           </div>
         ))}
