@@ -5,23 +5,17 @@ import { fetchFollowedEvents} from '../../redux/eventSlice';
 import {UserContext} from '../../context/UserContext'
 
 const MyAccount = () => {
-  // console.log("user id: ", user);
   const dispatch = useDispatch();
   const followedEvents = useSelector((state) => state.event.followedEvents);
   const { currentUser } = useContext(UserContext)
 
-  console.log("user id", currentUser.id)
+  // console.log("user id", currentUser.id)
   useEffect(() => {
     if (currentUser) {
       dispatch(fetchFollowedEvents(currentUser.id));
     }
   }, [currentUser, dispatch])
 
-  // const handleToggleFollow = (eventId, isFollowed) => {
-  //   // Dispatch your follow/unfollow action here or any other logic you want to execute
-  //   console.log('Toggling follow for event ID:', eventId);
-  //   console.log('Is Followed:', isFollowed);
-  // };
   const handleUnfollow = () => {
     // Fetch followed events again to update the list after unfollowing
     dispatch(fetchFollowedEvents(currentUser.id));
