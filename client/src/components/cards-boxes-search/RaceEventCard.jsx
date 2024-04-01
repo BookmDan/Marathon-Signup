@@ -37,7 +37,7 @@ function RaceEventCard({ raceEvent, isFollowing, onUnfollow}) {
       if (!response.ok) {
         throw new Error('Failed to add/remove race event from follow list');
       }
-      onUnfollow(raceEvent.id);
+      onUnfollow();
     })
     .catch(error => {
       console.error('Error:', error);
