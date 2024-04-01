@@ -11,17 +11,17 @@ const SelectRace = ({ raceEvents, onUnFollow }) => {
   // const { userId } = useParams();
   // console.log('User Id:', user)
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { currentUser } = useContext(UserContext)
+  const { setSelectedRaceCost } = useCost();
+  const [searchQuery, setSearchQuery] = useState('');
+  const [filterType, setFilterType] = useState('all');
+  const [selectedRaceId, setSelectedRaceId] = useState(null);
 
   if (!raceEvents) {
     return  <div>Loading...</div>; 
   }
-  const [searchQuery, setSearchQuery] = useState('');
-  const [filterType, setFilterType] = useState('all');
-  const navigate = useNavigate();
-  const [selectedRaceId, setSelectedRaceId] = useState(null);
-  const { setSelectedRaceCost } = useCost();
-  const { currentUser } = useContext(UserContext)
-
+  
   const handleRaceClick = (selectedRaceId, raceEvent) => {
     setSelectedRaceId(selectedRaceId);
     setSelectedRaceCost(raceEvent.race_cost);
