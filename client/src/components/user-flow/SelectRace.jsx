@@ -8,6 +8,9 @@ import {UserContext} from '../../context/UserContext'
 const SelectRace = ({ raceEvents }) => {
   // const { userId } = useParams();
   // console.log('User Id:', user)
+  if (!raceEvents) {
+    return  <div>Loading...</div>; 
+  }
   const [searchQuery, setSearchQuery] = useState('');
   const [filterType, setFilterType] = useState('all');
   const navigate = useNavigate();

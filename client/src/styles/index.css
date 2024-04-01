@@ -393,3 +393,11 @@ textarea.form-input {
   background-color: purple; /* Change the background color */
   color: white; /* Change the text color */
 }
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 800px;
+  height: 600px; 
+}
