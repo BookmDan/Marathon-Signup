@@ -4,11 +4,16 @@ export const eventSlice = createSlice({
   name: 'event',
   initialState: {
     followedEvents: [],
+    error:null
   },
   reducers: {
     setFollowedEvents: (state, action) => {
       state.followedEvents = action.payload;
+      state.error = null
     },
+    setError:(state, action) => {
+      state.error = action.payload
+    }
   },
 });
 

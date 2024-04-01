@@ -1,13 +1,17 @@
 import { useState, useContext } from 'react';
 import RaceEventCard from '../cards-boxes-search/RaceEventCard';
 import { Button } from "react-bootstrap";
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useCost} from '../../context/CostContext';
+import { useDispatch } from 'react-redux';
+import { fetchFollowedEvents} from '../../redux/eventSlice';
 import {UserContext} from '../../context/UserContext'
 
-const SelectRace = ({ raceEvents }) => {
+const SelectRace = ({ raceEvents, onUnFollow }) => {
   // const { userId } = useParams();
   // console.log('User Id:', user)
+  const dispatch = useDispatch();
+
   if (!raceEvents) {
     return  <div>Loading...</div>; 
   }
@@ -30,6 +34,11 @@ const SelectRace = ({ raceEvents }) => {
       console.log("User ID:", currentUser.id)
       navigate(`/agreement/${selectedRaceId}/${currentUser.id}`);
     }
+  };
+
+  const handleUnfollow = () => {
+    // Fetch followed events again to update the list after unfollowing
+    dispatch(fetchFollowedEvents(currentUser.id));
   };
 
   const filteredRaceEvents = raceEvents.filter((event) => {
@@ -68,6 +77,7 @@ const SelectRace = ({ raceEvents }) => {
               raceEvent={event}
               onClick={() => handleRaceClick(event.id, event)}
               isSelected={selectedRaceId === event.id}
+              onUnfollow={handleUnfollow}
             />
              <Button variant="primary" onClick={handleSelectButtonClick}>Select</Button>
           </div>

@@ -37,7 +37,7 @@ function RaceEventCard({ raceEvent, isFollowing, onUnfollow}) {
       if (!response.ok) {
         throw new Error('Failed to add/remove race event from follow list');
       }
-      onUnfollow();
+      onUnfollow(raceEvent.id);
     })
     .catch(error => {
       console.error('Error:', error);
@@ -65,7 +65,7 @@ function RaceEventCard({ raceEvent, isFollowing, onUnfollow}) {
           className={`ml-2 ${following ? 'following-button' : 'follow-button'}`}
           onClick={handleFollowClick}
         >
-          {isFollowing ? "Following" : "Follow"}
+          {isFollowing ? "Unfollow" : "Follow"}
         </Button>
       </Card.Body>
     </Card>
