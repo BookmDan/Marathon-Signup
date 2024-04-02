@@ -4,12 +4,10 @@ import { Button } from "react-bootstrap";
 import { useNavigate } from 'react-router-dom';
 import { useCost} from '../../context/CostContext';
 import { useDispatch } from 'react-redux';
-import { fetchFollowedEvents} from '../../redux/eventSlice';
+import { followRaceEvent, fetchFollowedEvents} from '../../redux/eventSlice';
 import {UserContext} from '../../context/UserContext'
 
 const SelectRace = ({ raceEvents, onUnFollow }) => {
-  // const { userId } = useParams();
-  // console.log('User Id:', user)
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { currentUser } = useContext(UserContext)
@@ -36,8 +34,15 @@ const SelectRace = ({ raceEvents, onUnFollow }) => {
     }
   };
 
-  const handleUnfollow = () => {
-    dispatch(fetchFollowedEvents(currentUser.id));
+  const handleUnfollow = (raceEventId) => {
+    // dispatch(fetchFollowedEvents(currentUser.id));
+    dispatch(followRaceEvent({ userId: currentUser.id, raceEventId, follow: false }))
+    .then(() => {
+      dispatch(fetchFollowedEvents(currentUser.id)); // Fetch updated followed events
+    })
+    .catch(error => {
+      console.error('Error:', error);
+    });
   };
 
   const filteredRaceEvents = raceEvents.filter((event) => {

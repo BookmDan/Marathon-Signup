@@ -29,18 +29,7 @@ function RaceEventCard({ raceEvent, isFollowing, onUnfollow}) {
     .catch(error => {
       console.error('Error:', error);
     });
-}
-
-  //   const action = following
-  //   ? followRaceEvent({ userId: currentUser.id, raceEventId: raceEvent.id, follow: false })
-  //   : followRaceEvent({ userId: currentUser.id, raceEventId: raceEvent.id, follow: true });
-
-  //   action.then(() => {
-  //     onUnfollow(); // Call the callback to handle UI changes
-  //   }).catch(error => {
-  //     console.error('Error:', error);
-  //   });
-  // }
+  }
   //   const postData = {
   //     user_id: currentUser.id, 
   //     race_event_id: raceEvent.id 
