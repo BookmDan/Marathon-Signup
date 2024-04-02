@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
 export const eventSlice = createSlice({
   name: 'event',
@@ -15,6 +15,7 @@ export const eventSlice = createSlice({
       state.error = action.payload
     }
   },
+  
 });
 
 export const { setFollowedEvents } = eventSlice.actions;

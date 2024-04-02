@@ -20,8 +20,6 @@ const MyAccount = () => {
     // Fetch followed events again to update the list after unfollowing
     dispatch(fetchFollowedEvents(currentUser.id));
   };
-
-
   
   return (
     <div>
