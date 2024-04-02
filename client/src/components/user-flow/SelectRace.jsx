@@ -35,14 +35,14 @@ const SelectRace = ({ raceEvents, onUnFollow }) => {
   };
 
   const handleUnfollow = (raceEventId) => {
-    // dispatch(fetchFollowedEvents(currentUser.id));
-    dispatch(followRaceEvent({ userId: currentUser.id, raceEventId, follow: false }))
-    .then(() => {
-      dispatch(fetchFollowedEvents(currentUser.id)); // Fetch updated followed events
-    })
-    .catch(error => {
-      console.error('Error:', error);
-    });
+    dispatch(fetchFollowedEvents(currentUser.id));
+    // dispatch(followRaceEvent({ userId: currentUser.id, raceEventId, follow: false }))
+    // .then(() => {
+    //   dispatch(fetchFollowedEvents(currentUser.id)); // Fetch updated followed events
+    // })
+    // .catch(error => {
+    //   console.error('Error:', error);
+    // });
   };
 
   const filteredRaceEvents = raceEvents.filter((event) => {
