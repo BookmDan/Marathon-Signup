@@ -3,46 +3,66 @@ import { Card, Button } from "react-bootstrap";
 import { Link, useNavigate } from 'react-router-dom';
 import { useState, useContext,useEffect } from 'react';
 import {UserContext} from '../../context/UserContext'
+import { followRaceEvent } from "../../redux/eventSlice";
+import { useDispatch } from "react-redux";
 
 function RaceEventCard({ raceEvent, isFollowing, onUnfollow}) {
   const {race_name, organization, race_type, race_cost } = raceEvent;
   const navigate = useNavigate();
   const [following, setFollowing] = useState(isFollowing)
   const { currentUser } = useContext(UserContext)
+  const dispatch = useDispatch();
 
   useEffect(() => {
     setFollowing(isFollowing);
   }, [isFollowing]);
 
   const handleFollowClick = () => {
-    // Toggle the follow state
     setFollowing(prevState => !prevState);
 
     // console.log('User ID:', currentUser.id);
     // console.log('Race Event ID:', raceEvent.id);
-    
-    const postData = {
-      user_id: currentUser.id, 
-      race_event_id: raceEvent.id 
-    };
-
-    fetch('/api/follows', {
-      method: following ? 'DELETE': 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(postData)
-    })
-    .then(response => {
-      if (!response.ok) {
-        throw new Error('Failed to add/remove race event from follow list');
-      }
-      onUnfollow();
+    dispatch(followRaceEvent({ userId: currentUser.id, raceEventId: raceEvent.id, follow: !following }))
+    .then(() => {
+      onUnfollow(); // Call the callback to handle UI changes
     })
     .catch(error => {
       console.error('Error:', error);
     });
-  };
+}
+
+  //   const action = following
+  //   ? followRaceEvent({ userId: currentUser.id, raceEventId: raceEvent.id, follow: false })
+  //   : followRaceEvent({ userId: currentUser.id, raceEventId: raceEvent.id, follow: true });
+
+  //   action.then(() => {
+  //     onUnfollow(); // Call the callback to handle UI changes
+  //   }).catch(error => {
+  //     console.error('Error:', error);
+  //   });
+  // }
+  //   const postData = {
+  //     user_id: currentUser.id, 
+  //     race_event_id: raceEvent.id 
+  //   };
+
+  //   fetch('/api/follows', {
+  //     method: following ? 'DELETE': 'POST',
+  //     headers: {
+  //       'Content-Type': 'application/json'
+  //     },
+  //     body: JSON.stringify(postData)
+  //   })
+  //   .then(response => {
+  //     if (!response.ok) {
+  //       throw new Error('Failed to add/remove race event from follow list');
+  //     }
+  //     onUnfollow();
+  //   })
+  //   .catch(error => {
+  //     console.error('Error:', error);
+  //   });
+  // };
 
   return (
     <Card style={{ width: '18rem' }} className="mx-2 my-3 race-card">
@@ -70,6 +90,6 @@ function RaceEventCard({ raceEvent, isFollowing, onUnfollow}) {
       </Card.Body>
     </Card>
   );
-}
+};
 
 export default RaceEventCard;
