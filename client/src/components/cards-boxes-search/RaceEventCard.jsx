@@ -30,28 +30,6 @@ function RaceEventCard({ raceEvent, isFollowing, onUnfollow}) {
       console.error('Error:', error);
     });
   }
-  //   const postData = {
-  //     user_id: currentUser.id, 
-  //     race_event_id: raceEvent.id 
-  //   };
-
-  //   fetch('/api/follows', {
-  //     method: following ? 'DELETE': 'POST',
-  //     headers: {
-  //       'Content-Type': 'application/json'
-  //     },
-  //     body: JSON.stringify(postData)
-  //   })
-  //   .then(response => {
-  //     if (!response.ok) {
-  //       throw new Error('Failed to add/remove race event from follow list');
-  //     }
-  //     onUnfollow();
-  //   })
-  //   .catch(error => {
-  //     console.error('Error:', error);
-  //   });
-  // };
 
   return (
     <Card style={{ width: '18rem' }} className="mx-2 my-3 race-card">
